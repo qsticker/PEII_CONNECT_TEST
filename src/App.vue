@@ -1,19 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <peiiNavbar/>
   <SlideShow/>
+
 </template>
 
 <script>
 import SlideShow from './components/SlideShow.vue'
+import peiiNavbar from './components/navbar.vue'
 export default {
   name: 'App',
   components: {
-    SlideShow
+    SlideShow,
+    peiiNavbar
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "~@/assets/scss/vendors/bootstrap-vue/index";
+@import "~@/assets/scss/vendors/bootstrap-vue/index";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

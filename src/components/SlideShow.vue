@@ -1,5 +1,5 @@
 <template>
-<vueper-slides bullets-outside :dragging-distance="50"  :autoplay=true :slideRatio="1/6">
+<vueper-slides bullets-outside :dragging-distance="50"  :autoplay=true :slideRatio="1/4">
   <vueper-slide
     v-for="(slide, i) in slides"
     :key="i"
