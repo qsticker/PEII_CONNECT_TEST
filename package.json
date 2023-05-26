@@ -1,5 +1,5 @@
 {
-  "name": "peii-frontend-ts",
+  "name": "peiifrontedts",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,18 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.11.5",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
-    "mutationobserver-shim": "^0.3.7",
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
-    "vue": "^3.2.13",
+    "vue": "^2.7.14",
+    "vue-class-component": "^7.2.3",
     "vue-cookies": "^1.7.4",
-    "vue-router": "^4.0.3",
-    "vueperslides": "^3.5.1",
-    "vuex": "^4.0.0"
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^3.5.1",
+    "vueperslides": "^2.16.0",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -36,8 +36,7 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.3.0",
     "typescript": "~4.5.5",
-    "vue-cli-plugin-bootstrap-vue": "~0.8.2",
-    "webpack": "^5.84.1"
+    "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
     "root": true,
@@ -45,7 +44,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
+      "plugin:vue/essential",
       "eslint:recommended",
       "@vue/typescript/recommended"
     ],
@@ -57,7 +56,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead",
-    "not ie 11"
+    "not dead"
   ]
 }

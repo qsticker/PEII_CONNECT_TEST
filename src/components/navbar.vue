@@ -60,19 +60,13 @@
         </div>
     </div>
     <div v-else class="not-login-btn" @click="closeSideNav">
-        <b-btn
+        <b-button
           variant="light"
           class="px-3 py-1"
         >
           註冊
-        </b-btn>
-        <b-btn
-          variant="success"
-          class="px-3 py-1 mx-1"
-          @click.prevent="logout"
-        >
-          登入
-        </b-btn>
+        </b-button>
+        <b-button variant="success" class="px-3 py-1">Button</b-button>
       </div>
     </div>
   </div>
@@ -122,6 +116,7 @@ export default {
   methods: {
     logout() {
       //Auth.logout();
+      console.log("out")
     },
     closeSideNav() {
       //this.showSideNav = false;

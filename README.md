@@ -1,4 +1,4 @@
-# peii-frontend-ts
+# peiifrontedts
 
 ## Project setup
 ```
