@@ -9,6 +9,16 @@
     
       </DebugToggler>
       -->
+      <div class = "nav">
+        <div class="peiiicon">
+          <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="d-flex logo-box align-items-center">
+          <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
+              <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
+              <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
+          </a>
+        </div>
 
         <div class="rwd-icon" >
             <span><i class="fas fa-bars" /></span>
@@ -22,18 +32,19 @@
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
-      <!-- Nav links -->
-    <div v-if="isLogin" class="nav-btn-wrapper" @click="closeSideNav">
+       
+        <!-- Nav links -->
+        <div v-if="isLogin" class="nav-btn-wrapper" @click="closeSideNav">
 
-        <div class="rwd-title">
-            <h6> '功能選擇' </h6>
-        </div>
+          <div class="rwd-title">
+              <h6> '功能選擇' </h6>
+          </div>
+          
+          <div class="lang-btn" @click="closeSideNav">
+              <LanguageSelector class="mr-2" />
+          </div>
 
-        <div class="lang-btn" @click="closeSideNav">
-            <LanguageSelector class="mr-2" />
-        </div>
-
-        <div v-if="isLogin" class="login-btn" @click="closeSideNav">
+          <div v-if="isLogin" class="login-btn" @click="closeSideNav">
             <!-- Login info -->
             <b-dropdown
             v-if="isLogin"
@@ -57,16 +68,17 @@
                 '登出'
             </b-dropdown-item>
             </b-dropdown>
+          </div>
         </div>
-    </div>
-    <div v-else class="not-login-btn" @click="closeSideNav">
-        <b-button
-          variant="light"
-          class="px-3 py-1"
-        >
-          註冊
-        </b-button>
-        <b-button variant="success" class="px-3 py-1">Button</b-button>
+
+        <div v-else class="not-login-btn" @click="closeSideNav">
+          <b-button
+            variant="light"
+          >
+            註冊
+          </b-button>
+          <b-button variant="success" >登入</b-button>
+        </div>
       </div>
     </div>
   </div>
@@ -131,7 +143,7 @@ export default {
   margin: 0;
 }
 .navbar {
-  height: 50px;
+  height: 100px;
   padding: 0 10px;
   box-shadow: 0 0 2px #ddd;
   background-color: #fff;
@@ -161,6 +173,7 @@ export default {
   .nav{
     display: flex;
     align-items: center;
+    
     .nav-btn-wrapper {
       display: flex;
       align-items: center;
@@ -185,6 +198,22 @@ export default {
         background-color: #42b983;
       }
     }
+    .not-login-btn{
+      //flex:1;
+      margin-left : 1490px;
+    }
+
+    .logo-box .logo-text{
+      line-height: 1.4;
+      color: #002969;
+      margin-left : 15px;
+    }
+    .logo-box .logo-text .title{
+      font-size: 16px;
+    }
+    .logo-box .logo-text .des{
+      font-size: 14px;
+    }
   }
   .rwd-title{
     display: none;
@@ -198,8 +227,11 @@ export default {
       cursor: pointer;
     }
   }
-
 }
+//.peiiicon{
+//  height : 40px;
+//  width: 120px;
+//}
 
 @media screen and (max-width: 1000px) {
   .navbar{
@@ -267,5 +299,16 @@ export default {
       transition: all 0.6s ease;
     }
   }
+}
+
+.logo-box .logo-text{
+	line-height: 1.4;
+	color: #002969;
+}
+.logo-box .logo-text .title{
+	font-size: 16px;
+}
+.logo-box .logo-text .des{
+	font-size: 14px;
 }
 </style>
