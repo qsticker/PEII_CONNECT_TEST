@@ -1,6 +1,6 @@
 <template>
     <div class="navbar">
-        <div class="navbar-brand">
+      
       <!---<DebugToggler>
         <router-link :to="homepageLocation">
           <i class="far fa-comment fa-flip-horizontal" />
@@ -9,7 +9,12 @@
     
       </DebugToggler>
       -->
-      <div class = "nav">
+
+      <div class="rwd-icon" @click="showSideNav = true" >
+        <span><img src="../assets/bars-solid.png" /></span>
+      </div>
+
+      <div class = "nav" :class="{'side-close': !showSideNav}">
         <div class="peiiicon">
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
@@ -20,15 +25,6 @@
           </a>
         </div>
 
-        <div class="rwd-icon" >
-            <span><i class="fas fa-bars" /></span>
-        </div>
-
-        <div class="nav" :class="{'side-close': !showSideNav}">
-            <div class="rwd-icon" @click="closeSideNav">
-                <span><i class="fas fa-times" /></span>
-            </div>
-        </div>
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
@@ -71,16 +67,27 @@
           </div>
         </div>
 
-        <div v-else class="not-login-btn" @click="closeSideNav">
-          <b-button
+        <div v-else-if="!isLogin && showSideNav"  @click="closeSideNav">
+          <b-btn
             variant="light"
           >
             註冊
-          </b-button>
-          <b-button variant="success" >登入</b-button>
+          </b-btn>
+          <b-btn variant="success" >登入</b-btn>
+        </div>
+
+        <div v-else class="not-login-btn" @click="closeSideNav">
+          <b-btn
+            variant="light"
+          >
+            註冊
+          </b-btn>
+          <b-btn variant="success" >登入</b-btn>
         </div>
       </div>
-    </div>
+
+      
+    
   </div>
 </template>
 
@@ -243,7 +250,8 @@ export default {
       background-color: #fff;
       width: 200px;
       height: 100vh;
-      flex-direction: column;
+      //flex-direction: column;
+      display: block;
       transition: all 0.6s ease;
       .nav-btn-wrapper{
         flex-direction: column;
@@ -260,11 +268,7 @@ export default {
           width: 100%;
         }
       }
-      .not-login-btn{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-      }
+      
       .rwd-title{
         display: block;
         background-color: #ddd;
@@ -290,9 +294,33 @@ export default {
           }
         }
       }
+      .logo-box .logo-text{
+        line-height: 1.4;
+        color: #002969;
+      }
+      .logo-box .logo-text  .title{
+        font-size:  16px;
+      }
+      .logo-box .logo-text  .des{
+        font-size:  14px;
+      }
+      //.not-login-btn{
+        //display: block;
+        //display: flex;
+        //flex-direction: column;
+        //width: 100%;
+      //}
     }
     .rwd-icon {
       display: block;
+      margin-left: auto;
+        span{
+          img{
+            width: 1.5rem;
+            height: 1.5rem;
+            text-align: center;
+          }
+        }
     }
     .side-close{
       right: -200px;
@@ -301,14 +329,5 @@ export default {
   }
 }
 
-.logo-box .logo-text{
-	line-height: 1.4;
-	color: #002969;
-}
-.logo-box .logo-text .title{
-	font-size: 16px;
-}
-.logo-box .logo-text .des{
-	font-size: 14px;
-}
+
 </style>
