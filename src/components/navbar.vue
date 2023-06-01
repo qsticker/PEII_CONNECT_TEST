@@ -91,7 +91,6 @@
 
 <script lang='ts'>
 
-import Vue from 'vue';
 import CognitoHandler from '@/handler/userpool';
 import { defineComponent } from "vue";
 
@@ -140,7 +139,7 @@ export default defineComponent({
       this.showSideNav = false;
     },
     register() {
-      CognitoHandler.printEnv()
+      CognitoHandler.login("yukina1026" , "Barry0501!"  )
     },
   },
 });
