@@ -10,21 +10,26 @@
       </DebugToggler>
       -->
 
-      <div class="rwd-icon" @click="showSideNav = true" >
+      <div v-if="!showSideNav" class="rwd-icon" @click="showSideNav = true" >
         <span><img src="../assets/bars-solid.png" /></span>
       </div>
+     
 
       <div class = "nav" :class="{'side-close': !showSideNav}">
-        <div class="peiiicon">
-          <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
+        <div class="rwd-icon" @click="closeSideNav">
+          <span><img src="../assets/times-solid.png" /></span>
         </div>
-        <div class="d-flex logo-box align-items-center">
-          <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
-              <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
-              <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
-          </a>
+        <div class="logo-container">
+          <div class="peiiicon">
+            <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
+          </div>
+          <div class="d-flex logo-box align-items-center">
+            <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
+                <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
+                <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
+            </a>
+          </div>
         </div>
-
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
@@ -67,14 +72,7 @@
           </div>
         </div>
 
-        <div v-else-if="!isLogin && showSideNav"  @click="closeSideNav">
-          <b-btn
-            variant="light"
-          >
-            註冊
-          </b-btn>
-          <b-btn variant="success" >登入</b-btn>
-        </div>
+       
 
         <div v-else class="not-login-btn" @click="closeSideNav">
           <b-btn
@@ -138,7 +136,7 @@ export default {
       console.log("out")
     },
     closeSideNav() {
-      //this.showSideNav = false;
+      this.showSideNav = false;
     },
   },
 };
@@ -155,6 +153,7 @@ export default {
   box-shadow: 0 0 2px #ddd;
   background-color: #fff;
   position: fixed;
+  display: block;
   width: 100%;
   z-index:10;
   a {
@@ -180,46 +179,34 @@ export default {
   .nav{
     display: flex;
     align-items: center;
+    //background-color: #f23f3f;
     
-    .nav-btn-wrapper {
-      display: flex;
-      align-items: center;
-
-      .nav-btn{
-        margin: 0 20px;
-        color: #2c3e50;
-        padding: 4px 10px;
-        border-radius: 3px;
-        &.router-link-exact-active {
-          color: #fff;
-          background-color: #42b983;
-        }
-        &:hover{
-          color: #fff;
-          background-color: #42b983
-        }
+    
+    .logo-container{
+      display: block;
+      .logo-box .logo-text{
+        line-height: 1.4;
+        color: #002969;
+        margin-left : 15px;
       }
-
-      .stayHere{
-        color: #fff;
-        background-color: #42b983;
+      .logo-box .logo-text .title{
+        font-size: 16px;
+      }
+      .logo-box .logo-text .des{
+        font-size: 14px;
       }
     }
+    
+
     .not-login-btn{
-      //flex:1;
-      margin-left : 1490px;
-    }
-
-    .logo-box .logo-text{
-      line-height: 1.4;
-      color: #002969;
-      margin-left : 15px;
-    }
-    .logo-box .logo-text .title{
-      font-size: 16px;
-    }
-    .logo-box .logo-text .des{
-      font-size: 14px;
+      flex:1;
+      //background-color: #333;
+      text-align: right;
+      //margin-left : auto;
+      //b-btn {
+      //  margin-left : auto;
+      //}
+      
     }
   }
   .rwd-title{
@@ -250,8 +237,8 @@ export default {
       background-color: #fff;
       width: 200px;
       height: 100vh;
-      //flex-direction: column;
-      display: block;
+      flex-direction: column;
+      //display: block;
       transition: all 0.6s ease;
       .nav-btn-wrapper{
         flex-direction: column;
@@ -294,28 +281,34 @@ export default {
           }
         }
       }
-      .logo-box .logo-text{
+      .logo-container{
+        display: block;
+        .logo-box .logo-text{
         line-height: 1.4;
         color: #002969;
+        }
+        .logo-box .logo-text  .title{
+          font-size:  16px;
+        }
+        .logo-box .logo-text  .des{
+          font-size:  14px;
+        }
       }
-      .logo-box .logo-text  .title{
-        font-size:  16px;
-      }
-      .logo-box .logo-text  .des{
-        font-size:  14px;
-      }
-      //.not-login-btn{
+
+      .not-login-btn{
         //display: block;
-        //display: flex;
-        //flex-direction: column;
-        //width: 100%;
-      //}
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
     }
     .rwd-icon {
-      display: block;
-      margin-left: auto;
+      display: flex;
+      //background-color: #002969;
         span{
+          margin-left: auto;
           img{
+            
             width: 1.5rem;
             height: 1.5rem;
             text-align: center;
@@ -323,8 +316,18 @@ export default {
         }
     }
     .side-close{
+      display: flex;
       right: -200px;
-      transition: all 0.6s ease;
+      //background-color: #002969;
+        span{
+          margin-left: auto;
+          img{
+            
+            width: 1.5rem;
+            height: 1.5rem;
+            text-align: center;
+          }
+        }
     }
   }
 }
