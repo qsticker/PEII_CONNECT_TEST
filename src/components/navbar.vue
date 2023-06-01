@@ -74,7 +74,7 @@
 
        
 
-        <div v-else class="not-login-btn" @click="closeSideNav">
+        <div v-else class="not-login-btn" @click="register">
           <b-btn
             variant="light"
           >
@@ -92,14 +92,15 @@
 <script lang='ts'>
 
 import Vue from 'vue';
-
+import CognitoHandler from '@/handler/userpool';
+import { defineComponent } from "vue";
 
 interface NavbarLocation {
   label: string;
   location: Location;
 }
 
-export default {
+export default defineComponent({
   name: 'peiiNavbar',
   components: {
    
@@ -138,8 +139,11 @@ export default {
     closeSideNav() {
       this.showSideNav = false;
     },
+    register() {
+      CognitoHandler.printEnv()
+    },
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
