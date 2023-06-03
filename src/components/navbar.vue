@@ -19,17 +19,54 @@
         <div class="rwd-icon" @click="closeSideNav">
           <span><img src="../assets/times-solid.png" /></span>
         </div>
-        <div class="logo-container">
-          <div class="peiiicon">
-            <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
-          </div>
-          <div class="d-flex logo-box align-items-center">
-            <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
-                <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
-                <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
-            </a>
-          </div>
+        
+        <div class="peiiicon">
+          <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
+        <div class="d-flex logo-box align-items-center">
+          <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
+              <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
+              <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
+          </a>
+        </div>
+        
+        
+        <div class="nav-item dropdown position-static show">
+          
+         
+         
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+              課程
+          </button>
+          <ul class="dropdown-menu w-100  active">
+            <div class="dropdown-item">
+              <div class="row">
+                <div v-for="(classfication,index) in roots" :key="index" class="col">
+                  
+                  <h6><a href="#">{{ classfication.name }}</a></h6>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  
+                </div>
+              </div>  
+            </div>
+          </ul>
+       
+
+        
+
+          <button class="btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" @click="print">
+            測驗
+          </button>
+          <ul class="dropdown-menu w-100  active">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else hereaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></li>
+          </ul>
+        </div>
+
+        
+
+
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
@@ -74,13 +111,14 @@
 
        
 
-        <div v-else class="not-login-btn" @click="register">
+        <div v-else class="not-login-btn">
           <b-btn
             variant="light"
+            @click="courseRootClassification"
           >
             註冊
           </b-btn>
-          <b-btn variant="success" >登入</b-btn>
+          <b-btn variant="success" @click="print">登入</b-btn>
         </div>
       </div>
 
@@ -99,6 +137,11 @@ interface NavbarLocation {
   location: Location;
 }
 
+interface rootClassification {
+  name : string;
+  subClassfication : Array<string>;
+}
+
 export default defineComponent({
   name: 'peiiNavbar',
   components: {
@@ -107,6 +150,7 @@ export default defineComponent({
   data() {
     return {
       showSideNav: false,
+      roots : Array<rootClassification>() ,
     };
   },
   computed: {
@@ -118,6 +162,7 @@ export default defineComponent({
         
       ];
     },
+
     username(): string {
       //if (this.$store.state.profile) {
         //return this.$store.state.profile.username;
@@ -131,6 +176,25 @@ export default defineComponent({
     },
   },
   methods: {
+    courseRootClassification() {
+      //if(this.roots.length != 0){
+        let typeone : rootClassification = { 
+          name : "root1",
+          subClassfication: ["1" , "yukina" ]
+        };
+        let typetwo : rootClassification = {
+          name : "root2",
+          subClassfication: ["2" ]
+        };
+        this.roots.push(typeone);
+        this.roots.push(typetwo);
+      //}
+      
+    },
+    print() {
+      console.log("hi")
+      console.log(this.roots[0])
+    },
     logout() {
       //Auth.logout();
       console.log("out")
@@ -138,7 +202,7 @@ export default defineComponent({
     closeSideNav() {
       this.showSideNav = false;
     },
-    register() {
+    login() {
       CognitoHandler.login("yukina1026" , "Barry0501!"  )
     },
   },
@@ -151,7 +215,7 @@ export default defineComponent({
   margin: 0;
 }
 .navbar {
-  height: 100px;
+  height: 80px;
   padding: 0 10px;
   box-shadow: 0 0 2px #ddd;
   background-color: #fff;
@@ -183,22 +247,26 @@ export default defineComponent({
     display: flex;
     align-items: center;
     //background-color: #f23f3f;
-    
-    
-    .logo-container{
-      display: block;
-      .logo-box .logo-text{
-        line-height: 1.4;
-        color: #002969;
-        margin-left : 15px;
-      }
-      .logo-box .logo-text .title{
-        font-size: 16px;
-      }
-      .logo-box .logo-text .des{
-        font-size: 14px;
-      }
+    //display: block;
+
+    .nav-item{
+      flex : 2;
     }
+    .next-btn{
+      margin : 10px;
+    }
+    .logo-box .logo-text{
+      line-height: 1.4;
+      color: #002969;
+      margin-left : 15px;
+    }
+    .logo-box .logo-text .title{
+      font-size: 16px;
+    }
+    .logo-box .logo-text .des{
+      font-size: 14px;
+    }
+    
     
 
     .not-login-btn{
@@ -284,19 +352,19 @@ export default defineComponent({
           }
         }
       }
-      .logo-container{
-        display: block;
-        .logo-box .logo-text{
+      
+      display: block;
+      .logo-box .logo-text{
         line-height: 1.4;
         color: #002969;
-        }
-        .logo-box .logo-text  .title{
-          font-size:  16px;
-        }
-        .logo-box .logo-text  .des{
-          font-size:  14px;
-        }
       }
+      .logo-box .logo-text  .title{
+        font-size:  16px;
+      }
+      .logo-box .logo-text  .des{
+        font-size:  14px;
+      }
+      
 
       .not-login-btn{
         //display: block;
