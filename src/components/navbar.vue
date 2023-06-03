@@ -41,7 +41,7 @@
           <ul class="dropdown-menu w-100  active">
             <div class="dropdown-item">
               <div class="row">
-                <div v-for="(classfication,index) in roots" :key="index" class="col">
+                <div v-for="(classfication,index) in courseRootClassifications" :key="index" class="col">
                   
                   <h6><a href="#">{{ classfication.name }}</a></h6>
                   <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
@@ -49,10 +49,7 @@
                 </div>
               </div>  
             </div>
-          </ul>
-       
-
-        
+          </ul>               
 
           <button class="btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" @click="print">
             測驗
@@ -114,11 +111,10 @@
         <div v-else class="not-login-btn">
           <b-btn
             variant="light"
-            @click="courseRootClassification"
           >
             註冊
           </b-btn>
-          <b-btn variant="success" @click="print">登入</b-btn>
+          <b-btn variant="success" >登入</b-btn>
         </div>
       </div>
 
@@ -137,11 +133,6 @@ interface NavbarLocation {
   location: Location;
 }
 
-interface rootClassification {
-  name : string;
-  subClassfication : Array<string>;
-}
-
 export default defineComponent({
   name: 'peiiNavbar',
   components: {
@@ -150,10 +141,13 @@ export default defineComponent({
   data() {
     return {
       showSideNav: false,
-      roots : Array<rootClassification>() ,
     };
   },
   computed: {
+    courseRootClassifications() {
+      return this.$store.state.courseClassfication;
+    },
+
     links(): NavbarLocation[] {
       //if (!this.$store.state.currentWorkspace) {
         //return [];
@@ -176,25 +170,6 @@ export default defineComponent({
     },
   },
   methods: {
-    courseRootClassification() {
-      //if(this.roots.length != 0){
-        let typeone : rootClassification = { 
-          name : "root1",
-          subClassfication: ["1" , "yukina" ]
-        };
-        let typetwo : rootClassification = {
-          name : "root2",
-          subClassfication: ["2" ]
-        };
-        this.roots.push(typeone);
-        this.roots.push(typetwo);
-      //}
-      
-    },
-    print() {
-      console.log("hi")
-      console.log(this.roots[0])
-    },
     logout() {
       //Auth.logout();
       console.log("out")
