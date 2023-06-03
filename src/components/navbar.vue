@@ -114,7 +114,7 @@
           >
             註冊
           </b-btn>
-          <b-btn variant="success" >登入</b-btn>
+          <b-btn variant="success" @click="login">登入</b-btn>
         </div>
       </div>
 
@@ -178,7 +178,8 @@ export default defineComponent({
       this.showSideNav = false;
     },
     login() {
-      CognitoHandler.login("yukina1026" , "Barry0501!"  )
+      this.$router.push({ path: '/login' })
+      //CognitoHandler.login("yukina1026" , "Barry0501!"  )
     },
   },
 });

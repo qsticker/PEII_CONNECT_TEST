@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <peiiNavbar/>
-    <SlideShow/>
+    
+     <router-view class="router-view" />
   </div>
 </template>
 
 <script>
-import SlideShow from './components/SlideShow.vue'
-import peiiNavbar from './components/navbar.vue'
+
+//import peiiNavbar from './components/navbar.vue'
+//import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
-    SlideShow,
-    peiiNavbar
+    //peiiNavbar,
+    //HomeView
   }
 }
 </script>
