@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    
+     <peiiNavbar/>
      <router-view class="router-view" />
   </div>
 </template>
 
 <script>
 
-//import peiiNavbar from './components/navbar.vue'
-//import HomeView from './views/HomeView'
+import peiiNavbar from './components/navbar.vue'
+import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
-    //peiiNavbar,
+   peiiNavbar,
     //HomeView
   }
 }

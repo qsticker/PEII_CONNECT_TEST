@@ -10,15 +10,11 @@
       </DebugToggler>
       -->
 
-      <div v-if="!showSideNav" class="rwd-icon" @click="showSideNav = true" >
+      <div class="rwd-icon" @click="changeSideNav" >
         <span><img src="../assets/bars-solid.png" /></span>
       </div>
      
-
-      <div class = "nav" :class="{'side-close': !showSideNav}">
-        <div class="rwd-icon" @click="closeSideNav">
-          <span><img src="../assets/times-solid.png" /></span>
-        </div>
+      <div class = "nav" :class="{'side-close': !showSideNav}" >
         
         <div class="peiiicon">
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
@@ -32,8 +28,6 @@
         
         
         <div class="nav-item dropdown position-static show">
-          
-         
          
           <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
               課程
@@ -51,7 +45,7 @@
             </div>
           </ul>               
 
-          <button class="btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" @click="print">
+          <button class="btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
             測驗
           </button>
           <ul class="dropdown-menu w-100  active">
@@ -61,25 +55,22 @@
           </ul>
         </div>
 
-        
-
-
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
        
         <!-- Nav links -->
-        <div v-if="isLogin" class="nav-btn-wrapper" @click="closeSideNav">
+        <div v-if="isLogin" class="nav-btn-wrapper" @click="changeSideNav">
 
           <div class="rwd-title">
               <h6> '功能選擇' </h6>
           </div>
           
-          <div class="lang-btn" @click="closeSideNav">
+          <div class="lang-btn" @click="changeSideNav">
               <LanguageSelector class="mr-2" />
           </div>
 
-          <div v-if="isLogin" class="login-btn" @click="closeSideNav">
+          <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
             <b-dropdown
             v-if="isLogin"
@@ -140,7 +131,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showSideNav: false,
+      showSideNav: true,
     };
   },
   computed: {
@@ -156,7 +147,6 @@ export default defineComponent({
         
       ];
     },
-
     username(): string {
       //if (this.$store.state.profile) {
         //return this.$store.state.profile.username;
@@ -174,8 +164,16 @@ export default defineComponent({
       //Auth.logout();
       console.log("out")
     },
-    closeSideNav() {
-      this.showSideNav = false;
+    
+    changeSideNav() {
+      this.showSideNav = !this.showSideNav;
+      // if( this.showSideNav == true ){
+      //   this.showSideNav = false
+      // }else{
+      //   this.showSideNav = true;
+      // }
+      //this.showSideNav = !this.showSideNav;
+      console.log(this.showSideNav)
     },
     login() {
       this.$router.push({ path: '/login' })
@@ -195,7 +193,7 @@ export default defineComponent({
   padding: 0 10px;
   box-shadow: 0 0 2px #ddd;
   background-color: #fff;
-  position: fixed;
+  //position: fixed;
   display: block;
   width: 100%;
   z-index:10;
