@@ -18,7 +18,7 @@ export default class CognitoHandler{
         console.log('hi')
     }
 
-    static registerTest(username: string , password: string  ,email: string ){
+    static register(username: string ,name: string , password: string  ,email: string ){
         
 
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
@@ -30,10 +30,16 @@ export default class CognitoHandler{
             Value: email,
         };
 
+        const dataName = {
+            Name: "name",
+            Value: name,
+        }
         
         const attributeEmail = new CognitoUserAttribute(dataEmail);
-        
+        const attributeName = new CognitoUserAttribute(dataName);
+
         attributeList.push(attributeEmail);
+        attributeList.push(attributeName)
         //attributeList.push(attributePhoneNumber);
         
         userPool.signUp(username, password, attributeList, [] , function(
@@ -51,8 +57,7 @@ export default class CognitoHandler{
                 cognitoUser = result.user ;
                 console.log('user name is ' + cognitoUser.getUsername());
             }
-            //const cognitoUser = result| undefined.user ;
-            
+            //const cognitoUser = result| undefined.user ;           
         });
     }
 
