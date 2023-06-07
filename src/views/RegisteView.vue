@@ -45,7 +45,6 @@
         name: "",
         password: "",
         email:"",
-
       };
     },
     computed: {
@@ -75,8 +74,11 @@
         console.log(this.username)
         //console.log(this.password)
         CognitoHandler.register(this.username , this.name , this.password , this.email);
+        
       }
     },
+
+
   });
   </script>
   

@@ -13,14 +13,15 @@ export default class CognitoHandler{
         ClientId: process.env.VUE_APP_AWS_COGNITO_ClIENTID
     };
 
+    static sucess = false;
+
     static printEnv(){
         console.log(process.env.VUE_APP_AWS_COGNITO_ClIENTID) 
         console.log('hi')
     }
 
-    static register(username: string ,name: string , password: string  ,email: string ){
+    static async register(username: string ,name: string , password: string  ,email: string ){
         
-
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
         
         const attributeList = [];
@@ -53,9 +54,11 @@ export default class CognitoHandler{
             }
             if( result == undefined){
                 alert( "result is undefined")
+                
             }else{
                 cognitoUser = result.user ;
                 console.log('user name is ' + cognitoUser.getUsername());
+                
             }
             //const cognitoUser = result| undefined.user ;           
         });
@@ -90,4 +93,26 @@ export default class CognitoHandler{
             },
         });
     }
+
+    static confirmUser(user: { username: string; confirmationCode: string }) {
+        const { username, confirmationCode } = user;
+
+        const userPool = new CognitoUserPool(CognitoHandler.poolData);
+        const userData = {
+          Username: username,
+          Pool: userPool,
+        };
+        const cognitoUser = new CognitoUser(userData);
+    
+        return new Promise((resolve, reject) => {
+         cognitoUser.confirmRegistration(confirmationCode, true, function (err, result) {
+          if (err) {
+           console.log(err);
+           reject(err);
+          } else {
+           resolve(result);
+          }
+         });
+        });
+       }
 }
