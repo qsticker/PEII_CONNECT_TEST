@@ -4,15 +4,14 @@
       <form class="login-form">
         <!-- Email input -->
         <div class="email-input form-outline mb-4">
-          <input type="email" id="form3Example3" class="form-control form-control-lg"
-            placeholder="Enter a valid email address" />
+          <input  id="form3Example3" class="form-control form-control-lg" v-model="username"
+            placeholder="輸入使用者名稱" />
         </div>
 
           <!-- Password input -->
         <div class="pawwsord-input form-outline mb-3">
           <input type="password" id="form3Example4" class="form-control form-control-lg"
-            placeholder="Enter password" />
-          
+            placeholder="輸入密碼" v-model="password"/>    
         </div>
 
         <div class="remeber-and-forgot">
@@ -28,7 +27,7 @@
         </div>
 
         
-        <button type="button" class="login-buttom btn btn-primary btn-lg">登入</button>
+        <button type="button" class="login-buttom btn btn-primary btn-lg" @click="login">登入</button>
         <div class="text-center text-lg-start mt-4 pt-2">
           
           <p class="small fw-bold mt-2 pt-1 mb-0">尚未擁有帳戶? <a href="#!"
@@ -41,6 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import CognitoHandler from "@/handler/userpool"
 //import peiiNavbar from '@/components/navbar.vue'
 
 export default defineComponent({
@@ -50,11 +50,19 @@ export default defineComponent({
   },
   data() {
     return {
-      
+      username: "",
+      password: "",
     };
   },
   computed: {
     
+  },
+  methods: {
+    login() {
+      console.log(this.username)
+      //console.log(this.password)
+      CognitoHandler.login(this.username , this.password);
+    }
   },
 });
 </script>
@@ -72,7 +80,7 @@ export default defineComponent({
     height:600px;
     
     .login-form {
-      border-radius: 10px;
+      border-radius: 5%;
       margin-top: 50px;
       margin-left: 70%;
       margin-right: 10%;
@@ -124,13 +132,8 @@ export default defineComponent({
         .login-buttom {
           margin-top: 10%;
           margin-bottom: 0%;
-          //background-color: aqua;
           padding-left: 2.5rem; 
           padding-right: 2.5rem;
-        //top: 50%;
-        //margin-right: 30%;
-        //margin-left: ;
-        //margin: -150px 0 0 -150px;
       }    
     }
   }

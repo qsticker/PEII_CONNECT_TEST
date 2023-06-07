@@ -102,6 +102,7 @@
         <div v-else class="not-login-btn">
           <b-btn
             variant="light"
+            @click="register"
           >
             註冊
           </b-btn>
@@ -179,6 +180,9 @@ export default defineComponent({
       this.$router.push({ path: '/login' })
       //CognitoHandler.login("yukina1026" , "Barry0501!"  )
     },
+    register(){
+      this.$router.push({ path: '/register' })
+    }
   },
 });
 </script>
