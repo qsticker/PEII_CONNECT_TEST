@@ -34,7 +34,7 @@ export default class CognitoHandler{
         console.log('hi')
     }
 
-    static async register(username: string ,name: string , password: string  ,email: string ,router : VueRouter ){
+    static register(username: string ,name: string , password: string  ,email: string ,router : VueRouter ){
         
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
         
@@ -134,14 +134,35 @@ export default class CognitoHandler{
         return new Promise((resolve, reject) => {
          cognitoUser.confirmRegistration(confirmationCode, true, function (err, result) {
           if (err) {
-           console.log(err);
-           reject(err);
+            console.log(err);
+            reject(err);
           } else {
-           resolve(result);
-           router.push({name : "Login"})
+            resolve(result);
+            router.push({name : "Login"})
           }
          });
         });
+    }
+
+    static resendAuthcode( username : string ){
+        
+        const userPool = new CognitoUserPool(CognitoHandler.poolData);
+
+        const userData = {
+            Username: username,
+            Pool: userPool,
+        };
+
+        const cognitoUser = new CognitoUser(userData);
+    
+        cognitoUser.resendConfirmationCode(function(err, result) {
+            if (err) {
+                alert(err.message || JSON.stringify(err));
+                return;
+            }
+            console.log('call result: ' + result);
+        });
+
     }
 
     static resetPassword(username : string) {
@@ -172,4 +193,6 @@ export default class CognitoHandler{
             //}
         });
     }
+
+
 }

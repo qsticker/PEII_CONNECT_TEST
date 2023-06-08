@@ -102,7 +102,7 @@
         <div v-else class="not-login-btn">
           <b-btn
             variant="light"
-            @click="test"
+            @click="register"
           >
             註冊
           </b-btn>
@@ -162,9 +162,6 @@ export default defineComponent({
     },
   },
   methods: {
-    test() {
-      console.log(this.$cookies.get("accessToken"))
-    },
     logout() {
       //Auth.logout();
       console.log("out")

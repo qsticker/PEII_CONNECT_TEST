@@ -7,7 +7,7 @@
             <input type="number" id="form3Example3" class="form-control form-control-lg" 
               placeholder="輸入驗證碼" v-model="authcode"/>
           </div>
-            
+          <button type="button" class="resend-buttom btn btn-primary btn-lg" @click="resend">重送郵件</button>
           <button type="button" class="verify-buttom btn btn-primary btn-lg" @click="verify">驗證</button>
         </form>
       </div>
@@ -35,6 +35,9 @@
     methods: {
       verify() {
         CognitoHandler.confirmUser( this.$route.params.username , this.authcode , this.$router)
+      },
+      resend(){
+        CognitoHandler.resendAuthcode( this.$route.params.username );
       }
     },
   });
@@ -58,19 +61,24 @@
         margin-left: 70%;
         margin-right: 10%;
         width: 300px;
-        height: 75%;
+        height: 50%;
         background-color: white;
         display :flex;
         align-items: center;
         flex-direction: column;
-        .username-input{
+        .authcode-input{
                 margin-top: 10%;
                 margin-right: 5%;
                 margin-left: 5%;
             }
 
         }
-        
+        .resend-buttom {
+            margin-top: 10%;
+            margin-bottom: 0%;
+            padding-left: 2.5rem; 
+            padding-right: 2.5rem;
+        }    
         .verify-buttom {
             margin-top: 10%;
             margin-bottom: 0%;
