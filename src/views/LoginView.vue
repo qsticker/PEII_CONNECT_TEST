@@ -23,7 +23,7 @@
             </label>
           </div>
 
-          <a href="#!" class="forgot-password text-body">忘記密碼?</a>          
+          <router-link to="/forgotPassword" class="forgot-password text-body">忘記密碼?</router-link>          
         </div>
 
         
@@ -42,12 +42,12 @@
 import { defineComponent } from "vue";
 import CognitoHandler from "@/handler/userpool"
 import VueCookies from 'vue-cookies'
+import router from "@/router";
 //import peiiNavbar from '@/components/navbar.vue'
 
 export default defineComponent({
   name: 'LoginView',
   components: {
-    //peiiNavbar,
   },
   data() {
     return {

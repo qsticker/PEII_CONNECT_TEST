@@ -133,14 +133,14 @@ export default class CognitoHandler{
     
         return new Promise((resolve, reject) => {
          cognitoUser.confirmRegistration(confirmationCode, true, function (err, result) {
-          if (err) {
-            console.log(err);
-            reject(err);
-          } else {
-            resolve(result);
-            router.push({name : "Login"})
-          }
-         });
+            if (err) {
+              console.log(err);
+              reject(err);
+            } else {
+              resolve(result);
+              router.push({name : "Login"})
+            }
+           });
         });
     }
 
@@ -165,7 +165,7 @@ export default class CognitoHandler{
 
     }
 
-    static resetPassword(username : string) {
+    static sendAuthcodeWhenForgotPassword(username : string ,router : VueRouter) {
         
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
     
@@ -180,19 +180,34 @@ export default class CognitoHandler{
         cognitoUser.forgotPassword({
             onSuccess: function (result) {
                 alert("Mail Sent")
+                router.push({ name: "verifyNewPassword" , params: { username }  })
             },
             onFailure: function (err) {
                 console.log(err)
             },
-            //inputVerificationCode()
-            //{
-               
-            //    var verificationCode = document.getElementById('code').value;
-            //    var newPassword = document.getElementById('fpass').value;
-            //    cognitoUser.confirmPassword(verificationCode, newPassword, this);
-            //}
         });
     }
 
+    static verifyNewPassword(username: string ,verificationCode: string , newPassword: string , router : VueRouter){
+        const userPool = new CognitoUserPool(CognitoHandler.poolData);
+    
+        // setup cognitoUser first
+        const userData = {
+            Username: username,
+            Pool: userPool
+        };
+
+        const cognitoUser = new CognitoUser(userData);
+
+        cognitoUser.confirmPassword(verificationCode, newPassword,{ onSuccess: function (result) {
+                        alert("change password success")
+                        router.push({name : "Login"})
+                    },
+                onFailure: function (err) {
+                        console.log(err)
+                    } 
+                }
+            );
+    }
 
 }

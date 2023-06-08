@@ -28,6 +28,20 @@ const routes: Array<RouteConfig> = [
     name: 'verify',
     component: () => import(/* webpackChunkName: "about" */ '@/views/VerifyView.vue'),
 
+  },
+  {
+    path: '/forgotPassword',
+    //alias: ['/login'],
+    name: 'ForgotPassword',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/ForgotPassword.vue'),
+
+  },
+  {
+    path: '/verifyNewPassword',
+    //alias: ['/login'],
+    name: 'verifyNewPassword',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/VerifyNewPassword.vue'),
+
   }
 
   //{
