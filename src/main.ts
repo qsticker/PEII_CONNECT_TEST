@@ -9,12 +9,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { RootClassfication } from '@/apis/models/RootClassfication'
-
+import VueCookies from 'vue-cookies'; 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-
+Vue.use(VueCookies);
 Vue.config.productionTip = false
 
 if( store.state.courseClassfication.length == 0 ){

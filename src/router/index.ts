@@ -21,6 +21,13 @@ const routes: Array<RouteConfig> = [
     //alias: ['/login'],
     name: 'register',
     component: () => import(/* webpackChunkName: "about" */ '@/views/RegisteView.vue'),
+  },
+  {
+    path: '/verify/:username',
+    //alias: ['/login'],
+    name: 'verify',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/VerifyView.vue'),
+
   }
 
   //{

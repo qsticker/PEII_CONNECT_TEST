@@ -1,9 +1,9 @@
 <template>
-    <div class="login">
-      <div class="login-form-back">
-        <form class="login-form">
+    <div class="register">
+      <div class="register-form-back">
+        <form class="register-form">
           <!-- Email input -->
-          <div class="username-input form-outline mb-4">
+          <div class="username-input form-outline b-4">
             <input  id="form3Example3" class="form-control form-control-lg" 
               placeholder="輸入使用者名稱" v-model="username"/>
           </div>
@@ -23,7 +23,7 @@
               placeholder="輸入密碼" v-model="password"/>    
           </div>
             
-          <button type="button" class="login-buttom btn btn-primary btn-lg" @click="register">註冊</button>
+          <button type="button" class="register-buttom btn btn-primary btn-lg" @click="register">註冊</button>
         </form>
       </div>
     </div>
@@ -73,7 +73,7 @@
         //var regex = 
         console.log(this.username)
         //console.log(this.password)
-        CognitoHandler.register(this.username , this.name , this.password , this.email);
+        CognitoHandler.register(this.username , this.name , this.password , this.email , this.$router);
         
       }
     },
@@ -84,17 +84,17 @@
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped lang="scss">
-  .login {
+  .register {
     display: block;
   
-    .login-form-back {
+    .register-form-back {
       
       background-image: url("../assets/bg-login.jpg");
       display: flex;
       //width:600px;
       height:600px;
       
-      .login-form {
+      .register-form {
         border-radius: 5%;
         margin-top: 50px;
         margin-left: 70%;
@@ -116,19 +116,19 @@
                 margin-left: 5%;
             }  
         .email-input {
-                margin-top: 5%;
+                //margin-top: 5%;
                 margin-right: 5%;
                 margin-left: 5%;
             }
   
         .pawwsord-input {
-                margin-top: 5%;
+                //margin-top: 5%;
                 margin-right: 5%;
                 margin-left: 5%;
             }
         }
         
-        .login-buttom {
+        .register-buttom {
             margin-top: 10%;
             margin-bottom: 0%;
             padding-left: 2.5rem; 

@@ -102,7 +102,7 @@
         <div v-else class="not-login-btn">
           <b-btn
             variant="light"
-            @click="register"
+            @click="test"
           >
             註冊
           </b-btn>
@@ -149,18 +149,22 @@ export default defineComponent({
       ];
     },
     username(): string {
-      //if (this.$store.state.profile) {
-        //return this.$store.state.profile.username;
-      //}
+      if (this.$store.state.profile) {
+        return this.$store.state.profile.username;
+      }
 
       return 'unknown';
     },
     isLogin(): boolean {
-      return false;
+      return Boolean(this.$store.state.profile);
+      //return false;
       //Boolean(this.$store.state.profile);
     },
   },
   methods: {
+    test() {
+      console.log(this.$cookies.get("accessToken"))
+    },
     logout() {
       //Auth.logout();
       console.log("out")

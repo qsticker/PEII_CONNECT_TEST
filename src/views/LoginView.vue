@@ -30,8 +30,8 @@
         <button type="button" class="login-buttom btn btn-primary btn-lg" @click="login">登入</button>
         <div class="text-center text-lg-start mt-4 pt-2">
           
-          <p class="small fw-bold mt-2 pt-1 mb-0">尚未擁有帳戶? <a href="#!"
-              class="link-danger">註冊</a></p>
+          <p class="small fw-bold mt-2 pt-1 mb-0">尚未擁有帳戶? <router-link to="/register"
+              class="link-danger">註冊</router-link></p>
         </div>
       </form>
     </div>
@@ -41,6 +41,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CognitoHandler from "@/handler/userpool"
+import VueCookies from 'vue-cookies'
 //import peiiNavbar from '@/components/navbar.vue'
 
 export default defineComponent({
@@ -61,7 +62,7 @@ export default defineComponent({
     login() {
       console.log(this.username)
       //console.log(this.password)
-      CognitoHandler.login(this.username , this.password);
+      CognitoHandler.login(this.username , this.password , this.$router , this.$cookies , this.$store );
     }
   },
 });

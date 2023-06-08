@@ -4,10 +4,24 @@ import {
 	CognitoUser,
     AuthenticationDetails
 } from 'amazon-cognito-identity-js';
-
+import { VueCookies } from 'vue-cookies'
 import * as AWS from 'aws-sdk/global';
+import VueRouter from 'vue-router';
+import jwt_decode from 'jwt-decode';
+import { ProfileModel } from '@/apis/models/Profile';
+import { Store } from "vuex";
+import { State } from "@/store/State"
 
+interface token {
+    username: string;
+    exp: number;
+    iat: number;
+    sub: string;
+    // whatever else is in the JWT.
+  }
 export default class CognitoHandler{
+    
+
     static poolData = {
         UserPoolId: process.env.VUE_APP_AWS_COGNITO_USERPOOLID, // Your user pool id here
         ClientId: process.env.VUE_APP_AWS_COGNITO_ClIENTID
@@ -20,7 +34,7 @@ export default class CognitoHandler{
         console.log('hi')
     }
 
-    static async register(username: string ,name: string , password: string  ,email: string ){
+    static async register(username: string ,name: string , password: string  ,email: string ,router : VueRouter ){
         
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
         
@@ -58,13 +72,14 @@ export default class CognitoHandler{
             }else{
                 cognitoUser = result.user ;
                 console.log('user name is ' + cognitoUser.getUsername());
+                router.push({ name: "verify" , params: { username }  })
                 
             }
             //const cognitoUser = result| undefined.user ;           
         });
     }
 
-    static login(username: string , password: string){
+    static login(username: string , password: string , router: VueRouter,cookies : VueCookies , store : Store<State>){
         const authenticationData = {
             Username: username,
             Password: password,
@@ -85,7 +100,18 @@ export default class CognitoHandler{
             onSuccess: function(result) {
                 const accessToken = result.getAccessToken().getJwtToken();
                 console.log( accessToken )
-                
+                const jwt = jwt_decode<token>(accessToken)
+                const expireTime = jwt.exp - jwt.iat;
+                cookies.set('accessToken', accessToken , expireTime);
+                cookies.set('refreshToken' , result.getRefreshToken , expireTime);
+
+                const profile : ProfileModel = { 
+                    username : jwt.username,
+                    sub: jwt.sub
+                };
+
+                store.commit('updateProfile', profile );
+                router.push({name : "home"})
             },
         
             onFailure: function(err) {
@@ -94,8 +120,9 @@ export default class CognitoHandler{
         });
     }
 
-    static confirmUser(user: { username: string; confirmationCode: string }) {
-        const { username, confirmationCode } = user;
+    static confirmUser( username: string, confirmationCode: string ,router : VueRouter) {
+        //user: { username: string; confirmationCode: string }
+        //const { username, confirmationCode } = user;
 
         const userPool = new CognitoUserPool(CognitoHandler.poolData);
         const userData = {
@@ -111,8 +138,38 @@ export default class CognitoHandler{
            reject(err);
           } else {
            resolve(result);
+           router.push({name : "Login"})
           }
          });
         });
-       }
+    }
+
+    static resetPassword(username : string) {
+        
+        const userPool = new CognitoUserPool(CognitoHandler.poolData);
+    
+        // setup cognitoUser first
+        const userData = {
+            Username: username,
+            Pool: userPool
+        };
+
+        const cognitoUser = new CognitoUser(userData);
+        // call forgotPassword on cognitoUser
+        cognitoUser.forgotPassword({
+            onSuccess: function (result) {
+                alert("Mail Sent")
+            },
+            onFailure: function (err) {
+                console.log(err)
+            },
+            //inputVerificationCode()
+            //{
+               
+            //    var verificationCode = document.getElementById('code').value;
+            //    var newPassword = document.getElementById('fpass').value;
+            //    cognitoUser.confirmPassword(verificationCode, newPassword, this);
+            //}
+        });
+    }
 }
