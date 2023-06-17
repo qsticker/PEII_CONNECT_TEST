@@ -32,6 +32,8 @@ if( store.state.courseClassfication.length == 0 ){
   store.commit('updateCourseClass', roots);
 }
 
+
+
 new Vue({
   router,
   store,

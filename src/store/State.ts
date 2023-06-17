@@ -3,5 +3,5 @@ import { ProfileModel } from '@/apis/models/Profile';
 
 export interface State {
     courseClassfication:  RootClassfication[],
-    profile: ProfileModel | null, //defulat is null
+    profile: ProfileModel | null, 
 }

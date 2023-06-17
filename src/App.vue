@@ -1,20 +1,27 @@
 <template>
   <div id="app">
+    <ClickArea />
+    <!--
      <peiiNavbar/>
      <router-view class="router-view" />
+     -->
   </div>
 </template>
 
 <script>
 
-import peiiNavbar from './components/navbar.vue'
-import HomeView from './views/HomeView'
+//import peiiNavbar from './components/navbar.vue'
+import ClickArea from './components/QuizView/ClickArea'
+//import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
-   peiiNavbar,
+   //peiiNavbar,
     //HomeView
-  }
+    ClickArea
+  },
+  
+
 }
 </script>
 
