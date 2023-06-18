@@ -6,6 +6,7 @@ export interface AreaModel {
   }
 
 export interface ContentModel {
+    Audio : Audio;
     textField: TextField;
     imageField: ImageField;
 }
@@ -39,7 +40,6 @@ export interface ActionModel {
 
 export interface ClickAreaModel {
     label: string;
-    area: AreaModel;
     action: ActionModel;
     content: ContentModel;
 }
