@@ -1,9 +1,10 @@
 <template>
   <div class= "root">
-    <div v-for="( clickArea ,index ) in AnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
+    <div  v-for="( clickArea ,index ) in answerModel.clickAreas" :key="index" class="ClickAreaList"> 
         <ClickArea :clickAreaModel="clickArea" :beClicked="beClickeds[index]" @updateByParent="updateAnswers" />
     </div>
   </div>
+
 </template>
   
   <script lang="ts">
@@ -25,7 +26,7 @@
     data() {
       return {
         beClickeds : [] as Array<boolean>,
-        
+        isCreated : false,
         //answerModel : {} as Answer
       };
     },
@@ -53,7 +54,7 @@
       console.log('hi')
       //this.subAnswerModel = this.answerModel
       //console.log( this.subAnswerModel )
-      
+      this.isCreated = true
     }
    
   });

@@ -1,6 +1,6 @@
 <template>
   <div class= "root">
-      <AnswerView :answerModel="currentAnsweModel" />
+      <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" />
       <p>{{amount}}</p>
 
   </div>
@@ -34,6 +34,7 @@
         newAnswerModelList: new Array<Answer>(),
         currentAnsweModel : {}  as Answer,
         currentIndex : 0,
+        isCreated : false
         //imageRatio: 500/imageWidth
       };
     },
@@ -81,6 +82,7 @@
       this.newAnswerModelList = newAnswerModelList;
       this.currentAnsweModel = newAnswerModelList[0];
       console.log("parent")
+      this.isCreated = true
     },
   });
   </script>

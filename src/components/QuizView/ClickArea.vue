@@ -63,7 +63,7 @@
       }
     },
     created() {
-      console.log( this.clickAreaModel )
+      console.log( this.clickAreaModel.label )
       this.localClickAreaModel = this.clickAreaModel; 
       this.interBeClick = this.beClicked;
     }
