@@ -1,0 +1,91 @@
+<template>
+  <div class= "root">
+      <AnswerView :answerModel="currentAnsweModel" />
+      <p>{{amount}}</p>
+
+  </div>
+</template>
+  
+  <script lang="ts">
+  import { defineComponent , PropType  } from "vue";
+  import { AnswerGroupRespondModel } from '@/apis/models/GetAnswerGroupModel';
+  import AnswerView from '@/components/QuizView/AnswerView.vue';
+  import axios from 'axios';
+  import { Answer } from '@/models/AnswerModel';
+  import AnswerGroupApi from '@/apis/AnswerGroupApi';
+  //import { QuizTemplateModel } from '@api/models/QuizModel';
+  //import ClickArea from '@/components/QuizView/ClickArea.vue';
+
+  export default defineComponent({
+    name: 'AnswerGroupView',
+    components: {
+        //ClickArea
+        AnswerView,
+    },
+    props: {
+        //quizModel : Object as PropType<QuizTemplateModel>,
+    },
+    data() {
+      return {
+        //clickAreaList : clickAreas ,
+        originalQuizInstance: null as unknown as AnswerGroupRespondModel,
+        quizData: [] as unknown[],
+        amount: 0,
+        newAnswerModelList: new Array<Answer>(),
+        currentAnsweModel : {}  as Answer,
+        currentIndex : 0,
+        //imageRatio: 500/imageWidth
+      };
+    },
+    computed: {
+       
+    },
+    methods: {
+    async connect(){
+      console.log('hi')
+      const instance = await AnswerGroupApi.create( "554dfd1d-20ba-4cc2-a975-406aac08c623" ) as AnswerGroupRespondModel;
+      console.log( instance )
+      console.log('after')
+      console.log('hi')
+      this.originalQuizInstance = instance;
+      this.quizData = instance.answerList;
+      this.amount = instance.amount;
+     
+      },
+      async changeTest() {
+        if(this.currentIndex == 0){
+          this.currentAnsweModel = this.newAnswerModelList[1]
+          this.currentIndex = 1
+        }else{
+          this.currentAnsweModel = this.newAnswerModelList[0]
+          this.currentIndex = 0
+        } 
+      }
+    },
+    async created() {
+      
+      //AnswerGroupApi.create( "554dfd1d-20ba-4cc2-a975-406aac08c623" );
+      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=554dfd1d-20ba-4cc2-a975-406aac08c623') //as AnswerGroupRespondModel
+      console.log( instance.data.amount )
+      const instanceData = instance.data;
+      this.amount = instance.data.amount;
+     
+      const newAnswerList = instanceData.answerList as Array<any>;
+      const newAnswerModelList = new Array<Answer>();
+      for (let i = 0; i < instanceData.amount; i += 1) {
+       const {
+          userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
+        } = newAnswerList[i];
+        newAnswerModelList.push( new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer) );
+      }
+      this.newAnswerModelList = newAnswerModelList;
+      this.currentAnsweModel = newAnswerModelList[0];
+      console.log("parent")
+    },
+  });
+  </script>
+  
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
+  <style scoped lang="scss">
+    
+  </style>

@@ -103,7 +103,7 @@ export default class CognitoHandler{
                 const jwt = jwt_decode<token>(accessToken)
                 const expireTime = jwt.exp - jwt.iat;
                 cookies.set('accessToken', accessToken , expireTime);
-                cookies.set('refreshToken' , result.getRefreshToken , expireTime);
+                //cookies.set('refreshToken' , result.getRefreshToken , expireTime);
 
                 const profile : ProfileModel = { 
                     username : jwt.username,

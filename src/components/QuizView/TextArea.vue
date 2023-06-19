@@ -4,7 +4,7 @@
   
 <script lang="ts">
   import Vue , { defineComponent , PropType} from "vue";
-  import { TextField } from '@/apis/models/QuizModel';
+  import { TextField } from '@/models/QuizModel';
   export default defineComponent({
     name: 'TextArea',
     components: {

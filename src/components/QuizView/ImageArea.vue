@@ -4,7 +4,7 @@
   
 <script lang="ts">
   import Vue , { defineComponent , PropType} from "vue";
-  import { ImageField } from '@/apis/models/QuizModel';
+  import { ImageField } from '@/models/QuizModel';
   export default defineComponent({
     name: 'ImageArea',
     components: {

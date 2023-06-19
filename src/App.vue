@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <QuizView />
+    <AnswerGroupView/>
+    
     <!--
      <peiiNavbar/>
-     <router-view class="router-view" />
+     //<router-view class="router-view" />
      -->
   </div>
 </template>
@@ -11,16 +12,28 @@
 <script>
 
 //import peiiNavbar from './components/navbar.vue'
-import QuizView from './views/QuizView.vue'
+import AnswerGroupView from './views/AnswerGroupView.vue'
 //import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
    //peiiNavbar,
     //HomeView
-    QuizView
+    //QuizView
+    AnswerGroupView,
   },
   
+   methods: {
+      async send() {
+        if(this.currentIndex == 0){
+          this.currentAnsweModel = this.newAnswerModelList[1]
+          this.currentIndex = 1
+        }else{
+          this.currentAnsweModel = this.newAnswerModelList[0]
+          this.currentIndex = 0
+        } 
+      }     
+    },
 
 }
 </script>

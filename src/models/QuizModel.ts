@@ -61,3 +61,16 @@ export interface QuizTemplateModel {
     isBlankFill?: boolean;
     score?: number;
   }
+export interface AnswerInterface {
+  templateId: string;
+  templateName: string;
+  type: string;
+  userAnswer: string[];
+  blankFillAnswer: string;
+  timeSpent: number;
+  clickAreas: Array<ClickAreaModel>;
+  multipleSelect?: boolean;
+  followPreviousQuiz?: boolean;
+  isBlankFill?: boolean;
+  uuid: string;
+}

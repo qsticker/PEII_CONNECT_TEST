@@ -6,7 +6,7 @@
   
 <script lang="ts">
   import Vue , { defineComponent , PropType} from "vue";
-  import { Audio } from '@/apis/models/QuizModel';
+  import { Audio } from '@/models/QuizModel';
   export default defineComponent({
     name: 'AudioArea',
     components: {

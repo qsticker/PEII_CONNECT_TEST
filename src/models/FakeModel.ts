@@ -1,4 +1,4 @@
-import { TextField , ImageField , Audio , ContentModel , ActionModel , ClickAreaModel} from '@/apis/models/QuizModel';
+import { TextField , ImageField , Audio , ContentModel , ActionModel , ClickAreaModel} from '@/models/QuizModel';
 
 
 
@@ -127,7 +127,7 @@ const imageField5 : ImageField = {
     paddingX : 100,
     size : 90,
     radius: 16,
-    enabled: false,
+    enabled: true,
     url: 'https://storage.googleapis.com/quiz-storage/quiz-images/Ro4W5pJbFQ7inrP',
     paddingY: 80
 }
@@ -136,7 +136,7 @@ const textField5 : TextField = {
     enabled: true,
     paddingX: 80,
     paddingY: 100,
-    size: 10,
+    size: 20,
     text : "It give you confidence."
 }
 

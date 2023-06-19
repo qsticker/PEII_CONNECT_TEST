@@ -1,18 +1,18 @@
 <template>
   <div class = "container">
     <div  @click="updateAnswers">
-      <div v-if="beClicked" class="ClickStage">
+      <div v-if="interBeClick" class="ClickStage">
 
-          <AudioArea v-if="clickAreaModel.content.Audio.enabled" :audio="clickAreaModel.content.Audio" />
-          <TextArea v-if="clickAreaModel.content.textField.enabled" class="text" :field="clickAreaModel.content.textField" />
-          <ImageArea v-if="clickAreaModel.content.imageField.enabled" class="image" :field="clickAreaModel.content.imageField"/> 
+          <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+          <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+          <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
           <div class="highlight" />
       </div>
 
       <div v-else class="ClickStage" >
-        <AudioArea v-if="clickAreaModel.content.Audio.enabled" :audio="clickAreaModel.content.Audio" />
-        <TextArea v-if="clickAreaModel.content.textField.enabled" class="text" :field="clickAreaModel.content.textField" />
-        <ImageArea v-if="clickAreaModel.content.imageField.enabled" class="image" :field="clickAreaModel.content.imageField"/> 
+        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+        <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
       </div>       
     </div>
   </div>
@@ -20,7 +20,7 @@
   
   <script lang="ts">
   import { defineComponent , PropType } from "vue";
-  import { ClickAreaModel } from '@/apis/models/QuizModel';
+  import { ClickAreaModel } from '@/models/QuizModel';
   import TextArea from '@/components/QuizView/TextArea.vue';
   import ImageArea from '@/components/QuizView/ImageArea.vue';
   import AudioArea from '@/components/QuizView/AudioArea.vue';
@@ -37,13 +37,16 @@
             required: false,
             default: null,
         },
+        beClicked : {
+          type: Boolean,
+          defualt: false,
+        },
     },
-
     data() {
       return {
-        beClicked : false,
-
-        //imageRatio: 500/imageWidth
+        localClickAreaModel : {} as ClickAreaModel ,
+        interBeClick : false,
+        //answerModel : {} as Answer
       };
     },
     computed: {
@@ -54,10 +57,15 @@
           //require text field
           
           if( this.clickAreaModel.action.type == 'answer' ){
-            this.beClicked = !this.beClicked;
+            this.interBeClick = !this.interBeClick;
             this.$emit('updateByParent', this.clickAreaModel.label );
           }
       }
+    },
+    created() {
+      console.log( this.clickAreaModel )
+      this.localClickAreaModel = this.clickAreaModel; 
+      this.interBeClick = this.beClicked;
     }
   });
   </script>
