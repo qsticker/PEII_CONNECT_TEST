@@ -77,7 +77,7 @@ export class Answer implements AnswerInterface {
           action : actionModel,
           content : contentModel
         }
-        clickAreaList.push( clickArea )
+        clickAreaList.push( clickAreaModel )
       } 
 
       this.clickAreas = clickAreaList;
