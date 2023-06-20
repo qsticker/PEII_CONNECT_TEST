@@ -49,6 +49,13 @@
         //answerModel : {} as Answer
       };
     },
+    watch: {
+      clickAreaModel : function() {
+          console.log( "watch" )
+          
+          this.localClickAreaModel = this.clickAreaModel
+      },
+    },
     computed: {
      
     },

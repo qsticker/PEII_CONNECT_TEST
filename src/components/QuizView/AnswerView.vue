@@ -1,8 +1,9 @@
 <template>
   <div class= "root">
-    <div  v-for="( clickArea ,index ) in answerModel.clickAreas" :key="index" class="ClickAreaList"> 
+    <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
         <ClickArea :clickAreaModel="clickArea" :beClicked="beClickeds[index]" @updateByParent="updateAnswers" />
     </div>
+    <div> {{ subAnswerModel.uuid }}</div>
   </div>
 
 </template>
@@ -25,37 +26,39 @@
     },
     data() {
       return {
+        subAnswerModel : this.answerModel,
         beClickeds : [] as Array<boolean>,
         isCreated : false,
         //answerModel : {} as Answer
       };
     },
+    watch: {
+      answerModel : function() {
+          console.log( "watch" )
+          console.log( this.answerModel.uuid )
+          this.subAnswerModel = this.answerModel
+      },
+    },
     computed: {
        
     },
+    
     methods: {
        updateAnswers(answer: string) {
            //console.log(
-           //this.answerModel = this.props.answerModel
-           if( this.answerModel.userAnswer.includes(answer) ){
-                //this.answerModel.userAnswer = this.answerModel.userAnswer.filter( (element) => {
-                //        return element !== answer;
-                //  }
-                //)
+           
+           if( this.subAnswerModel.userAnswer.includes(answer) ){
+                this.subAnswerModel.userAnswer = this.subAnswerModel.userAnswer.filter( (element) => {
+                        return element !== answer;
+                  }
+                )
            }
            else{
-              //this.answerModel.userAnswer.push(answer)
+              this.subAnswerModel.userAnswer.push(answer)
            }
            //console.log( this.answerModel.userAnswer )
       }
     },
-    created() {
-      console.log(this.answerModel)
-      console.log('hi')
-      //this.subAnswerModel = this.answerModel
-      //console.log( this.subAnswerModel )
-      this.isCreated = true
-    }
    
   });
   </script>

@@ -2,6 +2,7 @@
   <div class= "root">
       <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" />
       <p>{{amount}}</p>
+      <button @click="changeTest"> change </button>
 
   </div>
 </template>
@@ -55,10 +56,15 @@
       },
       async changeTest() {
         if(this.currentIndex == 0){
+          console.log(this.currentIndex)
           this.currentAnsweModel = this.newAnswerModelList[1]
+          console.log( this.currentAnsweModel.uuid )
           this.currentIndex = 1
+
         }else{
+          console.log(this.currentIndex)
           this.currentAnsweModel = this.newAnswerModelList[0]
+          console.log( this.currentAnsweModel.uuid )
           this.currentIndex = 0
         } 
       }
@@ -73,6 +79,7 @@
      
       const newAnswerList = instanceData.answerList as Array<any>;
       const newAnswerModelList = new Array<Answer>();
+      
       for (let i = 0; i < instanceData.amount; i += 1) {
        const {
           userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
