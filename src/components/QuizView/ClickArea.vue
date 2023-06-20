@@ -37,6 +37,10 @@
             required: false,
             default: null,
         },
+        currentIndex : {
+          type: Number ,
+          defualt: true,
+        },
         beClicked : {
           type: Boolean,
           defualt: false,
@@ -45,15 +49,21 @@
     data() {
       return {
         localClickAreaModel : {} as ClickAreaModel ,
-        interBeClick : false,
+        interBeClick : this.beClicked,
         //answerModel : {} as Answer
       };
     },
     watch: {
       clickAreaModel : function() {
-          console.log( "watch" )
+          //console.log( "watch" )
           
           this.localClickAreaModel = this.clickAreaModel
+      },
+      currentIndex : function() {
+        this.interBeClick = this.beClicked
+        console.log(this.clickAreaModel.label)
+        console.log(this.interBeClick)
+        console.log("hi")
       },
     },
     computed: {

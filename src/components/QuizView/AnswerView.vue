@@ -1,7 +1,7 @@
 <template>
   <div class= "root">
     <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
-        <ClickArea :clickAreaModel="clickArea" :beClicked="beClickeds[index]" @updateByParent="updateAnswers" />
+        <ClickArea :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" @updateByParent="updateAnswers" />
     </div>
     <div> {{ subAnswerModel.uuid }}</div>
   </div>
@@ -19,6 +19,14 @@
         ClickArea
     },
     props: {
+        beClickeds : {
+          type: [] as  PropType<Array<boolean>> ,
+          defualt: true,
+        },
+        currentIndex : {
+          type: Number ,
+          defualt: true,
+        },
         answerModel :{
           type: Object as PropType<Answer>,
           required: true,         
@@ -27,8 +35,9 @@
     data() {
       return {
         subAnswerModel : this.answerModel,
-        beClickeds : [] as Array<boolean>,
+        localBeClickeds : this.beClickeds,
         isCreated : false,
+        subCurrentIndex : this.currentIndex,
         //answerModel : {} as Answer
       };
     },
@@ -38,7 +47,13 @@
           console.log( this.answerModel.uuid )
           this.subAnswerModel = this.answerModel
       },
+      currentIndex : function() {
+        this.localBeClickeds = this.beClickeds
+        console.log( this.localBeClickeds )
+        this.subCurrentIndex = this.currentIndex
+      }
     },
+    
     computed: {
        
     },
@@ -56,7 +71,7 @@
            else{
               this.subAnswerModel.userAnswer.push(answer)
            }
-           //console.log( this.answerModel.userAnswer )
+
       }
     },
    

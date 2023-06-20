@@ -1,6 +1,6 @@
 <template>
   <div class= "root">
-      <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" />
+      <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
       <p>{{amount}}</p>
       <button @click="changeTest"> change </button>
 
@@ -35,7 +35,8 @@
         newAnswerModelList: new Array<Answer>(),
         currentAnsweModel : {}  as Answer,
         currentIndex : 0,
-        isCreated : false
+        isCreated : false ,
+        beClickCurrent : [] as Array<boolean>,
         //imageRatio: 500/imageWidth
       };
     },
@@ -54,7 +55,8 @@
       this.amount = instance.amount;
      
       },
-      async changeTest() {
+      changeTest() {
+        //this.isCreated = false;
         if(this.currentIndex == 0){
           console.log(this.currentIndex)
           this.currentAnsweModel = this.newAnswerModelList[1]
@@ -67,7 +69,21 @@
           console.log( this.currentAnsweModel.uuid )
           this.currentIndex = 0
         } 
-      }
+        this.changeQuizBeClickeds()
+        //this.isCreated =true
+      },
+      changeQuizBeClickeds() {
+        this.beClickCurrent = []
+        const tempUserAnswer = this.currentAnsweModel.userAnswer
+        for(let i = 0 ; i < this.currentAnsweModel.clickAreas.length ; i++ ){
+            if( tempUserAnswer.includes( this.currentAnsweModel.clickAreas[i].label ) ){
+              this.beClickCurrent.push( true )
+            }else{
+              this.beClickCurrent.push( false )
+            }
+        }
+        console.log( this.currentAnsweModel.userAnswer )
+      },
     },
     async created() {
       
