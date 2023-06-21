@@ -60,24 +60,26 @@
       this.unfinished = 0;
       this.ansSet = [];
       this.ansSet = this.answers;
-      for (let i = 0; i < this.ansSet.length; i += 1) {
-        if (!this.checkSignleQuestion(this.ansSet[i].userAnswer)) {
-          if (this.ansSet[i].isBlankFill) {
-            if (this.ansSet[i].blankFillAnswer === '') {
-              unfinishedCount += 1;
-            }
-          } else { unfinishedCount += 1; }
+      if( this.ansSet != undefined){
+        for (let i = 0; i < this.ansSet.length; i += 1) {
+          if (!this.checkSignleQuestion(this.ansSet[i].userAnswer)) {
+            if (this.ansSet[i].isBlankFill) {
+              if (this.ansSet[i].blankFillAnswer === '') {
+                unfinishedCount += 1;
+              }
+            } else { unfinishedCount += 1; }
+          }
         }
+        this.amount = this.ansSet.length;
+        this.pValue = ((this.amount - unfinishedCount) / this.amount) * 100;
+        this.unfinished = unfinishedCount;
       }
-      this.amount = this.ansSet.length;
-      this.pValue = ((this.amount - unfinishedCount) / this.amount) * 100;
-      this.unfinished = unfinishedCount;
     },
     methods: {
       changeNum(e : number) {
         this.$emit('numChanged', e);
       },
-      checkSignleQuestion(data) {
+      checkSignleQuestion(data : Array<string>) {
         const checkResult = false;
         for (let i = 0; i < data.length; i += 1) {
           if (data[i] !== '' && data[i] !== undefined && data[i] !== null) {
@@ -87,14 +89,16 @@
         return checkResult;
       },
       // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, consistent-return
-      buttonStateCheck(index) {
-        if (this.ansSet[index].isBlankFill) {
-          if (this.ansSet[index].blankFillAnswer === '') {
-            return false;
+      buttonStateCheck(index: number) {
+        if( this.ansSet != undefined){
+          if (this.ansSet[index].isBlankFill) {
+            if (this.ansSet[index].blankFillAnswer === '') {
+              return false;
+            }
+            return true;
           }
-          return true;
+          return this.checkSignleQuestion(this.ansSet[index].userAnswer);
         }
-        return this.checkSignleQuestion(this.ansSet[index].userAnswer);
       },
     },
    
