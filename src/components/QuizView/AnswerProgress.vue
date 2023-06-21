@@ -10,8 +10,8 @@
           <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" />
           <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
         </svg>
-        &nbsp;{{ 總題數 }}: {{ amount }}&nbsp;&nbsp;&nbsp;
-        <br>{{ 已完成 }}: {{ amount - unfinished }}&nbsp;&nbsp;&nbsp;{{ 待完成 }}: {{ unfinished }}
+        &nbsp; 總題數 : {{ amount }}&nbsp;&nbsp;&nbsp;
+        <br> 已完成 : {{ amount - unfinished }}&nbsp;&nbsp;&nbsp; 待完成 : {{ unfinished }}
       </b-alert>
       <b-row>
         <div v-for="(item, index) in ansSet" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
@@ -30,17 +30,18 @@
     </b-container>
   </template>
   
-  <script>
+  <script lang="ts">
 
-  import {  PropType  } from "vue";
+  import {  defineComponent , PropType  } from "vue";
   import { Answer } from '@/models/AnswerModel';
-  export default {
+
+  export default defineComponent( {
     name: 'AnswerPorgress',
     props: {
-        answers : {
-          type: [] as PropType<Array<Answer>>,
-          defualt: true,
-        },
+      answers : {
+        type: [] as PropType<Array<Answer>> ,
+        defualt: true,
+      },
     },
     data() {
       return {
@@ -48,7 +49,7 @@
         pMax: 100,
         amount: 0,
         unfinished: 0,
-        ansSet: [],
+        ansSet: this.answers,
       };
     },
     computed: {
@@ -58,7 +59,7 @@
       this.pValue = 0;
       this.unfinished = 0;
       this.ansSet = [];
-      this.ansSet = this.parentdata;
+      this.ansSet = this.answers;
       for (let i = 0; i < this.ansSet.length; i += 1) {
         if (!this.checkSignleQuestion(this.ansSet[i].userAnswer)) {
           if (this.ansSet[i].isBlankFill) {
@@ -73,7 +74,7 @@
       this.unfinished = unfinishedCount;
     },
     methods: {
-      changeNum(e) {
+      changeNum(e : number) {
         this.$emit('numChanged', e);
       },
       checkSignleQuestion(data) {
@@ -94,19 +95,10 @@
           return true;
         }
         return this.checkSignleQuestion(this.ansSet[index].userAnswer);
-  
-        // if (!this.checkSignleQuestion(this.ansSet[index].userAnswer)) {
-        //   if (this.ansSet[index].isBlankFill) {
-        //     if (this.ansSet[index].blankFillAnswer === '') {
-        //       return false;
-        //     }
-        //   } else { return true; }
-        // } else {
-        //   return false;
-        // }
       },
     },
-  };
+   
+  });
   </script>
   
   <style>

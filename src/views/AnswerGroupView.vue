@@ -1,8 +1,7 @@
 <template>
   <div class= "root">
       <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
-      <p>{{amount}}</p>
-      <button @click="changeTest"> change </button>
+      <AnswerProgress v-if="isCreated"  :answers="newAnswerModelList" @numChanged="changeNumber" />
 
   </div>
 </template>
@@ -11,6 +10,7 @@
   import { defineComponent , PropType  } from "vue";
   import { AnswerGroupRespondModel } from '@/apis/models/GetAnswerGroupModel';
   import AnswerView from '@/components/QuizView/AnswerView.vue';
+  import AnswerProgress from '@/components/QuizView/AnswerProgress.vue';
   import axios from 'axios';
   import { Answer } from '@/models/AnswerModel';
   import AnswerGroupApi from '@/apis/AnswerGroupApi';
@@ -22,6 +22,7 @@
     components: {
         //ClickArea
         AnswerView,
+        AnswerProgress,
     },
     props: {
         //quizModel : Object as PropType<QuizTemplateModel>,
@@ -71,6 +72,16 @@
         } 
         this.changeQuizBeClickeds()
         //this.isCreated =true
+      },
+      changeNumber(changeIndex : number) {
+        if( changeIndex  >= this.amount){
+          alert( "以超過總題數數量" )
+        }else{
+          console.log("change" + changeIndex)
+          this.currentIndex = changeIndex
+          this.currentAnsweModel = this.newAnswerModelList[changeIndex]
+        }
+        this.changeQuizBeClickeds()
       },
       changeQuizBeClickeds() {
         this.beClickCurrent = []
