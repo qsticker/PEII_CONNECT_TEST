@@ -1,6 +1,14 @@
 <template>
   <div class= "root">
-      <AnswerView v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
+      <b-navbar class="navbar navbar-expand-lg navbar-light fixed-top  box-shadow:0px 4.9px 5px -3px grey;">
+         <b-button v-if="isAllSelected" class="submitButton" variant="warning"  >
+            繳交
+          </b-button>
+          <b-button v-else class="submitButton" variant="outline-light" >
+            繳交
+          </b-button>
+      </b-navbar>
+      <AnswerView class="answer" v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
       <div class="fixed-bottom">
         <div class="navbar-light" role="group">
           <div class="btn-group bottom-btns" style="height:70%">
@@ -67,6 +75,7 @@
         isCreated : false ,
         beClickCurrent : [] as Array<boolean>,
         modalShow: false,
+        isAllSelected: false,
       };
     },
     computed: {
@@ -111,9 +120,29 @@
         }
         console.log( this.currentAnsweModel.userAnswer )
       },
+      checkIsAllSelected() {
+        let allSelected = false; 
+        let finish = 0;
+        for(let i = 0 ; i < this.newAnswerModelList.length ; i++){
+            if( this.newAnswerModelList[i].checkSignleQuestion() ){
+              finish = finish + 1;
+            }
+        }
+        if(finish == this.amount){
+          allSelected = true;
+        }
+        this.isAllSelected = allSelected;
+      },
+    },
+    watch: {
+      currentAnsweModel : {
+        handler : function() {
+          this.checkIsAllSelected()
+        },
+        deep: true,
+      }
     },
     async created() {
-      
       //AnswerGroupApi.create( "554dfd1d-20ba-4cc2-a975-406aac08c623" );
       const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=554dfd1d-20ba-4cc2-a975-406aac08c623') //as AnswerGroupRespondModel
       console.log( instance.data.amount )
@@ -132,6 +161,7 @@
       this.newAnswerModelList = newAnswerModelList;
       this.currentAnsweModel = newAnswerModelList[0];
       console.log("parent")
+      this.checkIsAllSelected()
       this.isCreated = true
     },
   });
@@ -149,5 +179,11 @@
         margin: 0;
       }
     }
+  }
+  .answer {
+    margin-top: 10%;
+  }
+  .submitButton{
+    margin-left: auto;
   }
   </style>

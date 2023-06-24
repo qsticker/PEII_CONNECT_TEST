@@ -3,7 +3,6 @@
     <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
         <ClickArea :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" @updateByParent="updateAnswers" />
     </div>
-    <div> {{ subAnswerModel.uuid }}</div>
   </div>
 
 </template>

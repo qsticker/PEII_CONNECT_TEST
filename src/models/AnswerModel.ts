@@ -97,4 +97,18 @@ export class Answer implements AnswerInterface {
       this.blankFillAnswer = blankFillAnswer;
       this.uuid = uuid;
     }
+
+    public checkSignleQuestion() {
+      const checkResult = false;
+      for (let i = 0; i < this.userAnswer.length; i += 1) {
+        if (this.userAnswer[i] !== '' && this.userAnswer[i] !== undefined && this.userAnswer[i] !== null) {
+          return true;
+        }
+      }
+      return checkResult;
+    }
+
+    public getSubmitFormat(){
+      
+    }
 }
