@@ -1,10 +1,10 @@
 <template>
   <div class= "root">
       <b-navbar class="navbar navbar-expand-lg navbar-light fixed-top  box-shadow:0px 4.9px 5px -3px grey;">
-         <b-button v-if="isAllSelected" class="submitButton" variant="warning"  >
+         <b-button v-if="isAllSelected" class="submitButton" variant="warning" @click="submitAnswer" >
             繳交
           </b-button>
-          <b-button v-else class="submitButton" variant="outline-light" >
+          <b-button v-else class="submitButton" variant="outline-light" @click="submitAnswer">
             繳交
           </b-button>
       </b-navbar>
@@ -51,7 +51,7 @@
   import AnswerView from '@/components/QuizView/AnswerView.vue';
   import AnswerProgress from '@/components/QuizView/AnswerProgress.vue';
   import axios from 'axios';
-  import { Answer } from '@/models/AnswerModel';
+  import { Answer , AnswerSubmitFormatModel } from '@/models/AnswerModel';
   import AnswerGroupApi from '@/apis/AnswerGroupApi';
   //import { QuizTemplateModel } from '@api/models/QuizModel';
   //import ClickArea from '@/components/QuizView/ClickArea.vue';
@@ -133,6 +133,15 @@
         }
         this.isAllSelected = allSelected;
       },
+      async submitAnswer() {
+        let submitAnswerFormatList = new Array<AnswerSubmitFormatModel>();
+        for(let i = 0 ; i < this.newAnswerModelList.length ; i++ ){
+          submitAnswerFormatList.push( this.newAnswerModelList[i].getSubmitFormat() );
+        }
+        const answerSubmitFormatSet = Answer.getSubmitJson( submitAnswerFormatList );
+        let res = await AnswerGroupApi.submit("554dfd1d-20ba-4cc2-a975-406aac08c623" , answerSubmitFormatSet );
+        console.log(res)
+      },
     },
     watch: {
       currentAnsweModel : {
@@ -161,6 +170,7 @@
       this.newAnswerModelList = newAnswerModelList;
       this.currentAnsweModel = newAnswerModelList[0];
       console.log("parent")
+      this.changeQuizBeClickeds()
       this.checkIsAllSelected()
       this.isCreated = true
     },

@@ -10,6 +10,17 @@ export interface AnswerModel {
     blankFillAnswer: string;
 }
 */
+
+export interface AnswerSubmitFormatModel {
+  uuid : string;
+  timeSpent: number;
+  userAnswer: Array<string>;
+}
+
+export interface AnswerSubmitFormatSet {
+  ansSet : Array<AnswerSubmitFormatModel>;
+}
+
 export class Answer implements AnswerInterface {
     templateId = "";
 
@@ -108,7 +119,19 @@ export class Answer implements AnswerInterface {
       return checkResult;
     }
 
-    public getSubmitFormat(){
-      
+    public getSubmitFormat() : AnswerSubmitFormatModel{
+      const asnwerSubmitFormat : AnswerSubmitFormatModel = {
+        uuid : this.uuid,
+        timeSpent : this.timeSpent,
+        userAnswer : this.userAnswer, 
+      };
+      return asnwerSubmitFormat;
+    }
+
+    public static getSubmitJson( answerSubmitFormatModels : Array<AnswerSubmitFormatModel> ) : AnswerSubmitFormatSet{
+      const answerSubmitFormatSet : AnswerSubmitFormatSet = {
+        ansSet : answerSubmitFormatModels
+      }
+      return answerSubmitFormatSet;
     }
 }
