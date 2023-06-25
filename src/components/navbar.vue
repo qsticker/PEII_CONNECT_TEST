@@ -26,7 +26,6 @@
           </a>
         </div>
         
-        
         <div class="nav-item dropdown position-static show">
          
           <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
@@ -53,14 +52,17 @@
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else hereaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></li>
           </ul>
+          
         </div>
+
+          
 
         <div v-if="isLogin" class="rwd-title">
             <h6> '頁面選擇' </h6>
         </div>
        
         <!-- Nav links -->
-        <div v-if="isLogin" class="nav-btn-wrapper" @click="changeSideNav">
+        <div v-if="isLogin" class="login-nav nav-btn-wrapper" @click="changeSideNav">
 
           <div class="rwd-title">
               <h6> '功能選擇' </h6>
@@ -70,8 +72,11 @@
               <LanguageSelector class="mr-2" />
           </div>
 
+          
+
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
+            <span class="cart-size" > 0 </span><img src="@/assets/shopping-cart.png" />
             <b-dropdown
             v-if="isLogin"
             id="account-dropdown"
@@ -80,18 +85,19 @@
             variant="light"
             no-caret
             >
+            
             <template v-slot:button-content>
                 <!-- <i class="fa fa-user-circle" /> -->
                 <b-avatar size="1.5rem" />
                 <i class="fas fa-sort-down ml-2" />
             </template>
             <b-dropdown-item>
-                '目前登入為'  <br><strong>{{ username }}</strong>
+                目前登入為  <br><strong>{{ username }}</strong>
             </b-dropdown-item>
             <b-dropdown-divider />
             <b-dropdown-item
                 @click.prevent="logout">
-                '登出'
+                登出
             </b-dropdown-item>
             </b-dropdown>
           </div>
@@ -156,7 +162,8 @@ export default defineComponent({
       return 'unknown';
     },
     isLogin(): boolean {
-      return Boolean(this.$store.state.profile);
+      return true; 
+      //Boolean(this.$store.state.profile);
       //return false;
       //Boolean(this.$store.state.profile);
     },
@@ -229,7 +236,8 @@ export default defineComponent({
     //display: block;
 
     .nav-item{
-      flex : 2;
+      margin-left : 20%; 
+      //flex : 2;
     }
     .next-btn{
       margin : 10px;
@@ -249,7 +257,10 @@ export default defineComponent({
     
 
     .not-login-btn{
-      flex:1;
+      //background: blue;
+      display : flex;
+      width : 150px;
+      margin-left : 40%;
       //background-color: #333;
       text-align: right;
       //margin-left : auto;
@@ -257,6 +268,10 @@ export default defineComponent({
       //  margin-left : auto;
       //}
       
+    }
+    .login-nav {
+      //background : blue;
+      margin-left : 40%;
     }
   }
   .rwd-title{
@@ -345,12 +360,13 @@ export default defineComponent({
       }
       
 
-      .not-login-btn{
+      .not-login-btn {
         //display: block;
         display: flex;
         flex-direction: column;
         width: 100%;
       }
+
     }
     .rwd-icon {
       display: flex;

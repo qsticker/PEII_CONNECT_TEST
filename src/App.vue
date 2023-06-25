@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <AnswerGroupView/>
-    
+    <peiiNavbar/>
+    <CommodityList />
+    <router-view class="router-view" />
     <!--
-     <peiiNavbar/>
+     
+     <AnswerGroupView/>
      //<router-view class="router-view" />
      -->
   </div>
@@ -11,16 +13,19 @@
 
 <script>
 
-//import peiiNavbar from './components/navbar.vue'
-import AnswerGroupView from './views/AnswerGroupView.vue'
+import peiiNavbar from './components/navbar.vue'
+//import AnswerGroupView from './views/AnswerGroupView.vue'
+import CommodityList from './components/CommodityList.vue'
 //import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
-   //peiiNavbar,
+    peiiNavbar,
     //HomeView
     //QuizView
-    AnswerGroupView,
+    //AnswerGroupView,
+    //ShoppingCartCommodity,
+    CommodityList,
   },
   
    methods: {
