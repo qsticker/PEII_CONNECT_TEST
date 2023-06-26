@@ -63,16 +63,19 @@ export default defineComponent({
           //this.currentCommodity = commodity;
           this.modalShow = true;
           this.number = 1;
+          this.currentCommodity = commodity;
           console.log("shopping")
-          console.log( )
       },
       addCurrentCommodityInShoppingCart(){
         //todo call api to save shopping cart
         let shoppingCartMap = new  Map<commodity, number>();
         if(this.$store.state.shoppingCart){
-          shoppingCartMap = this.$store.state.shoppingCart; 
+          console.log("exist")
+          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
+              shoppingCartMap.set( key , value )
+          });
         }
-        shoppingCartMap.set(  this.currentCommodity , this.number )
+        shoppingCartMap.set( this.currentCommodity , this.number )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         this.modalShow = false;
         console.log('updateShoppingCart', shoppingCartMap )

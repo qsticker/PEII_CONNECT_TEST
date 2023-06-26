@@ -68,7 +68,7 @@
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
             <div class="shopping-cart">
-              <!--<span class="cart-size" >--> {{ shoppingCount }}  <img src="@/assets/shopping-cart.png" />
+              <!--<span class="cart-size" >--> {{ shoppingCartNumber }}  <img src="@/assets/shopping-cart.png" />
             </div>
             
             
@@ -131,7 +131,7 @@ export default defineComponent({
   data() {
     return {
       showSideNav: true,
-      //shoppingCartNumber: 0,
+      shoppingCartNumber: 0,
       //commodityInShoppingCart : new Array<commodity>(),
     };
   },
@@ -161,14 +161,19 @@ export default defineComponent({
       //return false;
       //Boolean(this.$store.state.profile);
     },
-    shoppingCount() : number {
-      if(this.$store.state.shoppingCart){
-        return this.$store.state.shoppingCart.size;
-      }
-      else{
-        return 0;
-      }
-    }
+
+    //shoppingCount() : number{
+    //  if( this)
+    //}
+  },
+  watch: {
+      '$store.state.shoppingCart'  : {
+        handler : function( ) {
+          this.shoppingCartNumber = this.$store.state.shoppingCart.size
+          console.log("tsts")
+        },
+        deep: true,
+      },
   },
   methods: {
     logout() {
@@ -178,12 +183,6 @@ export default defineComponent({
     
     changeSideNav() {
       this.showSideNav = !this.showSideNav;
-      // if( this.showSideNav == true ){
-      //   this.showSideNav = false
-      // }else{
-      //   this.showSideNav = true;
-      // }
-      //this.showSideNav = !this.showSideNav;
       console.log(this.showSideNav)
     },
     login() {
@@ -193,7 +192,7 @@ export default defineComponent({
     register(){
       this.$router.push({ path: '/register' })
     }
-  },
+  }
   //load commodity.ts in shoppinng cart when created()
 });
 </script>

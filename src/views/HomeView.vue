@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     
-    <SlideShow/>
+   <!-- <SlideShow/>-->
   </div>
 </template>
 
