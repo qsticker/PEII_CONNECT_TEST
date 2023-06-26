@@ -42,7 +42,14 @@ const routes: Array<RouteConfig> = [
     name: 'verifyNewPassword',
     component: () => import(/* webpackChunkName: "about" */ '@/views/VerifyNewPassword.vue'),
 
-  }
+  },
+  {
+    path: '/ShoppingCart',
+    //alias: ['/login'],
+    name: 'shoppingCart',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/ShoppingCart.vue'),
+
+  },
 
   //{
     //path: '/about',

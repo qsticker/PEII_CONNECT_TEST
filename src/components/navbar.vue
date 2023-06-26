@@ -68,7 +68,7 @@
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
             <div class="shopping-cart">
-              <!--<span class="cart-size" >--> {{ shoppingCartNumber }}  <img src="@/assets/shopping-cart.png" />
+              <!--<span class="cart-size" >--> {{ shoppingCartNumber }}  <img @click="goToShoppingCart" src="@/assets/shopping-cart.png" />
             </div>
             
             
@@ -170,7 +170,6 @@ export default defineComponent({
       '$store.state.shoppingCart'  : {
         handler : function( ) {
           this.shoppingCartNumber = this.$store.state.shoppingCart.size
-          console.log("tsts")
         },
         deep: true,
       },
@@ -191,7 +190,10 @@ export default defineComponent({
     },
     register(){
       this.$router.push({ path: '/register' })
-    }
+    },
+    goToShoppingCart(){
+      this.$router.push({ path: '/ShoppingCart' })
+    },
   }
   //load commodity.ts in shoppinng cart when created()
 });

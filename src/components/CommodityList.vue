@@ -25,9 +25,9 @@
         </div>
         <div class="action-box">
           <div>
-            <button class="round">-</button>
+            <button class="round" @click="subNumber">-</button>
             <span>{{ number }}</span>
-            <button class="round">+</button>
+            <button class="round" @click="addNumber">+</button>
           </div>
           <button @click="addCurrentCommodityInShoppingCart">加入購物車</button>
         </div>
@@ -78,8 +78,17 @@ export default defineComponent({
         shoppingCartMap.set( this.currentCommodity , this.number )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         this.modalShow = false;
-        console.log('updateShoppingCart', shoppingCartMap )
-      }
+        this.number = 1;
+        //console.log('updateShoppingCart', shoppingCartMap )
+      },
+      addNumber(){
+        this.number = this.number + 1;
+      },
+      subNumber(){
+        if(this.number!=0){
+          this.number = this.number - 1;
+        } 
+      },
   },
   created() {
     //load commodity.ts by quiz or course's classified when created()
