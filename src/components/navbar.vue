@@ -16,19 +16,19 @@
      
       <div class = "nav" :class="{'side-close': !showSideNav}" >
         
-        <div class="peiiicon">
+        <div class="computer-view peiiicon">
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
-        <div class="d-flex logo-box align-items-center">
+        <div class="computer-view d-flex logo-box align-items-center">
           <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
-              <div class="title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
-              <div class="des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
+              <div class="computer-view title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
+              <div class="computer-view des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
           </a>
         </div>
         
         <div class="nav-item dropdown position-static show">
          
-          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          <button  class="computer-view btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
               課程
           </button>
           <ul class="dropdown-menu w-100  active">
@@ -44,7 +44,7 @@
             </div>
           </ul>               
 
-          <button class="btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
             測驗
           </button>
           <ul class="dropdown-menu w-100  active">
@@ -54,29 +54,24 @@
           </ul>
           
         </div>
-
-          
-
-        <div v-if="isLogin" class="rwd-title">
-            <h6> '頁面選擇' </h6>
-        </div>
        
         <!-- Nav links -->
         <div v-if="isLogin" class="login-nav nav-btn-wrapper" @click="changeSideNav">
+          <div v-if="isLogin" class="rwd-title">
+            <h6> '頁面選擇' </h6>
+          </div>
 
           <div class="rwd-title">
               <h6> '功能選擇' </h6>
           </div>
           
-          <div class="lang-btn" @click="changeSideNav">
-              <LanguageSelector class="mr-2" />
-          </div>
-
-          
-
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
-            <span class="cart-size" > 0 </span><img src="@/assets/shopping-cart.png" />
+            <div class="shopping-cart">
+              <!--<span class="cart-size" >--> {{ shoppingCount }}  <img src="@/assets/shopping-cart.png" />
+            </div>
+            
+            
             <b-dropdown
             v-if="isLogin"
             id="account-dropdown"
@@ -103,8 +98,6 @@
           </div>
         </div>
 
-       
-
         <div v-else class="not-login-btn">
           <b-btn
             variant="light"
@@ -116,14 +109,13 @@
         </div>
       </div>
 
-      
-    
   </div>
 </template>
 
 <script lang='ts'>
 
 import CognitoHandler from '@/handler/userpool';
+//import { commodity } from "@/models/commodity"
 import { defineComponent } from "vue";
 
 interface NavbarLocation {
@@ -139,6 +131,8 @@ export default defineComponent({
   data() {
     return {
       showSideNav: true,
+      //shoppingCartNumber: 0,
+      //commodityInShoppingCart : new Array<commodity>(),
     };
   },
   computed: {
@@ -167,6 +161,14 @@ export default defineComponent({
       //return false;
       //Boolean(this.$store.state.profile);
     },
+    shoppingCount() : number {
+      if(this.$store.state.shoppingCart){
+        return this.$store.state.shoppingCart.size;
+      }
+      else{
+        return 0;
+      }
+    }
   },
   methods: {
     logout() {
@@ -192,6 +194,7 @@ export default defineComponent({
       this.$router.push({ path: '/register' })
     }
   },
+  //load commodity.ts in shoppinng cart when created()
 });
 </script>
 
@@ -272,6 +275,23 @@ export default defineComponent({
     .login-nav {
       //background : blue;
       margin-left : 40%;
+      
+      .login-btn {
+        display : flex;
+        
+        .shopping-cart {
+          
+          //background : blue;
+          //display : flex;
+          width: 100px;
+          display: inline-block;
+          vertical-align: middle;
+          border: black;
+          border-style: solid;
+          border-radius : 5px;
+          border-width : 1px;
+        }
+      }
     }
   }
   .rwd-title{
@@ -286,6 +306,7 @@ export default defineComponent({
       cursor: pointer;
     }
   }
+  
 }
 //.peiiicon{
 //  height : 40px;
@@ -300,7 +321,7 @@ export default defineComponent({
       right: 0;
       box-shadow: -2px 0px 10px #ddd;
       background-color: #fff;
-      width: 200px;
+      width: 250px;
       height: 100vh;
       flex-direction: column;
       //display: block;
@@ -394,6 +415,9 @@ export default defineComponent({
             text-align: center;
           }
         }
+    }
+    .computer-view{
+      display: none;
     }
   }
 }
