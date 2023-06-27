@@ -14,7 +14,7 @@
 
     </div>
 
-    <b-modal v-model="modalShow"  hide-footer>
+    <b-modal v-model="modalShow" class="modal" hide-footer>
       <div class="commidity-modal">
         <div class="info-box">
           <img src="@/assets/QuizCommdity.png" />
@@ -273,6 +273,7 @@ export default defineComponent({
         padding: 10px 10px 10px 15px;
         justify-content: space-between;
         align-items: center;
+        //background: blue;
 
         .round {
             width: 30px;

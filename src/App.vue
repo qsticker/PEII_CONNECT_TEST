@@ -3,9 +3,10 @@
     <peiiNavbar/>
     <CommodityList />
     <router-view class="router-view" />
+    <!--<AnswerGroupView/>-->
     <!--
      
-     <AnswerGroupView/>
+     
      //<router-view class="router-view" />
      -->
   </div>
@@ -26,6 +27,7 @@ export default {
     //AnswerGroupView,
     //ShoppingCartCommodity,
     CommodityList,
+    //AnswerGroupView,
   },
   
    methods: {

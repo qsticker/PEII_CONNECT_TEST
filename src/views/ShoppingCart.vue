@@ -1,6 +1,6 @@
 <template>
   <div>   
-    <div class="commidityInShoppingCart"  v-for="( commodity ) in this.$store.state.shoppingCart" :key="commodity">
+    <div class="commidityInShoppingCart"  v-for="(commodity, index)  in shoppingCartSortArray" :key="index" >
         <div class="info-box">
           <img src="@/assets/QuizCommdity.png" />
           <div>
@@ -14,7 +14,7 @@
             <span>{{ commodity[1] }}</span>
             <button class="round" @click="addNumber(commodity[0])">+</button>
           </div>
-          <button @click="removeCommodityInShoppingCart(commodity[0])" >取消</button>
+          <button @click="removeCommodityInShoppingCart(commodity)" >取消</button>
         </div>
       </div>
   </div>
@@ -33,17 +33,26 @@ export default defineComponent ({
   },
   data() {
     return {
-      shoppingCart : new Map<commodity, number>(),
+      shoppingCartSortArray : new Array<Array<any>>(),
+
     };
   },
   computed: {
     
   },
+  watch: {
+      '$store.state.shoppingCart'  : {
+        handler : function( ) {
+          this.setshoppingCartSortArray(this.$store.state.shoppingCart )
+        },
+        deep: true,
+      },
+  },
   methods: {
       addNumber( Commodity : commodity){
         let commodityNumber = this.$store.state.shoppingCart.get(Commodity)
         console.log('add')
-        console.log( commodityNumber )
+        console.log( this.$store.state.shoppingCart )
         commodityNumber = commodityNumber + 1;
         this.changeNumberInShoppingCart( Commodity , commodityNumber );
       },
@@ -56,6 +65,7 @@ export default defineComponent ({
       },
       changeNumberInShoppingCart(Commodity: commodity , commodityNumber : number ){
         let shoppingCartMap = new  Map<commodity, number>();
+
         //todo save shopping cart by api
         if(this.$store.state.shoppingCart){
           this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
@@ -66,6 +76,7 @@ export default defineComponent ({
         }
         shoppingCartMap.set( Commodity , commodityNumber )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
+        this.setshoppingCartSortArray( shoppingCartMap )
       },
       removeCommodityInShoppingCart( Commodity: commodity ){
         //todo save shopping cart by api
@@ -80,9 +91,21 @@ export default defineComponent ({
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         console.log(shoppingCartMap)
       },
+      setshoppingCartSortArray(shoppingCartMap : Map<commodity, number> ){
+          this.shoppingCartSortArray =  new Array<Array<any>>();
+          shoppingCartMap.forEach((value: number, key: commodity) => {
+              let keyValue = new Array<any>();
+              keyValue.push(key);
+              keyValue.push(value);
+              this.shoppingCartSortArray.push(keyValue)
+          });
+          this.shoppingCartSortArray.sort( (one, two) => (one[0].name > two[0].name ? -1 : 1) )
+          console.log( this.shoppingCartSortArray )
+        },     
+
   },
   created() {
-    this.shoppingCart = this.$store.state.shoppingCart;
+    this.setshoppingCartSortArray(this.$store.state.shoppingCart);
   }
 });
 

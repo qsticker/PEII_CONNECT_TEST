@@ -67,7 +67,7 @@
           <div class="rwd-title">
               <h6> 功能選擇 </h6>
           </div>
-          
+          <!-- login-btn ie button after login -->
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
             <!-- Login info -->
             <div class="shopping-cart">
