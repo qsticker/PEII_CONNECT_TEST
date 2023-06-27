@@ -9,13 +9,16 @@
     
       </DebugToggler>
       -->
-
-      <div class="rwd-icon" @click="changeSideNav" >
-        <span><img src="../assets/bars-solid.png" /></span>
-      </div>
      
+      <div class="rwd-icon" @click="changeSideNav" >
+          <span><img src="../assets/bars-solid.png" /></span>
+      </div>
+
       <div class = "nav" :class="{'side-close': !showSideNav}" >
-        
+        <!--<div class="rwd-icon" @click="changeSideNav" >
+          <span><img src="../assets/bars-solid.png" /></span>
+        </div>-->
+         
         <div class="computer-view peiiicon">
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
@@ -58,11 +61,11 @@
         <!-- Nav links -->
         <div v-if="isLogin" class="login-nav nav-btn-wrapper" @click="changeSideNav">
           <div v-if="isLogin" class="rwd-title">
-            <h6> '頁面選擇' </h6>
+            <h6> 頁面選擇 </h6>
           </div>
 
           <div class="rwd-title">
-              <h6> '功能選擇' </h6>
+              <h6> 功能選擇 </h6>
           </div>
           
           <div v-if="isLogin" class="login-btn" @click="changeSideNav">
@@ -130,7 +133,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showSideNav: true,
+      showSideNav: false,
       shoppingCartNumber: 0,
       //commodityInShoppingCart : new Array<commodity>(),
     };
@@ -317,12 +320,15 @@ export default defineComponent({
 @media screen and (max-width: 1000px) {
   .navbar{
     align-items: flex-start;
+    
+    
     .nav{
+
       position: absolute;
       right: 0;
       box-shadow: -2px 0px 10px #ddd;
       background-color: #fff;
-      width: 250px;
+      width: 175px;
       height: 100vh;
       flex-direction: column;
       //display: block;
@@ -335,12 +341,14 @@ export default defineComponent({
           border-radius: 0;
         }
       }
-      .lang-btn, .login-btn{
+      .login-nav{
+      //.lang-btn, .login-btn{
         width: 100%;
         margin: 0;
         .dropdown{
           width: 100%;
         }
+      //}
       }
       
       .rwd-title{
@@ -357,16 +365,7 @@ export default defineComponent({
           cursor: default;
         }
       }
-      .rwd-icon {
-        position: relative;
-        margin-left: auto;
-        span{
-          i{
-            width: 1.5rem;
-            height: 1.5rem;
-            text-align: center;
-          }
-        }
+     
       }
       
       display: block;
@@ -389,7 +388,7 @@ export default defineComponent({
         width: 100%;
       }
 
-    }
+
     .rwd-icon {
       display: flex;
       //background-color: #002969;
@@ -405,7 +404,7 @@ export default defineComponent({
     }
     .side-close{
       display: flex;
-      right: -200px;
+      right: -250px;
       //background-color: #002969;
         span{
           margin-left: auto;
@@ -417,11 +416,13 @@ export default defineComponent({
           }
         }
     }
+  }
+    
     .computer-view{
       display: none;
     }
   }
-}
+
 
 
 </style>
