@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <peiiNavbar/>
+    <HierarchyClasses />
     <router-view class="router-view" />
     <!--<AnswerGroupView/>-->
     <!--
@@ -13,19 +13,19 @@
 
 <script>
 
-import peiiNavbar from './components/navbar.vue'
+import HierarchyClasses from './components/HierarchyClasses.vue'
 //import AnswerGroupView from './views/AnswerGroupView.vue'
 //import CommodityList from './components/CommodityList.vue'
 //import HomeView from './views/HomeView'
 export default {
   name: 'App',
   components: {
-    peiiNavbar,
+    //peiiNavbar,
     //HomeView
     //QuizView
     //AnswerGroupView,
     //ShoppingCartCommodity,
-    
+    HierarchyClasses,
     //AnswerGroupView,
   },
   
