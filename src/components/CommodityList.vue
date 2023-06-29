@@ -7,8 +7,7 @@
           <img src="@/assets/QuizCommdity.png" alt="">
           <div class="title text-truncate2 text-dark">
             <span class="classOfCommodity d-inline-block border border-danger small p-1 mr-1 text-danger"> {{ commodity.class }} </span>	{{ commodity.name }}
-          </div>
-          <span class="price text-danger text-md price">價格 ： {{ commodity.price }}</span>   
+          </div>  
         </div>
       </div>
 
@@ -17,10 +16,10 @@
     <b-modal v-model="modalShow" class="modal" hide-footer>
       <div class="commidity-modal">
         <div class="info-box">
-          <img src="@/assets/QuizCommdity.png" />
+          <img src="@/assets/中考真題.png" />
           <div>
-            <h2>{{ currentCommodity.name }}</h2>
-            <p>{{ currentCommodity.price }}</p>
+            <h2>{{ currentCommodity.pass.name }}</h2>
+            <p>{{ currentCommodity.pass.price }}</p>
           </div>
         </div>
         <div class="action-box">

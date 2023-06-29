@@ -1,7 +1,4 @@
-
-export interface commodity {
-    //uuid : string;
-    id : string; 
+export interface pass {
     type: string; //quiz or course
     price: number;
     name: string;
@@ -9,40 +6,52 @@ export interface commodity {
     isHold: boolean;
 }
 
-const com1 : commodity = {
-    id : "1",
-    type: "quiz",
+export interface commodity {
+    //uuid : string;
+    type: string; //quiz or course
+    name: string;
+    class : string; //人教版/uinit1 ...
+    pass : pass; //人教板第一冊
+}
+
+const pass : pass = {
+    type : "quiz-review",
     price: 20 ,
+    name:  "中考真題測驗",
+    class: "中考真題",
+    isHold: true
+}
+
+const com1 : commodity = {
+
+    type: "quiz",
     name:  "2012-中考真題測驗",
     class : "中考真題",
-    isHold : false
+    pass : pass
 }
 
 const com2 : commodity = {
-    id : "2",
+
     type: "quiz",
-    price: 20 ,
     name:  "2013-中考真題測驗",
     class : "中考真題",
-    isHold : false
+    pass : pass
 }
 
 const com3 : commodity = {
-    id : "3",
+
     type: "quiz",
-    price: 20 ,
     name:  "2014-中考真題測驗",
     class : "中考真題",
-    isHold : false
+    pass : pass
 }
 
 const com4 : commodity = {
-    id : "4",
+
     type: "quiz",
-    price: 20 ,
     name:  "2015-中考真題測驗",
     class : "中考真題",
-    isHold : false
+    pass : pass
 }
 
 

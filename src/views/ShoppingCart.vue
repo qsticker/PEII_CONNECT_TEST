@@ -2,10 +2,10 @@
   <div>   
     <div class="commidityInShoppingCart"  v-for="(commodity, index)  in shoppingCartSortArray" :key="index" >
         <div class="info-box">
-          <img src="@/assets/QuizCommdity.png" />
+          <img src="@/assets/中考真題.png" />
           <div>
-            <h2>{{ commodity[0].name }}</h2>
-            <p>{{ commodity[0].price }}</p>
+            <h2>{{ commodity[0].pass.name }}</h2>
+            <p>{{ commodity[0].pass.price }}</p>
           </div>
         </div>
         <div class="action-box">

@@ -34,7 +34,7 @@
           <button  class="computer-view btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
               課程
           </button>
-          <ul class="dropdown-menu w-100  active">
+          <ul class="dropdown-menu w-100 active">
             <div class="dropdown-item">
               <div class="row">
                 <div v-for="(classfication,index) in courseRootClassifications" :key="index" class="col">
@@ -48,7 +48,7 @@
           </ul>               
 
           <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
-            測驗
+            單元測驗
           </button>
 
           <ul class="dropdown-menu w-100  active">
@@ -63,6 +63,23 @@
               </div>  
             </div>
           </ul>        
+
+          <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+            複習測驗
+          </button>
+
+          <ul class="dropdown-menu w-100  active">
+            <div class="dropdown-item">
+              <div class="row">
+                <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col">
+                  
+                  <h6><a href="#">{{ classfication.name }}</a></h6>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  
+                </div>
+              </div>  
+            </div>
+          </ul>      
           
         </div>
        
@@ -171,8 +188,8 @@ export default defineComponent({
       return 'unknown';
     },
     isLogin(): boolean {
-      return true; 
-      //Boolean(this.$store.state.profile);
+      return Boolean(this.$store.state.profile);//true; 
+      
       //return false;
       //Boolean(this.$store.state.profile);
     },
@@ -256,10 +273,12 @@ export default defineComponent({
 
     .nav-item{
       margin-left : 20%; 
+      //background-color: #002969;
+      justify-content: space-around;
       //flex : 2;
     }
     .next-btn{
-      margin : 10px;
+      margin-left : 10px;
     }
     .logo-box .logo-text{
       line-height: 1.4;
@@ -272,14 +291,12 @@ export default defineComponent({
     .logo-box .logo-text .des{
       font-size: 14px;
     }
-    
-    
 
     .not-login-btn{
       //background: blue;
       display : flex;
       width : 150px;
-      margin-left : 40%;
+      margin-left : 33%;
       //background-color: #333;
       text-align: right;
       //margin-left : auto;
@@ -290,7 +307,7 @@ export default defineComponent({
     }
     .login-nav {
       //background : blue;
-      margin-left : 40%;
+      margin-left : 30%;
       
       .login-btn {
         display : flex;
