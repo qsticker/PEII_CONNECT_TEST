@@ -33,6 +33,26 @@ if( store.state.courseClassfication.length == 0 ){
   store.commit('updateCourseClass', roots);
 }
 
+if( store.state.quizClassfication.length == 0 ){
+  const roots = new Array<RootClassfication>();
+  const typeone : RootClassfication = { 
+    name : "北師大",
+    subClassfication: ["第一冊" , "第二冊" , "第三冊" ]
+    //["北師大" , "人教" , "外研", "牛津", "議林", "冀教" , "滬教" ]
+  };
+  const typetwo : RootClassfication = {
+    name : "人教",
+    subClassfication: ["第一冊" , "第二冊" , "第三冊" ]
+  };
+  const typethree : RootClassfication = {
+    name : "外研",
+    subClassfication: ["第一冊" , "第二冊" , "第三冊" ]
+  };
+  roots.push(typeone);
+  roots.push(typetwo);
+  roots.push( typethree);
+  store.commit('updateQuizClass', roots);
+}
 
 
 export default new Vue({

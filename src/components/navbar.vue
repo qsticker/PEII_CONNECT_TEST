@@ -50,11 +50,19 @@
           <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
             測驗
           </button>
+
           <ul class="dropdown-menu w-100  active">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else hereaaaaaaaaaaaaaaaaaaaaaaaaaaa</a></li>
-          </ul>
+            <div class="dropdown-item">
+              <div class="row">
+                <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col">
+                  
+                  <h6><a href="#">{{ classfication.name }}</a></h6>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  
+                </div>
+              </div>  
+            </div>
+          </ul>        
           
         </div>
        
@@ -141,6 +149,10 @@ export default defineComponent({
   computed: {
     courseRootClassifications() {
       return this.$store.state.courseClassfication;
+    },
+
+    quizRootClassifications(){
+      return this.$store.state.quizClassfication;
     },
 
     links(): NavbarLocation[] {

@@ -4,6 +4,7 @@ import { commodity } from '@/models/commodity'
 
 export interface State {
     courseClassfication:  RootClassfication[],
+    quizClassfication:  RootClassfication[],
     profile: ProfileModel | null, 
     shoppingCart : Map<commodity, number> | null;
 }

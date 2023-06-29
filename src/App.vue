@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <peiiNavbar/>
-    <CommodityList />
     <router-view class="router-view" />
     <!--<AnswerGroupView/>-->
     <!--
@@ -16,7 +15,7 @@
 
 import peiiNavbar from './components/navbar.vue'
 //import AnswerGroupView from './views/AnswerGroupView.vue'
-import CommodityList from './components/CommodityList.vue'
+//import CommodityList from './components/CommodityList.vue'
 //import HomeView from './views/HomeView'
 export default {
   name: 'App',
@@ -26,7 +25,7 @@ export default {
     //QuizView
     //AnswerGroupView,
     //ShoppingCartCommodity,
-    CommodityList,
+    
     //AnswerGroupView,
   },
   
