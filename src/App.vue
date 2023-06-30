@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HierarchyClasses />
+    <HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />
     <router-view class="router-view" />
     <!--<AnswerGroupView/>-->
     <!--
