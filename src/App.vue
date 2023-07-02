@@ -5,9 +5,6 @@
     <!---<HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />-->
     <router-view class="router-view" />
     <!--<AnswerGroupView/>-->
-    <!--
-     //<router-view class="router-view" />
-     -->
     <!--<ShoppingCart />-->
   </div>
 </template>

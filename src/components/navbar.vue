@@ -1,14 +1,5 @@
 <template>
     <div class="navbar">
-      
-      <!---<DebugToggler>
-        <router-link :to="homepageLocation">
-          <i class="far fa-comment fa-flip-horizontal" />
-          {{ $t('brandname') }}
-        </router-link>
-    
-      </DebugToggler>
-      -->
      
       <div class="rwd-icon" @click="changeSideNav" >
           <span><img src="../assets/bars-solid.png" /></span>
@@ -451,7 +442,4 @@ export default defineComponent({
       display: none;
     }
   }
-
-
-
 </style>

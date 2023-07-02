@@ -10,10 +10,9 @@
           </div>  
         </div>
       </div>
-
     </div>
 
-    <b-modal v-model="modalShow" class="modal" hide-footer>
+    <b-modal v-if="!isHoldingCurrentComodity" v-model="modalShow" class="modal" hide-footer>
       <div class="commidity-modal">
         <div class="info-box">
           <img src="@/assets/中考真題.png" />
@@ -32,6 +31,27 @@
         </div>
       </div>
     </b-modal>
+
+    <b-modal v-else v-model="modalShow" class="modal" hide-footer>
+      <div class="commidity-modal">
+        <div class="info-box">
+          <img src="@/assets/中考真題.png" />
+          <div>
+            <h2>{{ currentCommodity.pass.name }}</h2>
+            <!--<p>{{ currentCommodity.pass.price }}</p>-->
+          </div>
+        </div>
+        <div class="action-box">
+          <div>
+            <button class="round" @click="subNumber">-</button>
+            <span>{{ number }}</span>
+            <button class="round" @click="addNumber">+</button>
+          </div>
+          <button >點擊進入</button>
+        </div>
+      </div>
+    </b-modal>
+
   </div>
 </template>
 <script lang="ts">
@@ -52,10 +72,10 @@ export default defineComponent({
       modalShow : false,
       number : 1,
       isCreated : false,
+      isHoldingCurrentComodity : false
     };
   },
   computed: {
-    
   },
   methods: {
       readyAddShoppingCart( commodity : commodity){
@@ -63,6 +83,7 @@ export default defineComponent({
           this.modalShow = true;
           this.number = 1;
           this.currentCommodity = commodity;
+          this.isHoldingCurrentComodity = this.checkCommodityContainByUser(commodity)
           console.log("shopping")
       },
       addCurrentCommodityInShoppingCart(){
@@ -88,6 +109,17 @@ export default defineComponent({
           this.number = this.number - 1;
         } 
       },
+      checkCommodityContainByUser(commodity : commodity) {
+        if( this.$store.state.userContainPasses ){
+          if( this.$store.state.userContainPasses.has( commodity ) ){
+            console.log( this.$store.state.userContainPasses )
+            return true;
+          }
+        }
+        console.log("ppp")
+        return false;
+      },
+      
   },
   created() {
     //load commodity.ts by quiz or course's classified when created()

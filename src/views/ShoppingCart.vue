@@ -113,6 +113,7 @@ export default defineComponent ({
       checkout(){
         //todo: save commodity in user space by api
         this.$store.state.userContainPasses = this.$store.state.shoppingCart;
+        console.log(  this.$store.state.userContainPasses )
         this.$router.push({name : "home"});
       },
   },
