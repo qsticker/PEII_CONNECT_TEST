@@ -1,31 +1,36 @@
 <template>
-  <div>   
-    <div class="commidityInShoppingCart"  v-for="(commodity, index)  in shoppingCartSortArray" :key="index" >
-        <div class="info-box">
-          <img src="@/assets/中考真題.png" />
-          <div>
-            <h2>{{ commodity[0].pass.name }}</h2>
-            <p>{{ commodity[0].pass.price }}</p>
+  <div> 
+    <div class="root">
+      <div class="commidity-container" >
+        <div class="commidityInShoppingCart"  v-for="(commodity, index)  in shoppingCartSortArray" :key="index" >
+          <div class="info-box">
+            <img src="@/assets/中考真題.png" />
+            <div>
+              <h2>{{ commodity[0].pass.name }}</h2>
+              <p>{{ commodity[0].pass.price }}</p>
+            </div>
           </div>
-        </div>
-        <div class="action-box">
-          <div>
-            <button class="round" @click="subNumber(commodity[0])">-</button>
-            <span>{{ commodity[1] }}</span>
-            <button class="round" @click="addNumber(commodity[0])">+</button>
+          <div class="action-box">
+            <div>
+              <button class="round" @click="subNumber(commodity[0])">-</button>
+              <span>{{ commodity[1] }}</span>
+              <button class="round" @click="addNumber(commodity[0])">+</button>
+            </div>
+            <button @click="removeCommodityInShoppingCart(commodity[0])" >取消</button>
           </div>
-          <button @click="removeCommodityInShoppingCart(commodity[0])" >取消</button>
         </div>
       </div>
+      <div class="check-out-container">
+        <div colspan="3" class="total-price-title" >商品總計 <span class="total-price">$ {{ getTotal() }}</span></div>
+        <button class="checkout" @click="checkout">前往付款</button>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-//import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
 import { commodity , commoditys} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
-//import peiiNavbar from '@/components/navbar.vue'
-
 export default defineComponent ({
   name: 'ShoopingCart',
     components: {
@@ -34,7 +39,7 @@ export default defineComponent ({
   data() {
     return {
       shoppingCartSortArray : new Array<Array<any>>(),
-
+      total : 0,
     };
   },
   computed: {
@@ -97,27 +102,45 @@ export default defineComponent ({
           });
           this.shoppingCartSortArray.sort( (one, two) => (one[0].name > two[0].name ? -1 : 1) )
           console.log( this.shoppingCartSortArray )
-        },     
-
+      },
+      getTotal(){
+          this.total = 0;
+          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
+             this.total = this.total + ( value * key.pass.price );
+          });
+          return this.total
+      },     
+      checkout(){
+        //todo: save commodity in user space by api
+        this.$store.state.userContainPasses = this.$store.state.shoppingCart;
+        this.$router.push({name : "home"});
+      },
   },
   created() {
     this.setshoppingCartSortArray(this.$store.state.shoppingCart);
   }
 });
-
 </script>
-  
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
-.commidityInShoppingCart {
-    position: relative;
-    margin: 20px;
-    background: #fff;
+.root {
+  display: flex;
+  //flex-wrap: wrap;
+  .commidity-container{
+   
+    width: 50%;
+    .commidityInShoppingCart {
+    
+    flex-direction:column;
+    
+    margin-left: 30% ;
+    //#fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    width : 70%;
 
     .info-box {
         display: flex;
+        
+        //background: blue;
         padding: 15px 5px;
 
         img {
@@ -181,7 +204,40 @@ export default defineComponent ({
             background: #ef8a8b;
             cursor: pointer;
         }
+      }
+    
     }
+  }
+  .check-out-container{
+    margin-left: 3%;
+    margin-top: 5%;
+    width: 30%;
+    height: 20%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    .total-price-title {
+      color: black;
+      font-size: 30px;
+      .total-price {
+        margin-left: 1em;
+        color: red;
+        //font-size: 50px;
+      }
+    }
+    .checkout {
+      display: block;
+      width: 94%;
+      margin: 20px;
+      outline: 0;
+      border: 0;
+      padding: 15px 0;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      background-color: #ef8a8b;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+      cursor: pointer;
+    }
+  }
+ 
 }
-
 </style>

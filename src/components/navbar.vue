@@ -296,7 +296,7 @@ export default defineComponent({
       //background: blue;
       display : flex;
       width : 150px;
-      margin-left : 33%;
+      margin-left : 38%;
       //background-color: #333;
       text-align: right;
       //margin-left : auto;
@@ -307,7 +307,7 @@ export default defineComponent({
     }
     .login-nav {
       //background : blue;
-      margin-left : 30%;
+      margin-left : 38%;
       
       .login-btn {
         display : flex;

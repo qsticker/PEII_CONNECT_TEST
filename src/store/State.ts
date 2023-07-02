@@ -7,4 +7,5 @@ export interface State {
     quizClassfication:  RootClassfication[],
     profile: ProfileModel | null, 
     shoppingCart : Map<commodity, number> | null;
+    userContainPasses : Map<commodity, number> | null; //retrieve this information by api ( maybe those can contain in user's profile)
 }

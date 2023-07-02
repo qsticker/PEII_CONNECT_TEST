@@ -13,6 +13,7 @@ export default new Vuex.Store<State>({
     quizClassfication: new Array<RootClassfication>(),
     profile: null , //defulat is null
     shoppingCart : null,
+    userContainPasses : null,
   }),
   getters: {
   
@@ -29,6 +30,9 @@ export default new Vuex.Store<State>({
     },
     updateShoppingCart: function(state : State,  shoppingCart : Map<commodity , number> ){
       state.shoppingCart = shoppingCart;
+    },
+    updateUserContainPasses: function(state : State,  userContainPasses : Map<commodity , number> ){
+      state.userContainPasses = userContainPasses;
     },
   },
   actions: {

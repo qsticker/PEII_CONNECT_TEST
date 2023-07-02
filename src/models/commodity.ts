@@ -19,7 +19,15 @@ const pass : pass = {
     price: 20 ,
     name:  "中考真題測驗",
     class: "中考真題",
-    isHold: true
+    isHold: false,
+}
+
+const pass2 : pass = {
+    type : "quiz-review",
+    price: 20 ,
+    name:  "中考真題測驗2",
+    class: "中考真題",
+    isHold: false,
 }
 
 const com1 : commodity = {
@@ -35,7 +43,7 @@ const com2 : commodity = {
     type: "quiz",
     name:  "2013-中考真題測驗",
     class : "中考真題",
-    pass : pass
+    pass : pass2
 }
 
 const com3 : commodity = {
@@ -43,7 +51,7 @@ const com3 : commodity = {
     type: "quiz",
     name:  "2014-中考真題測驗",
     class : "中考真題",
-    pass : pass
+    pass : pass2
 }
 
 const com4 : commodity = {

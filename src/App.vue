@@ -1,31 +1,35 @@
 <template>
   <div id="app">
-    <HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />
+    <peiiNavbar />
+    <!---<CommodityList />-->
+    <!---<HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />-->
     <router-view class="router-view" />
     <!--<AnswerGroupView/>-->
     <!--
-     
-     
      //<router-view class="router-view" />
      -->
+    <!--<ShoppingCart />-->
   </div>
 </template>
 
 <script>
 
-import HierarchyClasses from './components/HierarchyClasses.vue'
+//import HierarchyClasses from './components/HierarchyClasses.vue'
 //import AnswerGroupView from './views/AnswerGroupView.vue'
 //import CommodityList from './components/CommodityList.vue'
 //import HomeView from './views/HomeView'
+//import ShoppingCart from './views/ShoppingCart.vue'
+import peiiNavbar from './components/navbar.vue'
 export default {
   name: 'App',
   components: {
-    //peiiNavbar,
+    peiiNavbar,
+    //CommodityList,
     //HomeView
     //QuizView
     //AnswerGroupView,
-    //ShoppingCartCommodity,
-    HierarchyClasses,
+    //ShoppingCart,
+    //HierarchyClasses,
     //AnswerGroupView,
   },
   
