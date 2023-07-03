@@ -1,6 +1,6 @@
 <template>
   <div class= "root">
-      <b-navbar class="navbar navbar-expand-lg navbar-light fixed-top  box-shadow:0px 4.9px 5px -3px grey;">
+      <b-navbar class="navbar navbar-expand-lg navbar-light  box-shadow:0px 4.9px 5px -3px grey;">
          <b-button v-if="isAllSelected" class="submitButton" variant="warning" @click="submitAnswer" >
             繳交
           </b-button>
@@ -191,7 +191,7 @@
     }
   }
   .answer {
-    margin-top: 20%;
+    margin-top: 10%;
   }
   .submitButton{
     margin-left: auto;

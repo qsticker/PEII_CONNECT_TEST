@@ -50,6 +50,13 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/ShoppingCart.vue'),
 
   },
+  {
+    path: '/Answer',
+    //alias: ['/login'],
+    name: 'answer',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),
+
+  },
 
   //{
     //path: '/about',

@@ -32,7 +32,7 @@
       </div>
     </b-modal>
 
-    <b-modal v-else v-model="modalShow" class="modal" hide-footer>
+    <b-modal v-else v-model="modalShow" class="modal" hide-footer>Q
       <div class="commidity-modal">
         <div class="info-box">
           <img src="@/assets/中考真題.png" />
@@ -47,18 +47,18 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button >點擊進入</button>
+          <button v-if="isQuiz" @click="answer" >點擊進入</button>
+          <a v-else href="https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html">點擊進入</a>
         </div>
       </div>
     </b-modal>
-
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 //import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
 import { commodity , commoditys} from "@/models/commodity"
-//import peiiNavbar from '@/components/navbar.vue'
+import isEqual from 'lodash.isequal';
 
 export default defineComponent({
   name: 'CommodityList',
@@ -72,7 +72,8 @@ export default defineComponent({
       modalShow : false,
       number : 1,
       isCreated : false,
-      isHoldingCurrentComodity : false
+      isHoldingCurrentComodity : false,
+      isQuiz : false,
     };
   },
   computed: {
@@ -84,6 +85,7 @@ export default defineComponent({
           this.number = 1;
           this.currentCommodity = commodity;
           this.isHoldingCurrentComodity = this.checkCommodityContainByUser(commodity)
+          this.isQuiz = this.checkCommodityType( commodity );
           console.log("shopping")
       },
       addCurrentCommodityInShoppingCart(){
@@ -119,6 +121,15 @@ export default defineComponent({
         console.log("ppp")
         return false;
       },
+      checkCommodityType(commodity : commodity){
+        if( isEqual( commodity.type , "quiz" )){
+          return true;
+        }
+        return false;
+      },
+      answer(){
+        this.$router.push({name : "answer"});
+      }
       
   },
   created() {
@@ -327,6 +338,16 @@ export default defineComponent({
         }
 
         & > button {
+            outline: 0;
+            border: 0;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
+            text-transform: uppercase;
+            background: #ef8a8b;
+            cursor: pointer;
+        }
+        & > a {
             outline: 0;
             border: 0;
             padding: 10px 20px;
