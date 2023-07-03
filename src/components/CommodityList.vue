@@ -57,7 +57,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 //import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
-import { commodity , pass , commoditys} from "@/models/commodity"
+import { commodity , pass , commoditys , courses} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
 
 export default defineComponent({
@@ -75,6 +75,16 @@ export default defineComponent({
       isHoldingCurrentComodity : false,
       isQuiz : false,
     };
+  },
+  props: {
+    clickedClass : {
+      type: String ,
+      defualt: true,
+    },
+    type : {
+      type: String ,
+      defualt: true,
+    },
   },
   computed: {
   },
@@ -138,7 +148,14 @@ export default defineComponent({
   created() {
     //load commodity.ts by quiz or course's classified when created()
     console.log(  commoditys )
-    this.commodityList = commoditys;
+    if( isEqual( this.type , "quiz" ) ){
+      this.commodityList = commoditys;
+    }else if( isEqual( this.type , "course" ) ) {
+      this.commodityList = courses;
+    }else{
+      this.commodityList = commoditys;
+    }
+    
     this.currentCommodity = this.commodityList[0];
     this.isCreated = true;
   }

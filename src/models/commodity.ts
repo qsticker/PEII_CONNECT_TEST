@@ -30,6 +30,13 @@ const pass2 : pass = {
     isHold: false,
 }
 
+const pass3 : pass = {
+    type : "course",
+    price: 20 ,
+    name:  "短語庫",
+    class: "短語庫",
+    isHold: false,
+}
 const com1 : commodity = {
 
     type: "quiz",
@@ -65,7 +72,7 @@ const com5 : commodity = {
     type: "course",
     name:  "and用在句首",
     class : "短語库",
-    pass : pass
+    pass : pass3
 }
 
 
@@ -74,4 +81,8 @@ export const commoditys: Array<commodity> = [
     com2,
     com3,
     com4
+]
+
+export const courses: Array<commodity> = [
+    com5
 ]
