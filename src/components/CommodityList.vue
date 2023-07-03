@@ -48,7 +48,7 @@
             <button class="round" @click="addNumber">+</button>
           </div>
           <button v-if="isQuiz" @click="answer" >點擊進入</button>
-          <a v-else href="https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html">點擊進入</a>
+          <button v-else @click="course" >點擊進入</button>
         </div>
       </div>
     </b-modal>
@@ -57,7 +57,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 //import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
-import { commodity , commoditys} from "@/models/commodity"
+import { commodity , pass , commoditys} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
 
 export default defineComponent({
@@ -90,18 +90,18 @@ export default defineComponent({
       },
       addCurrentCommodityInShoppingCart(){
         //todo call api to save shopping cart
-        let shoppingCartMap = new  Map<commodity, number>();
+        let shoppingCartMap = new  Map<pass , number>();
         if(this.$store.state.shoppingCart){
           console.log("exist")
-          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
+          this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
               shoppingCartMap.set( key , value )
           });
         }
-        shoppingCartMap.set( this.currentCommodity , this.number )
+        shoppingCartMap.set( this.currentCommodity.pass , this.number )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         this.modalShow = false;
         this.number = 1;
-        //console.log('updateShoppingCart', shoppingCartMap )
+        console.log(shoppingCartMap )
       },
       addNumber(){
         this.number = this.number + 1;
@@ -113,7 +113,7 @@ export default defineComponent({
       },
       checkCommodityContainByUser(commodity : commodity) {
         if( this.$store.state.userContainPasses ){
-          if( this.$store.state.userContainPasses.has( commodity ) ){
+          if( this.$store.state.userContainPasses.has( commodity.pass ) ){
             console.log( this.$store.state.userContainPasses )
             return true;
           }
@@ -129,6 +129,9 @@ export default defineComponent({
       },
       answer(){
         this.$router.push({name : "answer"});
+      },
+      course(){
+        window.location.href = "https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html"
       }
       
   },

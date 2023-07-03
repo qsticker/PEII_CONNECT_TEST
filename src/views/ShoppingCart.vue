@@ -2,34 +2,34 @@
   <div> 
     <div class="root">
       <div class="commidity-container" >
-        <div class="commidityInShoppingCart"  v-for="(commodity, index)  in shoppingCartSortArray" :key="index" >
+        <div class="commidityInShoppingCart"  v-for="(pass, index)  in shoppingCartSortArray" :key="index" >
           <div class="info-box">
             <img src="@/assets/中考真題.png" />
             <div>
-              <h2>{{ commodity[0].pass.name }}</h2>
-              <p>{{ commodity[0].pass.price }}</p>
+              <h2>{{ pass[0].name }}</h2>
+              <p>{{ pass[0].price }}</p>
             </div>
           </div>
           <div class="action-box">
             <div>
-              <button class="round" @click="subNumber(commodity[0])">-</button>
-              <span>{{ commodity[1] }}</span>
-              <button class="round" @click="addNumber(commodity[0])">+</button>
+              <button class="round" @click="subNumber(pass[0])">-</button>
+              <span>{{ pass[1] }}</span>
+              <button class="round" @click="addNumber(pass[0])">+</button>
             </div>
-            <button @click="removeCommodityInShoppingCart(commodity[0])" >取消</button>
+            <button @click="removeCommodityInShoppingCart(pass[0])" >取消</button>
           </div>
         </div>
       </div>
       <div class="check-out-container">
         <div colspan="3" class="total-price-title" >商品總計 <span class="total-price">$ {{ getTotal() }}</span></div>
-        <button class="checkout" @click="checkout">前往付款</button>
+        <button class="checkout" @click="checkout">付款</button>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { commodity , commoditys} from "@/models/commodity"
+import { pass , commoditys} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
 export default defineComponent ({
   name: 'ShoopingCart',
@@ -54,37 +54,37 @@ export default defineComponent ({
       },
   },
   methods: {
-      addNumber( Commodity : commodity){
-        let commodityNumber = this.$store.state.shoppingCart.get(Commodity)
-        commodityNumber = commodityNumber + 1;
-        this.changeNumberInShoppingCart( Commodity , commodityNumber );
+      addNumber( pass : pass){
+        let passNumber = this.$store.state.shoppingCart.get(pass)
+        passNumber = passNumber + 1;
+        this.changeNumberInShoppingCart( pass , passNumber );
       },
-      subNumber( Commodity : commodity){
-        let commodityNumber = this.$store.state.shoppingCart.get(Commodity)
-        if(commodityNumber > 1){
-            commodityNumber = commodityNumber - 1;
-            this.changeNumberInShoppingCart( Commodity , commodityNumber );
+      subNumber( pass : pass){
+        let passNumber = this.$store.state.shoppingCart.get(pass)
+        if(passNumber > 1){
+            passNumber = passNumber - 1;
+            this.changeNumberInShoppingCart( pass ,passNumber );
         }
       },
-      changeNumberInShoppingCart(Commodity: commodity , commodityNumber : number ){
-        let shoppingCartMap = new  Map<commodity, number>();
+      changeNumberInShoppingCart( pass : pass , passNumber : number ){
+        let shoppingCartMap = new  Map<pass, number>();
         //todo save shopping cart by api
         if(this.$store.state.shoppingCart){
-          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
-              if( !isEqual(key , Commodity) ){
+          this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
+              if( !isEqual(key , pass) ){
                 shoppingCartMap.set( key , value )
               }  
           });
         }
-        shoppingCartMap.set( Commodity , commodityNumber )
+        shoppingCartMap.set( pass , passNumber )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
       },
-      removeCommodityInShoppingCart( Commodity: commodity ){
+      removeCommodityInShoppingCart( pass : pass ){
         //todo save shopping cart by api
-        let shoppingCartMap = new  Map<commodity, number>();
+        let shoppingCartMap = new  Map<pass, number>();
         if(this.$store.state.shoppingCart){
-          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
-              if( !isEqual(key , Commodity) ){
+          this.$store.state.shoppingCart.forEach((value: number, key: pass ) => {
+              if( !isEqual(key , pass ) ){
                 shoppingCartMap.set( key , value )
               }  
           });
@@ -92,9 +92,9 @@ export default defineComponent ({
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         console.log(shoppingCartMap)
       },
-      setshoppingCartSortArray(shoppingCartMap : Map<commodity, number> ){
+      setshoppingCartSortArray(shoppingCartMap : Map<pass, number> ){
           this.shoppingCartSortArray =  new Array<Array<any>>();
-          shoppingCartMap.forEach((value: number, key: commodity) => {
+          shoppingCartMap.forEach((value: number, key: pass) => {
               let keyValue = new Array<any>();
               keyValue.push(key);
               keyValue.push(value);
@@ -105,8 +105,8 @@ export default defineComponent ({
       },
       getTotal(){
           this.total = 0;
-          this.$store.state.shoppingCart.forEach((value: number, key: commodity) => {
-             this.total = this.total + ( value * key.pass.price );
+          this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
+             this.total = this.total + ( value * key.price );
           });
           return this.total
       },     

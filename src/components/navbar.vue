@@ -175,19 +175,11 @@ export default defineComponent({
       if (this.$store.state.profile) {
         return this.$store.state.profile.username;
       }
-
       return 'unknown';
     },
     isLogin(): boolean {
       return Boolean(this.$store.state.profile);//true; 
-      
-      //return false;
-      //Boolean(this.$store.state.profile);
     },
-
-    //shoppingCount() : number{
-    //  if( this)
-    //}
   },
   watch: {
       '$store.state.shoppingCart'  : {

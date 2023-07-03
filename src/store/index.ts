@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { RootClassfication } from '@/apis/models/RootClassfication'
 import { ProfileModel } from '@/apis/models/Profile';
-import { commodity } from '@/models/commodity'
+import { pass} from '@/models/commodity'
 import { State } from "@/store/State"
 Vue.use(Vuex)
 
@@ -28,10 +28,10 @@ export default new Vuex.Store<State>({
     updateProfile: function(state : State, profile : ProfileModel ){
       state.profile = profile;
     },
-    updateShoppingCart: function(state : State,  shoppingCart : Map<commodity , number> ){
+    updateShoppingCart: function(state : State,  shoppingCart : Map<pass , number> ){
       state.shoppingCart = shoppingCart;
     },
-    updateUserContainPasses: function(state : State,  userContainPasses : Map<commodity , number> ){
+    updateUserContainPasses: function(state : State,  userContainPasses : Map<pass , number> ){
       state.userContainPasses = userContainPasses;
     },
   },

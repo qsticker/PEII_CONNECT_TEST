@@ -55,10 +55,16 @@ const com3 : commodity = {
 }
 
 const com4 : commodity = {
-
     type: "quiz",
     name:  "2015-中考真題測驗",
     class : "中考真題",
+    pass : pass
+}
+
+const com5 : commodity = {
+    type: "course",
+    name:  "and用在句首",
+    class : "短語库",
     pass : pass
 }
 
