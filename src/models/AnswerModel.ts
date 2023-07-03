@@ -41,9 +41,10 @@ export class Answer implements AnswerInterface {
     isBlankFill = false;
     score = 5;
     uuid = ""
+    realAnswer = [] as string[];
 
     constructor(userAnswer: [], sourceQuiz: any | JSON , uuid: string, timeSpent: number,
-      multipleSelect: boolean, isBlankFill: boolean, blankFillAnswer: string) {
+      multipleSelect: boolean, isBlankFill: boolean, blankFillAnswer: string , score : number) {
       
       //console.log( sourceQuiz.clickAreas[0] )
       const clickAreaList = new Array<ClickAreaModel>()
@@ -107,6 +108,7 @@ export class Answer implements AnswerInterface {
       this.isBlankFill = isBlankFill;
       this.blankFillAnswer = blankFillAnswer;
       this.uuid = uuid;
+      this.score = score
     }
 
     public checkSignleQuestion() {
@@ -133,5 +135,9 @@ export class Answer implements AnswerInterface {
         ansSet : answerSubmitFormatModels
       }
       return answerSubmitFormatSet;
+    }
+
+    public setRealAnswer( realAnswer : Array<string> ){
+      this.realAnswer = realAnswer;
     }
 }

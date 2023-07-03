@@ -165,7 +165,7 @@
        const {
           userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
         } = newAnswerList[i];
-        newAnswerModelList.push( new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer) );
+        newAnswerModelList.push( new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , 0) );
       }
       this.newAnswerModelList = newAnswerModelList;
       this.currentAnsweModel = newAnswerModelList[0];
