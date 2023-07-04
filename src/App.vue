@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <peiiNavbar />
-    <AnswerGroupResult />
+    <!--<AnswerGroupResult />-->
     <!---<ClassficationCommodityList clickedClass="北師大/第一冊" type="quiz" />-->
     <!---<CommodityList />-->
     <!---<HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />-->
-    <!----<router-view class="router-view" />-->
+    <router-view class="router-view" />
     <!---<AnswerGroupView/>-->
     <!---<ShoppingCart />-->
   </div>
@@ -19,7 +19,7 @@
 //import ShoppingCart from './views/ShoppingCart.vue'
 //import ClassficationCommodityList from './views/ClassificationCommodityList'
 import peiiNavbar from './components/navbar.vue'
-import AnswerGroupResult from './views/AnswerGroupResult.vue'
+//import AnswerGroupResult from './views/AnswerGroupResult.vue'
 export default {
   name: 'App',
   components: {
@@ -32,7 +32,7 @@ export default {
     //HierarchyClasses,
     //AnswerGroupView,
     //ClassficationCommodityList,
-    AnswerGroupResult,
+    //AnswerGroupResult,
   },
   
    methods: {

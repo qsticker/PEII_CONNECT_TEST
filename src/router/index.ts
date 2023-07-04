@@ -57,15 +57,19 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),
 
   },
-
-  //{
-    //path: '/about',
-    //name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    //component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  //}
+  {
+    path: '/AnswerResult',
+    //alias: ['/login'],
+    name: 'answerResult',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupResult.vue'),
+  },
+  {
+    path: '/ClassficationCommodityList/:type/:classPath',
+    //alias: ['/login'],
+    name: 'classficationCommodityList',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/ClassificationCommodityList.vue'),
+    //props: true,
+  },
 ]
 
 const router = new VueRouter({

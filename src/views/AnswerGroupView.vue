@@ -139,8 +139,9 @@
           submitAnswerFormatList.push( this.newAnswerModelList[i].getSubmitFormat() );
         }
         const answerSubmitFormatSet = Answer.getSubmitJson( submitAnswerFormatList );
-        let res = await AnswerGroupApi.submit("554dfd1d-20ba-4cc2-a975-406aac08c623" , answerSubmitFormatSet );
+        let res = await AnswerGroupApi.save("cbdjq" , answerSubmitFormatSet );
         console.log(res)
+        this.$router.push( { path: '/AnswerResult' } )
       },
     },
     watch: {
@@ -153,7 +154,7 @@
     },
     async created() {
       //AnswerGroupApi.create( "554dfd1d-20ba-4cc2-a975-406aac08c623" );
-      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=554dfd1d-20ba-4cc2-a975-406aac08c623') //as AnswerGroupRespondModel
+      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=cbdjq') //as AnswerGroupRespondModel
       console.log( instance.data.amount )
       const instanceData = instance.data;
       this.amount = instance.data.amount;

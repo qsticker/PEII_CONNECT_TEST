@@ -14,10 +14,10 @@
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
         <div class="computer-view d-flex logo-box align-items-center">
-          <a class="logo-text" href="http://customer.6ms.cn/Etc/index.php" title="北一國際教育">
+          <router-link class="logo-text" to="/" title="北一國際教育">
               <div class="computer-view title font-weight-bold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">智能型英語教學.自學云</font></font></div>
               <div class="computer-view des text-family-light"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">北一國際教育集團旗下品牌</font></font></div>
-          </a>
+          </router-link >
         </div>
         
         <div class="nav-item dropdown position-static show">
@@ -45,11 +45,9 @@
           <ul class="dropdown-menu w-100  active">
             <div class="dropdown-item">
               <div class="row">
-                <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col">
-                  
-                  <h6><a href="#">{{ classfication.name }}</a></h6>
+                <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col" >
+                  <h6  @click="goToClassficationCommidityList(classfication.name,'*','quiz')">{{  classfication.name  }}</h6>
                   <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
-                  
                 </div>
               </div>  
             </div>
@@ -194,7 +192,6 @@ export default defineComponent({
       //Auth.logout();
       console.log("out")
     },
-    
     changeSideNav() {
       this.showSideNav = !this.showSideNav;
       console.log(this.showSideNav)
@@ -208,6 +205,10 @@ export default defineComponent({
     },
     goToShoppingCart(){
       this.$router.push({ path: '/ShoppingCart' })
+    },
+    goToClassficationCommidityList(class1 : string , class2 : string , type : string){
+        let classPath = class1 + "/" + class2;
+        this.$router.push({ name: "classficationCommodityList" , params: { type , classPath }})
     },
   }
   //load commodity.ts in shoppinng cart when created()

@@ -17,25 +17,31 @@
       HierarchyClasses ,
       CommodityList ,
     },
-    props: {
-        clickedClass : {
-            type: String ,
-            defualt: true,
-        },
-        type : {
-            type: String ,
-            defualt: true,
-        },
-    },
     data() {
       return {
+        clickedClass : "",
+        type : "",
       };
     },
     computed: {
       
     },
+     watch: {
+      '$route.params.classPath'  : {
+        handler : function( ) {
+          console.log("c")
+          this.clickedClass = this.$route.params.classPath
+          this.type = this.$route.params.type
+        },
+        deep: true,
+      },
+  },
     methods: {
     
+    },created() {
+      console.log( this.$route.params.classPath )
+      this.clickedClass = this.$route.params.classPath
+      this.type = this.$route.params.type
     },
   });
   </script>

@@ -31,6 +31,7 @@ export default defineComponent({
             defualt: true,
         },
     },
+    
     data() {
         return {
             levelClassesObj : {} as levelClasses,
@@ -87,6 +88,8 @@ export default defineComponent({
         },
     },
     created() {
+        console.log( this.clickedClass )
+        console.log( this.type )
         //todo load this type level hierachy by api
         if(this.type == "quiz"){
             this.levelClassesObj = quizunitRoot
@@ -105,7 +108,7 @@ export default defineComponent({
             this.currentLocation = this.clickedClass.split("/")
         }
 
-    
+        
     }
 });
 
