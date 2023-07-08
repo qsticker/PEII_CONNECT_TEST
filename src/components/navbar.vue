@@ -10,7 +10,7 @@
           <span><img src="../assets/bars-solid.png" /></span>
         </div>-->
          
-        <div class="computer-view peiiicon">
+        <div class="computer-view peiiicon" style="margin-top: 15px">
           <img src="../assets/logo.png" class="img-fluid" alt="Responsive image">
         </div>
         <div class="computer-view d-flex logo-box align-items-center">
@@ -22,48 +22,58 @@
         
         <div class="nav-item dropdown position-static show">
          
-          <button  class="computer-view btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          <b-button squared variant="link" class="text-decoration-none computer-view dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navMenuItemBtn">
               課程
-          </button>
-          <ul class="dropdown-menu w-100 active">
+          </b-button>
+          
+          <ul class="dropdown-menu active" id="ulStyle">
+            <div id="dropdownMenuTopLine" />
+            <div style="margin-left: 15px; font-size: 23px; margin-top: 10px; font-weight:bold;">課程</div>
+            <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
             <div class="dropdown-item">
               <div class="row">
                 <div v-for="(classfication,index) in courseRootClassifications" :key="index" class="col">
                   
-                  <h6><a href="#">{{ classfication.name }}</a></h6>
-                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  <h6><a href="#" id="listItemStyle" >{{ classfication.name }}</a></h6>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#" id="listItemStyle">{{subClassfication}}</a></li>
                   
                 </div>
               </div>  
             </div>
           </ul>               
-
-          <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          
+          <b-button squared variant="link" class="text-decoration-none computer-view dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navMenuItemBtn" >
             單元測驗
-          </button>
+          </b-button>
 
-          <ul class="dropdown-menu w-100  active">
+          <ul class="dropdown-menu active" id="ulStyle" >
+            <div id="dropdownMenuTopLine" />
+            <div style="margin-left: 15px; font-size: 23px; margin-top: 10px; font-weight:bold;">單元測驗</div>
+            <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
             <div class="dropdown-item">
               <div class="row">
                 <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col" >
                   <h6  @click="goToClassficationCommidityList(classfication.name,'*','quiz')">{{  classfication.name  }}</h6>
-                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#" id="listItemStyle" >{{subClassfication}}</a></li>
                 </div>
               </div>  
             </div>
           </ul>        
 
-          <button  class="computer-view btn btn-secondary dropdown-toggle next-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          <b-button squared variant="link" class="text-decoration-none computer-view dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="navMenuItemBtn" >
             複習測驗
-          </button>
+          </b-button>
 
-          <ul class="dropdown-menu w-100  active">
+          <ul class="dropdown-menu active" id="ulStyle" >
+            <div id="dropdownMenuTopLine" />
+            <div style="margin-left: 15px; font-size: 23px; margin-top: 10px; font-weight:bold;">複習測驗</div>
+            <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
             <div class="dropdown-item">
               <div class="row">
                 <div v-for="(classfication,index) in quizRootClassifications" :key="index" class="col">
                   
-                  <h6><a href="#">{{ classfication.name }}</a></h6>
-                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#">{{subClassfication}}</a></li>
+                  <h6><a href="#" id="listItemStyle" >{{ classfication.name }}</a></h6>
+                  <li v-for="(subClassfication,index) in classfication.subClassfication" :key="index" class="list-group-item"><a href="#" id="listItemStyle" >{{subClassfication}}</a></li>
                   
                 </div>
               </div>  
@@ -116,13 +126,14 @@
         </div>
 
         <div v-else class="not-login-btn">
-          <b-btn
-            variant="light"
+          <b-btn squared
+            variant="dark" style=" margin-top: 10px;padding-right: 10px; padding-left: 10px;"
             @click="register"
           >
             註冊
           </b-btn>
-          <b-btn variant="success" @click="login">登入</b-btn>
+          <b-btn style="margin-left: 10px; margin-top: 10px;padding-right: 10px; padding-left: 10px;" 
+          squared variant="outline-dark" @click="login">登入</b-btn>
         </div>
       </div>
 
@@ -219,6 +230,26 @@ export default defineComponent({
 *{
   padding: 0;
   margin: 0;
+}
+
+#ulStyle {
+margin-top: 5px; width: 90%; margin-left:5%; margin-right: 5%;
+}
+
+#driodiwbMenuHrLineBetweenTopicAndList {
+margin-left: 10px; margin-right: 10px; background-color:#8F9BB3; height: 1.3px; margin-bottom: 10px; margin-top: 10px;
+}
+#dropdownMenuTopLine {
+float:right; width: 100%;  height: 3.9px;  margin-top: -0.5em;  background:#42AAFF;  position: relative;  text-align: center;
+}
+#listItemStyle {
+ color: black;font-weight:normal;
+}
+#navMenuItemBtn:hover, #navMenuItemBtn:active{
+  background-color: #1A2138; color:#fff; height: 72px;
+}
+#navMenuItemBtn{
+  color: #1A2138;
 }
 .navbar {
   height: 80px;
@@ -341,7 +372,7 @@ export default defineComponent({
       right: 0;
       box-shadow: -2px 0px 10px #ddd;
       background-color: #fff;
-      width: 175px;
+      width: 275px;
       height: 100vh;
       flex-direction: column;
       //display: block;
