@@ -12,7 +12,12 @@
       </div>
     </div>
 
-    <b-modal v-if="!isHoldingCurrentComodity" v-model="modalShow" class="modal" hide-footer>
+    <b-modal v-if="!isHoldingCurrentComodity" v-model="modalShow" class="modal" hide-footer id="bv-modal-a">
+      <template #modal-header>
+         <div class="mx-auto" style="width:100%">
+          <b-button squared style="width: 10%; margin-left: 90%; " variant="outline-dark" size="sm" @click="$bvModal.hide('bv-modal-a')">X</b-button>
+         </div>
+        </template>
       <div class="commidity-modal">
         <div class="info-box">
           <img src="@/assets/中考真題.png" />

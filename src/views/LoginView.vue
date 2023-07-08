@@ -27,7 +27,7 @@
         </div>
 
         
-        <button type="button" class="login-buttom btn btn-primary btn-lg" @click="login">登入</button>
+        <b-button variant="dark" squared class="login-buttom btn btn-lg" @click="login">登入</b-button>
         <div class="text-center text-lg-start mt-4 pt-2">
           
           <p class="small fw-bold mt-2 pt-1 mb-0">尚未擁有帳戶? <router-link to="/register"

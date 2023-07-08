@@ -23,7 +23,7 @@
               placeholder="輸入密碼" v-model="password"/>    
           </div>
             
-          <button type="button" class="register-buttom btn btn-primary btn-lg" @click="register">註冊</button>
+          <b-button variant="dark" squared class="register-buttom btn btn-lg" @click="register">註冊</b-button>
         </form>
       </div>
     </div>

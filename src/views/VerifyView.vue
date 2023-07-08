@@ -7,8 +7,8 @@
             <input type="number" id="form3Example3" class="form-control form-control-lg" 
               placeholder="輸入驗證碼" v-model="authcode"/>
           </div>
-          <button type="button" class="resend-buttom btn btn-primary btn-lg" @click="resend">重送郵件</button>
-          <button type="button" class="verify-buttom btn btn-primary btn-lg" @click="verify">驗證</button>
+          <b-button variant="outline-dark" squared class="resend-buttom btn" @click="resend">重送郵件</b-button>
+          <b-button variant="dark" squared class="verify-buttom btn btn-lg" @click="verify">驗證</b-button>
         </form>
       </div>
     </div>
