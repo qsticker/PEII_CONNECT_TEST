@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 80px;">
     <div class="commodity-list">
       <div class="commodity"  v-for="( commodity ,index ) in commodityList" :key="index" >
         <!--<PeiiCommodity :commodity="commodity" />-->

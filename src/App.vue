@@ -8,6 +8,7 @@
     <router-view class="router-view" />
     <!---<AnswerGroupView/>-->
     <!---<ShoppingCart />-->
+    <peiiFooter />
   </div>
 </template>
 
@@ -19,11 +20,13 @@
 //import ShoppingCart from './views/ShoppingCart.vue'
 //import ClassficationCommodityList from './views/ClassificationCommodityList'
 import peiiNavbar from './components/navbar.vue'
+import peiiFooter from './components/PageFooter.vue'
 //import AnswerGroupResult from './views/AnswerGroupResult.vue'
 export default {
   name: 'App',
   components: {
     peiiNavbar,
+    peiiFooter,
     //CommodityList,
     //HomeView
     //QuizView
