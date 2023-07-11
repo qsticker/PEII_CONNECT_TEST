@@ -11,7 +11,7 @@
             <input type="password" id="password" class="form-control form-control-lg" 
               placeholder="輸入新密碼" v-model="newPassword"/>
           </div>        
-          <button type="button" class="verify-buttom btn btn-primary btn-lg" @click="verifyNewPassword">驗證</button>
+          <b-button variant="dark" squared class="verify-buttom btn-lg" @click="verifyNewPassword">驗證</b-button>
         </form>
       </div>
     </div>

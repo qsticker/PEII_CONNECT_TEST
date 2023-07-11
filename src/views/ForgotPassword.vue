@@ -7,7 +7,7 @@
             <input  id="form3Example3" class="form-control form-control-lg" 
               placeholder="輸入使用者名稱" v-model="username"/>
           </div>        
-          <button type="button" class="verify-buttom btn btn-primary btn-lg" @click="sendAuthcode">寄送驗證碼</button>
+          <b-button variant="outline-dark" squared class="verify-buttom btn" @click="sendAuthcode">寄送驗證碼</b-button>
         </form>
       </div>
     </div>
