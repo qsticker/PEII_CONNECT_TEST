@@ -19,8 +19,8 @@
           <!--Grid row-->
           <div class="row">
             <!--Grid column-->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <ul class="list-unstyled mb-0">
+            <div class="col-lg-1 col-6  ">
+              <ul class="list-unstyled ">
                 
               </ul>
             </div>
@@ -31,11 +31,17 @@
               <!-- <h5 class="text-uppercase">Links</h5> -->
 
               <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#!" class="text-white" style="text-decoration:none;">關於北一</a>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">平台介绍</a>
                 </li>
-                <li>
-                  <a href="#!" class="text-white" style="text-decoration:none;">聯絡我們</a>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">认识我们</a>
+                </li>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">联系我们</a>
+                </li>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">法律申明</a>
                 </li>
               </ul>
             </div>
@@ -45,19 +51,33 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
 
               <ul class="list-unstyled mb-0">
-                <li>
-                  <a href="#!" class="text-white" style="text-decoration:none;" >Cookie</a>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;" >新手指南</a>
                 </li>
-                <li>
-                  <a href="#!" class="text-white" style="text-decoration:none;">隱私政策</a>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">常见问题</a>
                 </li>
-                <li>
-                  <a href="#!" class="text-white" style="text-decoration:none;" >使用條款</a>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;" >网站地图</a>
                 </li>
               </ul>
             </div>
             <!--Grid column-->
 
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+              <ul class="list-unstyled mb-0">
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;" >学员的话</a>
+                </li>
+                <li style="margin-bottom: 10px;">
+                  <a href="#!" class="text-white" style="text-decoration:none;">相关连结</a>
+                </li>
+
+              </ul>
+            </div>
+            <!--Grid column-->
            
           </div>
           <!--Grid row-->
