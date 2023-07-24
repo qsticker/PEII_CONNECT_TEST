@@ -13,15 +13,15 @@
         <img src="../assets/logo.png" class="img-fluid" alt="Responsive image" />
       </div>
       <div class="computer-view d-flex logo-box align-items-center">
-        <router-link class="logo-text" to="/" title="北一國際教育">
+        <router-link class="logo-text" to="/" title="北一国际教育">
           <div class="computer-view title font-weight-bold">
             <font style="vertical-align: inherit"
-              ><font style="vertical-align: inherit">智能型英語教學.自學云</font></font
+              ><font style="vertical-align: inherit">智能型英语教学.自学云</font></font
             >
           </div>
           <div class="computer-view des text-family-light">
             <font style="vertical-align: inherit"
-              ><font style="vertical-align: inherit">北一國際教育集團旗下品牌</font></font
+              ><font style="vertical-align: inherit">北一国际教育集团旗下品牌</font></font
             >
           </div>
         </router-link>
@@ -36,7 +36,7 @@
           aria-expanded="false"
           id="navMenuItemBtn"
         >
-          課程
+          课程
         </b-button>
 
         <ul class="dropdown-menu active" id="ulStyle">
@@ -49,7 +49,7 @@
               font-weight: bold;
             "
           >
-            課程
+            课程
           </div>
           <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
           <div class="dropdown-item">
@@ -82,7 +82,7 @@
           aria-expanded="false"
           id="navMenuItemBtn"
         >
-          單元測驗
+          单元测验
         </b-button>
 
         <ul class="dropdown-menu active" id="ulStyle">
@@ -95,7 +95,7 @@
               font-weight: bold;
             "
           >
-            單元測驗
+            单元测验
           </div>
           <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
           <div class="dropdown-item">
@@ -130,7 +130,7 @@
           aria-expanded="false"
           id="navMenuItemBtn"
         >
-          複習測驗
+          复习测验
         </b-button>
 
         <ul class="dropdown-menu active" id="ulStyle">
@@ -143,7 +143,7 @@
               font-weight: bold;
             "
           >
-            複習測驗
+            复习测验
           </div>
           <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
           <div class="dropdown-item">
@@ -172,11 +172,11 @@
       <!-- Nav links -->
       <div v-if="isLogin" class="login-nav nav-btn-wrapper" @click="changeSideNav">
         <div v-if="isLogin" class="rwd-title">
-          <h6>頁面選擇</h6>
+          <h6>页面选择</h6>
         </div>
 
         <div class="rwd-title">
-          <h6>功能選擇</h6>
+          <h6>功能选择</h6>
         </div>
         <!-- login-btn ie button after login -->
         <div v-if="isLogin" class="login-btn" @click="changeSideNav">
@@ -210,10 +210,10 @@
               <!-- <i class="fas fa-sort-down ml-2" /> -->
             </template>
             <b-dropdown-item>
-              目前登入為 <br /><strong>{{ username }}</strong>
+              目前登录为 <br /><strong>{{ username }}</strong>
             </b-dropdown-item>
             <b-dropdown-divider />
-            <b-dropdown-item @click.prevent="logout"> 登出 </b-dropdown-item>
+            <b-dropdown-item @click.prevent="logout"> 退出 </b-dropdown-item>
           </b-dropdown>
         </div>
       </div>
@@ -225,7 +225,7 @@
           style="margin-top: 10px; padding-right: 10px; padding-left: 10px"
           @click="register"
         >
-          註冊
+          注册
         </b-btn>
         <b-btn
           style="
@@ -237,7 +237,7 @@
           squared
           variant="outline-dark"
           @click="login"
-          >登入</b-btn
+          >登录</b-btn
         >
       </div>
     </div>
@@ -301,7 +301,9 @@ export default defineComponent({
     logout() {
       //Auth.logout();
       console.log("out");
-    },
+      this.$cookies.remove("accessToken");
+      this.$store.state.profile = null;
+      },
     changeSideNav() {
       this.showSideNav = !this.showSideNav;
       console.log(this.showSideNav);

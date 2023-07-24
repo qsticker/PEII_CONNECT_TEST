@@ -20,7 +20,7 @@ interface token {
     // whatever else is in the JWT.
   }
 export default class CognitoHandler{
-    
+
 
     static poolData = {
         UserPoolId: process.env.VUE_APP_AWS_COGNITO_USERPOOLID, // Your user pool id here
