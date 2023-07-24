@@ -5,25 +5,25 @@
           <!-- Email input -->
           <div class="username-input form-outline b-4">
             <input  id="form3Example3" class="form-control form-control-lg" 
-              placeholder="輸入使用者名稱" v-model="username"/>
+              placeholder="输入用户名" v-model="username"/>
           </div>
 
           <div class="name-input form-outline mb-4">
             <input  id="form3Example3" class="form-control form-control-lg"
-              placeholder="輸入名稱" v-model="name"/>
+              placeholder="输入名称" v-model="name"/>
           </div>
 
           <div class="email-input form-outline mb-3">
             <input type="email" id="form3Example4" class="form-control form-control-lg"
-              placeholder="輸入電子信箱" v-model="email"/>    
+              placeholder="输入电子邮箱" v-model="email"/>    
           </div>
             <!-- Password input -->
           <div class="pawwsord-input form-outline mb-3">
             <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="輸入密碼" v-model="password"/>    
+              placeholder="输入密码" v-model="password"/>    
           </div>
             
-          <b-button variant="dark" squared class="register-buttom btn btn-lg" @click="register">註冊</b-button>
+          <b-button variant="dark" squared class="register-buttom btn btn-lg" @click="register">注册</b-button>
         </form>
       </div>
     </div>
@@ -56,19 +56,19 @@
 
         let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         if( this.password.length < 8){
-          alert("密碼長度小於 8");
+          alert("密码长度小于 8");
         }
         else if( !regex.test( this.password ) ){
-          alert("密碼請至少包含數字和特殊符號和一大寫英文字母");
+          alert("密码需至少包含数字、特殊符号和一个大写英文字母");
         }
         if( !emailRegex.test(this.email )){
-          alert("錯誤的電子郵件格式")
+          alert("电子邮箱格式错误")
         }
         if( this.username == ""){
-          alert("使用者名稱不得為空")
+          alert("用户名不得为空")
         }
         if( this.name == ""){
-          alert("名稱不得為空")
+          alert("名称不得为空")
         }
         //var regex = 
         console.log(this.username)

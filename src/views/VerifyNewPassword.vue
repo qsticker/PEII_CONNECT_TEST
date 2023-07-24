@@ -5,13 +5,13 @@
           <!-- Email input -->
           <div class="verify-password-input form-outline b-4">
             <input  type="number" id="form3Example3" class="form-control form-control-lg" 
-              placeholder="輸入驗證碼" v-model="authcode"/>
+              placeholder="输入验证码" v-model="authcode"/>
           </div>  
           <div class="forgot-password-input form-outline b-4">
             <input type="password" id="password" class="form-control form-control-lg" 
-              placeholder="輸入新密碼" v-model="newPassword"/>
+              placeholder="输入新密码" v-model="newPassword"/>
           </div>        
-          <b-button variant="dark" squared class="verify-buttom btn-lg" @click="verifyNewPassword">驗證</b-button>
+          <b-button variant="dark" squared class="verify-buttom btn-lg" @click="verifyNewPassword">验证</b-button>
         </form>
       </div>
     </div>

@@ -5,13 +5,13 @@
         <!-- Email input -->
         <div class="email-input form-outline mb-4">
           <input  id="form3Example3" class="form-control form-control-lg" v-model="username"
-            placeholder="輸入使用者名稱" />
+            placeholder="输入用户名" />
         </div>
 
           <!-- Password input -->
         <div class="pawwsord-input form-outline mb-3">
           <input type="password" id="form3Example4" class="form-control form-control-lg"
-            placeholder="輸入密碼" v-model="password"/>    
+            placeholder="输入密码" v-model="password"/>    
         </div>
 
         <div class="remeber-and-forgot">
@@ -19,19 +19,19 @@
           <div class="remeber-box form-check mb-0">
             <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
             <label class="form-check-label" for="form2Example3">
-              記住密碼
+              记住密码
             </label>
           </div>
 
-          <router-link to="/forgotPassword" class="forgot-password text-body">忘記密碼?</router-link>          
+          <router-link to="/forgotPassword" class="forgot-password text-body">忘记密码?</router-link>          
         </div>
 
         
-        <b-button variant="dark" squared class="login-buttom btn btn-lg" @click="login">登入</b-button>
+        <b-button variant="dark" squared class="login-buttom btn btn-lg" @click="login">登录</b-button>
         <div class="text-center text-lg-start mt-4 pt-2">
           
-          <p class="small fw-bold mt-2 pt-1 mb-0">尚未擁有帳戶? <router-link to="/register"
-              class="link-danger">註冊</router-link></p>
+          <p class="small fw-bold mt-2 pt-1 mb-0">尚未拥有账号? <router-link to="/register"
+              class="link-danger">注册</router-link></p>
         </div>
       </form>
     </div>

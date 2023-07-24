@@ -5,9 +5,9 @@
           <!-- Email input -->
           <div class="forgot-password-input form-outline b-4">
             <input  id="form3Example3" class="form-control form-control-lg" 
-              placeholder="輸入使用者名稱" v-model="username"/>
+              placeholder="输入用户名" v-model="username"/>
           </div>        
-          <b-button variant="outline-dark" squared class="verify-buttom btn" @click="sendAuthcode">寄送驗證碼</b-button>
+          <b-button variant="outline-dark" squared class="verify-buttom btn" @click="sendAuthcode">发送验证码</b-button>
         </form>
       </div>
     </div>

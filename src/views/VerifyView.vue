@@ -5,10 +5,10 @@
           <!-- Email input -->
           <div class="authcode-input form-outline b-4">
             <input type="number" id="form3Example3" class="form-control form-control-lg" 
-              placeholder="輸入驗證碼" v-model="authcode"/>
+              placeholder="输入验证码" v-model="authcode"/>
           </div>
-          <b-button variant="outline-dark" squared class="resend-buttom btn" @click="resend">重送郵件</b-button>
-          <b-button variant="dark" squared class="verify-buttom btn btn-lg" @click="verify">驗證</b-button>
+          <b-button variant="outline-dark" squared class="resend-buttom btn" @click="resend">重发邮件</b-button>
+          <b-button variant="dark" squared class="verify-buttom btn btn-lg" @click="verify">验证</b-button>
         </form>
       </div>
     </div>
