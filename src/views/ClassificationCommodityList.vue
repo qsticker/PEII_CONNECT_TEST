@@ -7,9 +7,10 @@
   
   <script lang="ts">
   import { defineComponent } from "vue";
-  import HierarchyClasses  from "@/components/HierarchyClasses.vue"
-  import CommodityList  from "@/components/CommodityList.vue"
-  
+  import HierarchyClasses  from "@/components/HierarchyClasses.vue";
+  import CommodityList  from "@/components/CommodityList.vue";
+  import CategoryApi from "@/apis/CategoryApi";
+
   export default defineComponent({
     name: 'ClassficationCommodityList',
     components: {
@@ -29,7 +30,6 @@
      watch: {
       '$route.params.classPath'  : {
         handler : function( ) {
-          console.log("c")
           this.clickedClass = this.$route.params.classPath
           this.type = this.$route.params.type
         },
@@ -38,10 +38,18 @@
   },
     methods: {
     
-    },created() {
-      console.log( this.$route.params.classPath )
-      this.clickedClass = this.$route.params.classPath
-      this.type = this.$route.params.type
+    },
+    async created() {
+      console.log( this.$route.params.classPath );
+
+      this.clickedClass = this.$route.params.classPath;
+      this.type = this.$route.params.type;
+
+      const courseCategory = await CategoryApi.getCoursePath();
+      console.log(JSON.parse(JSON.stringify(courseCategory)).child);
+      
+
+
     },
   });
   </script>

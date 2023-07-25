@@ -32,7 +32,7 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button @click="addCurrentCommodityInShoppingCart">加入購物車</button>
+          <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
         </div>
       </div>
     </b-modal>
@@ -52,8 +52,8 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button v-if="isQuiz" @click="answer" >點擊進入</button>
-          <button v-else @click="course" >點擊進入</button>
+          <button v-if="isQuiz" @click="answer" >点击进入</button>
+          <button v-else @click="course" >点击进入</button>
         </div>
       </div>
     </b-modal>
