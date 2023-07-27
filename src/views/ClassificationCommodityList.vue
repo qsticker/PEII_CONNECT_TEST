@@ -9,7 +9,6 @@
   import { defineComponent } from "vue";
   import HierarchyClasses  from "@/components/HierarchyClasses.vue";
   import CommodityList  from "@/components/CommodityList.vue";
-  import CategoryApi from "@/apis/CategoryApi";
 
   export default defineComponent({
     name: 'ClassficationCommodityList',
@@ -20,8 +19,8 @@
     },
     data() {
       return {
-        clickedClass : "",
-        type : "",
+        clickedClass: "",
+        type: "",
       };
     },
     computed: {
@@ -44,12 +43,6 @@
 
       this.clickedClass = this.$route.params.classPath;
       this.type = this.$route.params.type;
-
-      const courseCategory = await CategoryApi.getCoursePath();
-      console.log(JSON.parse(JSON.stringify(courseCategory)).child);
-      
-
-
     },
   });
   </script>
