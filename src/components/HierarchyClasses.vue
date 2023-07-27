@@ -24,7 +24,7 @@
         </ul>
       </div>
     </div> -->
-    <div v-for="(group, index) in displayArray" :key="index">
+    <div v-for="(group, groupIndex) in displayArray" :key="groupIndex">
       <div class="row">
         <ul class="list-group list-group-horizontal">
           <li class="list-group-item border-0">
@@ -33,10 +33,13 @@
           <b-button
             squared
             variant="light"
-            v-for="element in group"
+            v-for="(element, elementIndex) in group"
             :key="element.uuid"
             class="list-group-item border border-white"
-            :class=" element.isSelected?'beClicked':'' "
+            :class="element.isSelected ? 'beClicked' : ''"
+            @click="
+              elementClickedHandler(groupIndex, elementIndex, element.uuid)
+            "
           >
             {{ element.name }}
           </b-button>
@@ -83,25 +86,22 @@ export default defineComponent({
     console.log(this.clickedClass);
     console.log(this.type);
     try {
-    const courseCategory = await CategoryApi.getCoursePath();
-    console.log(JSON.parse(JSON.stringify(courseCategory)).child);
-    this.treeData = JSON.parse(JSON.stringify(courseCategory));
-    let level0 = [] as any;
-    this.treeData.child.forEach(
-      (element: { name: string; uuid: any }) => {
+      const courseCategory = await CategoryApi.getCoursePath();
+      console.log(JSON.parse(JSON.stringify(courseCategory)).child);
+      this.treeData = JSON.parse(JSON.stringify(courseCategory));
+      let level0 = [] as any;
+      this.treeData.child.forEach((element: { name: string; uuid: any }) => {
         // 設定第0層的每一個元素
         let elemetnObject = { uuid: "", name: "", isSelected: false, depth: 0 };
         elemetnObject.uuid = element.uuid;
         elemetnObject.name = element.name;
         level0.push(elemetnObject);
-      }
-    );
-    this.displayArray = [level0];
+      });
+      this.displayArray = [level0];
     } catch (error) {
       console.log(error);
-      
     }
-    
+
     //todo load this type level hierachy by api
     // if (this.type == "quiz") {
     //   this.levelClassesObj = quizunitRoot;
@@ -112,6 +112,26 @@ export default defineComponent({
     // }
   },
   methods: {
+    elementClickedHandler(depth: number, index: number, uuid: string) {
+      console.log(depth, index, uuid);
+      if (this.displayArray[depth][index].isSelected) {
+        // 已選 -> 將原本已選改為未選中
+        let tempDisplayArray = this.displayArray;
+        tempDisplayArray[depth][index].isSelected = false;
+        this.displayArray = tempDisplayArray;
+        // if(depth!=0 && )
+      } else {
+        // 未選
+
+        // 檢查同一層是不是已經有已選的element
+        let hasSelected = false;
+        this.displayArray[depth].forEach((element: { isSelected: any; }) => {
+          if(element.isSelected){
+            hasSelected = true;
+          }
+        });
+      }
+    },
     //   getLevelByIndex(index: number): levelClasses | undefined {
     //     let tempLevelClassesObj = this.levelClassesObj;
     //     for (let i = 0; i <= index; i++) {
