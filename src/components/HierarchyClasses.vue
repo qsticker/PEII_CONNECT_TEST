@@ -114,22 +114,33 @@ export default defineComponent({
   methods: {
     elementClickedHandler(depth: number, index: number, uuid: string) {
       console.log(depth, index, uuid);
+      let tempDisplayArray = this.displayArray;
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
-        let tempDisplayArray = this.displayArray;
-        tempDisplayArray[depth][index].isSelected = false;
-        this.displayArray = tempDisplayArray;
-        // if(depth!=0 && )
-      } else {
-        // 未選
 
-        // 檢查同一層是不是已經有已選的element
+        tempDisplayArray[depth][index].isSelected = false;
+        if (depth != 0 && depth + 1 != this.displayArray.length) {
+          tempDisplayArray.pop();
+        }
+        this.displayArray = tempDisplayArray;
+      } else {
+        // 檢查同一層,是不是已經有已選的element
         let hasSelected = false;
-        this.displayArray[depth].forEach((element: { isSelected: any; }) => {
-          if(element.isSelected){
-            hasSelected = true;
+        this.displayArray[depth].forEach(
+          (element: { isSelected: any }, forEachIndex: any) => {
+            if (element.isSelected) {
+              hasSelected = true;
+              tempDisplayArray[depth][forEachIndex].isSelected = false;
+            }
           }
-        });
+        );
+
+        // 沒有已選
+        tempDisplayArray.push(this.treeData.child);
+
+        for (let i = 0; i < depth+1; i++) {
+          // this.treeData.child[]
+        }
       }
     },
     //   getLevelByIndex(index: number): levelClasses | undefined {
