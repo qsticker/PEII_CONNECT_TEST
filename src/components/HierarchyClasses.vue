@@ -52,6 +52,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import CategoryApi from "@/apis/CategoryApi";
+import SellPlanApi from "@/apis/SellPlanApi";
 import { levelClasses, quizunitRoot } from "@/models/levelClass";
 import { Json } from "aws-sdk/clients/robomaker";
 // import isEqual from "lodash.isequal";
@@ -114,13 +115,14 @@ export default defineComponent({
   },
   methods: {
     elementClickedHandler(depth: number, index: number, uuid: string) {
+      this.$store.commit('updateSellPlanId', uuid);
       console.log(depth, index, uuid);
       let tempDisplayArray = this.displayArray;
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
 
         tempDisplayArray[depth][index].isSelected = false;
-        if (depth != 0 && depth + 1 != this.displayArray.length) {
+        if (tempDisplayArray.length != 0 && depth + 1 != this.displayArray.length) {
           tempDisplayArray.pop();
         }
         this.displayArray = tempDisplayArray;
@@ -136,14 +138,24 @@ export default defineComponent({
           }
         );
 
+        if(depth<tempDisplayArray.length){
+          this.displayArray = this.displayArray.slice(0, depth+1);
+          console.log("tempDisplayArray: "+ JSON.stringify(tempDisplayArray));
+        }
+
+      if(depth==0 && this.displayArray.length>1){
+        this.displayArray[1].array.forEach((element: { isSelected: boolean; }) => {
+          element.isSelected = false;
+        });
+      }
+
         // 沒有已選
-        tempDisplayArray[depth][index].isSelected = true;
+        
         const resultChildData = this.get_child_at_depth(this.treeData.child, index, depth).child;
         if (!resultChildData.isLeaf){
-          tempDisplayArray.push(resultChildData);
+          this.displayArray.push(resultChildData);
+          this.displayArray[depth][index].isSelected = true;
         }
-        console.log("this.get_data_at_depth_in_object(this.treeData, index, depth): "+ JSON.stringify(this.get_child_at_depth(this.treeData.child, index, depth).child));
-        
 
       }
     },

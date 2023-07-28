@@ -64,6 +64,7 @@ import { defineComponent } from "vue";
 //import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
 import { commodity , pass , commoditys , courses} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
+import SellPlanApi from "@/apis/SellPlanApi";
 
 export default defineComponent({
   name: 'CommodityList',
@@ -151,6 +152,9 @@ export default defineComponent({
       
   },
   created() {
+    const sellPlanQueryResult = SellPlanApi.getSellPlans("1c1c25e5-0c16-45a6-b778-aee1faa87c96");
+    // console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
+    
     //load commodity.ts by quiz or course's classified when created()
     console.log(  commoditys )
     if( isEqual( this.type , "quiz" ) ){

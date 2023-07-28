@@ -14,11 +14,15 @@ export default new Vuex.Store<State>({
     profile: null , //defulat is null
     shoppingCart : null,
     userContainPasses : null,
+    sellPlanId: 'ceb5cfdf-2dd8-4abc-91f7-0579faa55e5e',
   }),
   getters: {
   
   },
   mutations: {
+    updateSellPlanId: function(state : State, newSellPlanId: string){
+      state.sellPlanId = newSellPlanId;
+    },
     updateCourseClass: function(state : State, courseClassfication: RootClassfication[] ){
       state.courseClassfication = courseClassfication;
     },
