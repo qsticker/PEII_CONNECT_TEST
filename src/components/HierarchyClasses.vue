@@ -53,6 +53,7 @@
 import { defineComponent, PropType } from "vue";
 import CategoryApi from "@/apis/CategoryApi";
 import { levelClasses, quizunitRoot } from "@/models/levelClass";
+import { Json } from "aws-sdk/clients/robomaker";
 // import isEqual from "lodash.isequal";
 //import peiiNavbar from '@/components/navbar.vue'
 export default defineComponent({
@@ -136,59 +137,41 @@ export default defineComponent({
         );
 
         // 沒有已選
-        tempDisplayArray.push(this.treeData.child);
-
-        for (let i = 0; i < depth+1; i++) {
-          // this.treeData.child[]
+        tempDisplayArray[depth][index].isSelected = true;
+        const resultChildData = this.get_child_at_depth(this.treeData.child, index, depth).child;
+        if (!resultChildData.isLeaf){
+          tempDisplayArray.push(resultChildData);
         }
+        console.log("this.get_data_at_depth_in_object(this.treeData, index, depth): "+ JSON.stringify(this.get_child_at_depth(this.treeData.child, index, depth).child));
+        
+
       }
     },
-    //   getLevelByIndex(index: number): levelClasses | undefined {
-    //     let tempLevelClassesObj = this.levelClassesObj;
-    //     for (let i = 0; i <= index; i++) {
-    //       if (i == index) {
-    //         return tempLevelClassesObj;
-    //       } else {
-    //         if (tempLevelClassesObj.classMap == null) {
-    //           return undefined;
-    //         } else {
-    //           tempLevelClassesObj = tempLevelClassesObj.classMap.get(
-    //             this.currentLocation[i]
-    //           ) as levelClasses;
-    //         }
-    //       }
-    //     }
-    //   },
-    //   getLevelName(index: number) {
-    //     let tempLevelClassesObj = this.getLevelByIndex(index);
-    //     if (tempLevelClassesObj != undefined) {
-    //       return tempLevelClassesObj.rootLevel.levelName;
-    //     }
-    //   },
-    //   checkClick(currentClass: string, classOfThisLevel: string) {
-    //     if (isEqual(currentClass, classOfThisLevel)) {
-    //       return true;
-    //     }
-    //     return false;
-    //   },
-    //   beClicked(localeIndex: number, classOfThisLevel: string) {
-    //     const newCurrentLocation = [];
-    //     for (let i = 0; i < this.currentLocation.length; i++) {
-    //       if (i >= localeIndex) {
-    //         break;
-    //       } else {
-    //         newCurrentLocation.push(this.currentLocation[i]);
-    //       }
-    //     }
-    //     newCurrentLocation.push(classOfThisLevel);
-    //     const tempLevelClassesObj = this.getLevelByIndex(localeIndex);
-    //     if (tempLevelClassesObj != undefined) {
-    //       if (!tempLevelClassesObj.isLeaf) {
-    //         newCurrentLocation.push("*");
-    //       }
-    //     }
-    //     this.currentLocation = newCurrentLocation;
-    //   },
+    get_child_at_depth(data: any, objectIndex: any, depth: any) {
+      // Helper function - recursively traverse the JSON object
+      function dfs(obj: any, currentDepth: any) {
+        if (currentDepth === depth) {
+          return obj;
+        }
+        if (obj.child && Array.isArray(obj.child)) {
+          for (const childObj of obj.child) {
+            const result = dfs(childObj, currentDepth + 1) as any;
+            if (result !== null) {
+              return result;
+            }
+          }
+        }
+        return null;
+      }
+
+      if (objectIndex >= 0 && objectIndex < data.length) {
+        const desiredObject = data[objectIndex];
+        const desiredChild = dfs(desiredObject, 0); // Start traversing from depth 0
+        return desiredChild;
+      } else {
+        return null;
+      }
+    },
   },
 });
 </script>
