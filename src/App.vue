@@ -46,10 +46,9 @@ export default {
         }else{
           this.currentAnsweModel = this.newAnswerModelList[0]
           this.currentIndex = 0
-        } 
-      }     
+        }
+      }
     },
-
 }
 </script>
 
