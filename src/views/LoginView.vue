@@ -43,6 +43,7 @@ import { defineComponent } from "vue";
 import CognitoHandler from "@/handler/userpool"
 import VueCookies from 'vue-cookies'
 import router from "@/router";
+import UserDataApi from "@/apis/UserDataApi";
 //import peiiNavbar from '@/components/navbar.vue'
 
 export default defineComponent({
@@ -59,10 +60,16 @@ export default defineComponent({
     
   },
   methods: {
-    login() {
+    async login() {
       console.log(this.username)
       //console.log(this.password)
-      CognitoHandler.login(this.username , this.password , this.$router , this.$cookies , this.$store );
+      await CognitoHandler.login(this.username , this.password , this.$router , this.$cookies , this.$store );
+      this.retriveUserDetail();
+    },
+    async retriveUserDetail(){
+      const result = await UserDataApi.getDetail();
+      console.log("user detail" + JSON.stringify(result));
+      // this.$cookies.set()
     }
   },
 });
