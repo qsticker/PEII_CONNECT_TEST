@@ -94,6 +94,11 @@ export default defineComponent({
   },
   computed: {
   },
+  watch: {
+    '$store.state.sellPlanId'(newVal,oldVal){
+			this.retriveList();
+		}
+  },
   methods: {
       readyAddShoppingCart( commodity : commodity){
           //this.currentCommodity = commodity;
@@ -148,12 +153,16 @@ export default defineComponent({
       },
       course(){
         window.location.href = "https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html"
+      },
+      async retriveList(){
+        const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+        console.log(this.$store.state.sellPlanId + " sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
       }
       
   },
-  created() {
-    const sellPlanQueryResult = SellPlanApi.getSellPlans("1c1c25e5-0c16-45a6-b778-aee1faa87c96");
-    // console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
+  async created() {
+    const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+    console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
     
     //load commodity.ts by quiz or course's classified when created()
     console.log(  commoditys )
