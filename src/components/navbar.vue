@@ -59,13 +59,14 @@
                 :key="index"
                 class="col"
               >
-                <h6>
+                <h6 @click="goToClassficationCommidityList(classfication.name, '*', 'course')">
                   <a href="#" id="listItemStyle">{{ classfication.name }}</a>
                 </h6>
                 <li
                   v-for="(subClassfication, index) in classfication.subClassfication"
                   :key="index"
                   class="list-group-item"
+                  @click="goToClassficationCommidityList(classfication.name, '*', 'quiz')"
                 >
                   <a href="#" id="listItemStyle">{{ subClassfication }}</a>
                 </li>
@@ -114,6 +115,7 @@
                   v-for="(subClassfication, index) in classfication.subClassfication"
                   :key="index"
                   class="list-group-item"
+                  @click="goToClassficationCommidityList(classfication.name, '*', 'quiz')"
                 >
                   <a href="#" id="listItemStyle">{{ subClassfication }}</a>
                 </li>

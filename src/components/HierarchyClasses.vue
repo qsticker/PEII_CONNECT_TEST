@@ -55,7 +55,7 @@ import CategoryApi from "@/apis/CategoryApi";
 import SellPlanApi from "@/apis/SellPlanApi";
 import { levelClasses, quizunitRoot } from "@/models/levelClass";
 import { Json } from "aws-sdk/clients/robomaker";
-// import isEqual from "lodash.isequal";
+import isEqual from "lodash.isequal";
 //import peiiNavbar from '@/components/navbar.vue'
 export default defineComponent({
   name: "HierarchyClasses",
@@ -85,12 +85,18 @@ export default defineComponent({
     };
   },
   async created() {
-    console.log(this.clickedClass);
-    console.log(this.type);
+    // console.log(this.clickedClass);
+    // console.log(this.type);
+    let remoteCategory;
     try {
-      const courseCategory = await CategoryApi.getCoursePath();
-      console.log(JSON.parse(JSON.stringify(courseCategory)).child);
-      this.treeData = JSON.parse(JSON.stringify(courseCategory));
+      if (isEqual( this.type , "course" )) {
+        remoteCategory = await CategoryApi.getCoursePath();
+        console.log(JSON.parse(JSON.stringify(remoteCategory)).child);
+      } else{
+        remoteCategory = await CategoryApi.getQuizPath();
+      }
+
+      this.treeData = JSON.parse(JSON.stringify(remoteCategory));
       let level0 = [] as any;
       this.treeData.child.forEach((element: { name: string; uuid: any }) => {
         // 設定第0層的每一個元素
@@ -115,14 +121,17 @@ export default defineComponent({
   },
   methods: {
     elementClickedHandler(depth: number, index: number, uuid: string) {
-      this.$store.commit('updateSellPlanId', uuid); // 用於顯示列表
+      this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
       console.log(depth, index, uuid);
       let tempDisplayArray = this.displayArray;
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
 
         tempDisplayArray[depth][index].isSelected = false;
-        if (tempDisplayArray.length != 0 && depth + 1 != this.displayArray.length) {
+        if (
+          tempDisplayArray.length != 0 &&
+          depth + 1 != this.displayArray.length
+        ) {
           tempDisplayArray.pop();
         }
         this.displayArray = tempDisplayArray;
@@ -138,25 +147,30 @@ export default defineComponent({
           }
         );
 
-        if(depth<tempDisplayArray.length){
-          this.displayArray = this.displayArray.slice(0, depth+1);
-          console.log("tempDisplayArray: "+ JSON.stringify(tempDisplayArray));
+        if (depth < tempDisplayArray.length) {
+          this.displayArray = this.displayArray.slice(0, depth + 1);
+          console.log("tempDisplayArray: " + JSON.stringify(tempDisplayArray));
         }
 
-      if(depth==0 && this.displayArray.length>1){
-        this.displayArray[1].array.forEach((element: { isSelected: boolean; }) => {
-          element.isSelected = false;
-        });
-      }
+        if (depth == 0 && this.displayArray.length > 1) {
+          this.displayArray[1].array.forEach(
+            (element: { isSelected: boolean }) => {
+              element.isSelected = false;
+            }
+          );
+        }
 
         // 沒有已選
-        
-        const resultChildData = this.get_child_at_depth(this.treeData.child, index, depth).child;
-        if (!resultChildData.isLeaf){
+
+        const resultChildData = this.get_child_at_depth(
+          this.treeData.child,
+          index,
+          depth
+        ).child;
+        if (!resultChildData.isLeaf) {
           this.displayArray.push(resultChildData);
           this.displayArray[depth][index].isSelected = true;
         }
-
       }
     },
     get_child_at_depth(data: any, objectIndex: any, depth: any) {
