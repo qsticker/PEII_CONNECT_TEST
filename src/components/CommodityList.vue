@@ -4,15 +4,16 @@
       <div class="commodity"  v-for="( commodity ,index ) in commodityList" :key="index" >
         <!--<PeiiCommodity :commodity="commodity" />-->
         <div class="content" @click="readyAddShoppingCart(commodity)">
-          <img src="@/assets/QuizCommdity.png" alt="">
+          <img :src="commodity.showImageUrl" alt="">
           <div class="title text-truncate2 text-dark">
-            <span class="classOfCommodity d-inline-block border border-danger small p-1 mr-1 text-danger"> {{ commodity.class }} </span>	{{ commodity.name }}
+            <!-- <span class="classOfCommodity d-inline-block border border-danger small p-1 mr-1 text-danger"> {{ commodity.class }} </span>	 -->
+            {{ commodity.name }}
           </div>  
         </div>
       </div>
     </div>
 
-    <b-modal v-if="!isHoldingCurrentComodity" v-model="modalShow" class="modal" hide-footer id="bv-modal-a">
+    <b-modal v-model="modalShow" class="modal" hide-footer id="bv-modal-a">
       <template #modal-header>
          <div class="mx-auto" style="width:100%">
           <b-button squared style="width: 10%; margin-left: 90%; " variant="outline-dark" size="sm" @click="$bvModal.hide('bv-modal-a')">X</b-button>
@@ -20,10 +21,10 @@
         </template>
       <div class="commidity-modal">
         <div class="info-box">
-          <img src="@/assets/中考真題.png" />
+          <img :src="currentCommodity.showImageUrl" />
           <div>
-            <h2>{{ currentCommodity.pass.name }}</h2>
-            <p>{{ currentCommodity.pass.price }}</p>
+            <h2>{{ currentCommodity.name }}</h2>
+            <p>{{ currentCommodity.price }}</p>
           </div>
         </div>
         <div class="action-box">
@@ -37,26 +38,7 @@
       </div>
     </b-modal>
 
-    <b-modal v-else v-model="modalShow" class="modal" hide-footer>Q
-      <div class="commidity-modal">
-        <div class="info-box">
-          <img src="@/assets/中考真題.png" />
-          <div>
-            <h2>{{ currentCommodity.pass.name }}</h2>
-            <!--<p>{{ currentCommodity.pass.price }}</p>-->
-          </div>
-        </div>
-        <div class="action-box">
-          <div>
-            <button class="round" @click="subNumber">-</button>
-            <span>{{ number }}</span>
-            <button class="round" @click="addNumber">+</button>
-          </div>
-          <button v-if="isQuiz" @click="answer" >点击进入</button>
-          <button v-else @click="course" >点击进入</button>
-        </div>
-      </div>
-    </b-modal>
+   
   </div>
 </template>
 <script lang="ts">
@@ -156,12 +138,15 @@ export default defineComponent({
       },
       async retriveList(){
         const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+        this.commodityList = JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
         console.log(this.$store.state.sellPlanId + " sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
       }
       
   },
   async created() {
     const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+    
+    this.commodityList = JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
     console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
     
     //load commodity.ts by quiz or course's classified when created()

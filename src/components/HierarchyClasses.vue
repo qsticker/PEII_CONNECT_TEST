@@ -115,7 +115,7 @@ export default defineComponent({
   },
   methods: {
     elementClickedHandler(depth: number, index: number, uuid: string) {
-      this.$store.commit('updateSellPlanId', uuid);
+      this.$store.commit('updateSellPlanId', uuid); // 用於顯示列表
       console.log(depth, index, uuid);
       let tempDisplayArray = this.displayArray;
       if (this.displayArray[depth][index].isSelected) {
