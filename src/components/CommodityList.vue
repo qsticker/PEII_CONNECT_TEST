@@ -146,18 +146,18 @@ export default defineComponent({
   async created() {
     const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
     
-    this.commodityList = JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
+    this.commodityList = await JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
     console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
     
     //load commodity.ts by quiz or course's classified when created()
-    console.log(  commoditys )
-    if( isEqual( this.type , "quiz" ) ){
-      this.commodityList = commoditys;
-    }else if( isEqual( this.type , "course" ) ) {
-      this.commodityList = courses;
-    }else{
-      this.commodityList = commoditys;
-    }
+    // console.log(  commoditys )
+    // if( isEqual( this.type , "quiz" ) ){
+    //   this.commodityList = commoditys;
+    // }else if( isEqual( this.type , "course" ) ) {
+    //   this.commodityList = courses;
+    // }else{
+    //   this.commodityList = commoditys;
+    // }
     
     this.currentCommodity = this.commodityList[0];
     this.isCreated = true;
