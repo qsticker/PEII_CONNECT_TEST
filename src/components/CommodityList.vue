@@ -225,7 +225,7 @@ export default defineComponent({
             color: #aba6a6;
 
             &::before {
-                content: "$";
+                content: "￥";
                 margin-right: .3em;
             }
         }
@@ -326,7 +326,7 @@ export default defineComponent({
             color: #aba6a6;
 
             &::before {
-                content: "$";
+                content: "￥";
                 margin-right: .3em;
             }
         }
