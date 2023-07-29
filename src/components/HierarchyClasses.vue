@@ -52,7 +52,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import CategoryApi from "@/apis/CategoryApi";
+import SellPlanApi from "@/apis/SellPlanApi";
 import { levelClasses, quizunitRoot } from "@/models/levelClass";
+import { Json } from "aws-sdk/clients/robomaker";
 // import isEqual from "lodash.isequal";
 //import peiiNavbar from '@/components/navbar.vue'
 export default defineComponent({
@@ -113,71 +115,75 @@ export default defineComponent({
   },
   methods: {
     elementClickedHandler(depth: number, index: number, uuid: string) {
+      this.$store.commit('updateSellPlanId', uuid); // 用於顯示列表
       console.log(depth, index, uuid);
+      let tempDisplayArray = this.displayArray;
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
-        let tempDisplayArray = this.displayArray;
-        tempDisplayArray[depth][index].isSelected = false;
-        this.displayArray = tempDisplayArray;
-        // if(depth!=0 && )
-      } else {
-        // 未選
 
-        // 檢查同一層是不是已經有已選的element
+        tempDisplayArray[depth][index].isSelected = false;
+        if (tempDisplayArray.length != 0 && depth + 1 != this.displayArray.length) {
+          tempDisplayArray.pop();
+        }
+        this.displayArray = tempDisplayArray;
+      } else {
+        // 檢查同一層,是不是已經有已選的element
         let hasSelected = false;
-        this.displayArray[depth].forEach((element: { isSelected: any; }) => {
-          if(element.isSelected){
-            hasSelected = true;
+        this.displayArray[depth].forEach(
+          (element: { isSelected: any }, forEachIndex: any) => {
+            if (element.isSelected) {
+              hasSelected = true;
+              tempDisplayArray[depth][forEachIndex].isSelected = false;
+            }
           }
+        );
+
+        if(depth<tempDisplayArray.length){
+          this.displayArray = this.displayArray.slice(0, depth+1);
+          console.log("tempDisplayArray: "+ JSON.stringify(tempDisplayArray));
+        }
+
+      if(depth==0 && this.displayArray.length>1){
+        this.displayArray[1].array.forEach((element: { isSelected: boolean; }) => {
+          element.isSelected = false;
         });
       }
+
+        // 沒有已選
+        
+        const resultChildData = this.get_child_at_depth(this.treeData.child, index, depth).child;
+        if (!resultChildData.isLeaf){
+          this.displayArray.push(resultChildData);
+          this.displayArray[depth][index].isSelected = true;
+        }
+
+      }
     },
-    //   getLevelByIndex(index: number): levelClasses | undefined {
-    //     let tempLevelClassesObj = this.levelClassesObj;
-    //     for (let i = 0; i <= index; i++) {
-    //       if (i == index) {
-    //         return tempLevelClassesObj;
-    //       } else {
-    //         if (tempLevelClassesObj.classMap == null) {
-    //           return undefined;
-    //         } else {
-    //           tempLevelClassesObj = tempLevelClassesObj.classMap.get(
-    //             this.currentLocation[i]
-    //           ) as levelClasses;
-    //         }
-    //       }
-    //     }
-    //   },
-    //   getLevelName(index: number) {
-    //     let tempLevelClassesObj = this.getLevelByIndex(index);
-    //     if (tempLevelClassesObj != undefined) {
-    //       return tempLevelClassesObj.rootLevel.levelName;
-    //     }
-    //   },
-    //   checkClick(currentClass: string, classOfThisLevel: string) {
-    //     if (isEqual(currentClass, classOfThisLevel)) {
-    //       return true;
-    //     }
-    //     return false;
-    //   },
-    //   beClicked(localeIndex: number, classOfThisLevel: string) {
-    //     const newCurrentLocation = [];
-    //     for (let i = 0; i < this.currentLocation.length; i++) {
-    //       if (i >= localeIndex) {
-    //         break;
-    //       } else {
-    //         newCurrentLocation.push(this.currentLocation[i]);
-    //       }
-    //     }
-    //     newCurrentLocation.push(classOfThisLevel);
-    //     const tempLevelClassesObj = this.getLevelByIndex(localeIndex);
-    //     if (tempLevelClassesObj != undefined) {
-    //       if (!tempLevelClassesObj.isLeaf) {
-    //         newCurrentLocation.push("*");
-    //       }
-    //     }
-    //     this.currentLocation = newCurrentLocation;
-    //   },
+    get_child_at_depth(data: any, objectIndex: any, depth: any) {
+      // Helper function - recursively traverse the JSON object
+      function dfs(obj: any, currentDepth: any) {
+        if (currentDepth === depth) {
+          return obj;
+        }
+        if (obj.child && Array.isArray(obj.child)) {
+          for (const childObj of obj.child) {
+            const result = dfs(childObj, currentDepth + 1) as any;
+            if (result !== null) {
+              return result;
+            }
+          }
+        }
+        return null;
+      }
+
+      if (objectIndex >= 0 && objectIndex < data.length) {
+        const desiredObject = data[objectIndex];
+        const desiredChild = dfs(desiredObject, 0); // Start traversing from depth 0
+        return desiredChild;
+      } else {
+        return null;
+      }
+    },
   },
 });
 </script>
