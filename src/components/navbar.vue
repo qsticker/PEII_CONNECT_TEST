@@ -82,7 +82,7 @@
           aria-expanded="false"
           id="navMenuItemBtn"
         >
-          单元测验
+          测验
         </b-button>
 
         <ul class="dropdown-menu active" id="ulStyle">
@@ -95,7 +95,7 @@
               font-weight: bold;
             "
           >
-            单元测验
+            测验
           </div>
           <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
           <div class="dropdown-item">
@@ -122,51 +122,7 @@
           </div>
         </ul>
 
-        <b-button
-          squared
-          variant="link"
-          class="text-decoration-none computer-view dropdown-toggle"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          id="navMenuItemBtn"
-        >
-          复习测验
-        </b-button>
-
-        <ul class="dropdown-menu active" id="ulStyle">
-          <div id="dropdownMenuTopLine" />
-          <div
-            style="
-              margin-left: 15px;
-              font-size: 23px;
-              margin-top: 10px;
-              font-weight: bold;
-            "
-          >
-            复习测验
-          </div>
-          <hr id="driodiwbMenuHrLineBetweenTopicAndList" />
-          <div class="dropdown-item">
-            <div class="row">
-              <div
-                v-for="(classfication, index) in quizRootClassifications"
-                :key="index"
-                class="col"
-              >
-                <h6>
-                  <a href="#" id="listItemStyle">{{ classfication.name }}</a>
-                </h6>
-                <li
-                  v-for="(subClassfication, index) in classfication.subClassfication"
-                  :key="index"
-                  class="list-group-item"
-                >
-                  <a href="#" id="listItemStyle">{{ subClassfication }}</a>
-                </li>
-              </div>
-            </div>
-          </div>
-        </ul>
+        
       </div>
 
       <!-- Nav links -->
