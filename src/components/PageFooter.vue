@@ -89,7 +89,7 @@
       <!-- Copyright -->
       <img src="../assets/logoWhite.png" style="width: 110px; margin-top: 50px;">
       <div class="text-center p-3" style=" color: #8F9BB3; height: 135px">
-        © 2023 北一國際教育
+        © 2023 北一国际教育
       </div>
       <!-- Copyright -->
     </div>
