@@ -100,7 +100,7 @@ export default defineComponent({
               shoppingCartMap.set( key , value )
           });
         }
-        shoppingCartMap.set( this.currentCommodity.pass , this.number )
+        shoppingCartMap.set( {name: this.currentCommodity.name, price: this.currentCommodity.price, showImageUrl: this.currentCommodity.showImageUrl} as any , this.number )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         this.modalShow = false;
         this.number = 1;
@@ -146,18 +146,18 @@ export default defineComponent({
   async created() {
     const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
     
-    this.commodityList = JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
+    this.commodityList = await JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
     console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
     
     //load commodity.ts by quiz or course's classified when created()
-    console.log(  commoditys )
-    if( isEqual( this.type , "quiz" ) ){
-      this.commodityList = commoditys;
-    }else if( isEqual( this.type , "course" ) ) {
-      this.commodityList = courses;
-    }else{
-      this.commodityList = commoditys;
-    }
+    // console.log(  commoditys )
+    // if( isEqual( this.type , "quiz" ) ){
+    //   this.commodityList = commoditys;
+    // }else if( isEqual( this.type , "course" ) ) {
+    //   this.commodityList = courses;
+    // }else{
+    //   this.commodityList = commoditys;
+    // }
     
     this.currentCommodity = this.commodityList[0];
     this.isCreated = true;
@@ -225,7 +225,7 @@ export default defineComponent({
             color: #aba6a6;
 
             &::before {
-                content: "$";
+                content: "￥";
                 margin-right: .3em;
             }
         }
@@ -326,7 +326,7 @@ export default defineComponent({
             color: #aba6a6;
 
             &::before {
-                content: "$";
+                content: "￥";
                 margin-right: .3em;
             }
         }

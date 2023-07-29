@@ -4,7 +4,7 @@
       <div class="commidity-container" >
         <div class="commidityInShoppingCart"  v-for="(pass, index)  in shoppingCartSortArray" :key="index" >
           <div class="info-box">
-            <img src="@/assets/中考真題.png" />
+            <img :src="pass[0].showImageUrl" />
             <div>
               <h2>{{ pass[0].name }}</h2>
               <p>{{ pass[0].price }}</p>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="check-out-container">
-        <div colspan="3" class="total-price-title" >商品总计 <span class="total-price">$ {{ getTotal() }}</span></div>
+        <div colspan="3" class="total-price-title" >商品总计 <span class="total-price">￥ {{ getTotal() }}</span></div>
         <button class="checkout" @click="checkout">付款</button>
       </div>
     </div>
@@ -162,7 +162,7 @@ export default defineComponent ({
             color: #aba6a6;
 
             &::before {
-                content: "$";
+                content: "￥";
                 margin-right: .3em;
             }
         }
