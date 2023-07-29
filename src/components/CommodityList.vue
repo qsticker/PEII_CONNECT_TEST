@@ -89,53 +89,70 @@ export default defineComponent({
       this.retriveList();
     },
   },
+  watch: {
+    '$store.state.sellPlanId'(newVal,oldVal){
+			this.retriveList();
+		}
+  },
   methods: {
-    readyAddShoppingCart(commodity: commodity) {
-      //this.currentCommodity = commodity;
-      this.modalShow = true;
-      this.number = 1;
-      this.currentCommodity = commodity;
-      this.isHoldingCurrentComodity =
-        this.checkCommodityContainByUser(commodity);
-      this.isQuiz = this.checkCommodityType(commodity);
-      console.log("shopping");
-    },
-    addCurrentCommodityInShoppingCart() {
-      //todo call api to save shopping cart
-      let shoppingCartMap = new Map<pass, number>();
-      if (this.$store.state.shoppingCart) {
-        console.log("exist");
-        this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
-          shoppingCartMap.set(key, value);
-        });
-      }
-      shoppingCartMap.set(
-        {
-          name: this.currentCommodity.name,
-          price: this.currentCommodity.price,
-          showImageUrl: this.currentCommodity.showImageUrl,
-        } as any,
-        this.number
-      );
-      this.$store.commit("updateShoppingCart", shoppingCartMap);
-      this.modalShow = false;
-      this.number = 1;
-      console.log(shoppingCartMap);
-    },
-    addNumber() {
-      this.number = this.number + 1;
-    },
-    subNumber() {
-      if (this.number != 0) {
-        this.number = this.number - 1;
-      }
-    },
-    checkCommodityContainByUser(commodity: commodity) {
-      if (this.$store.state.userContainPasses) {
-        if (this.$store.state.userContainPasses.has(commodity.pass)) {
-          console.log(this.$store.state.userContainPasses);
+      readyAddShoppingCart( commodity : commodity){
+          //this.currentCommodity = commodity;
+          this.modalShow = true;
+          this.number = 1;
+          this.currentCommodity = commodity;
+          this.isHoldingCurrentComodity = this.checkCommodityContainByUser(commodity)
+          this.isQuiz = this.checkCommodityType( commodity );
+          console.log("shopping")
+      },
+      addCurrentCommodityInShoppingCart(){
+        //todo call api to save shopping cart
+        let shoppingCartMap = new  Map<pass , number>();
+        if(this.$store.state.shoppingCart){
+          console.log("exist")
+          this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
+              shoppingCartMap.set( key , value )
+          });
+        }
+        shoppingCartMap.set( {name: this.currentCommodity.name, price: this.currentCommodity.price, showImageUrl: this.currentCommodity.showImageUrl} as any , this.number )
+        this.$store.commit('updateShoppingCart', shoppingCartMap );  
+        this.modalShow = false;
+        this.number = 1;
+        console.log(shoppingCartMap )
+      },
+      addNumber(){
+        this.number = this.number + 1;
+      },
+      subNumber(){
+        if(this.number!=0){
+          this.number = this.number - 1;
+        } 
+      },
+      checkCommodityContainByUser(commodity : commodity) {
+        if( this.$store.state.userContainPasses ){
+          if( this.$store.state.userContainPasses.has( commodity.pass ) ){
+            console.log( this.$store.state.userContainPasses )
+            return true;
+          }
+        }
+        console.log("ppp")
+        return false;
+      },
+      checkCommodityType(commodity : commodity){
+        if( isEqual( commodity.type , "quiz" )){
           return true;
         }
+        return false;
+      },
+      answer(){
+        this.$router.push({name : "answer"});
+      },
+      course(){
+        window.location.href = "https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html"
+      },
+      async retriveList(){
+        const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+        this.commodityList = JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
+        console.log(this.$store.state.sellPlanId + " sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
       }
       console.log("ppp");
       return false;
@@ -168,14 +185,10 @@ export default defineComponent({
     },
   },
   async created() {
-    const sellPlanQueryResult = await SellPlanApi.getSellPlans(
-      this.$store.state.sellPlanId
-    );
-
-    this.commodityList = await JSON.parse(JSON.stringify(sellPlanQueryResult))
-      .sellPlans;
+    const sellPlanQueryResult = await SellPlanApi.getSellPlans(this.$store.state.sellPlanId);
+    
+    this.commodityList = await JSON.parse(JSON.stringify(sellPlanQueryResult)).sellPlans;
     console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
-
     //load commodity.ts by quiz or course's classified when created()
     // console.log(  commoditys )
     // if( isEqual( this.type , "quiz" ) ){
@@ -185,7 +198,6 @@ export default defineComponent({
     // }else{
     //   this.commodityList = commoditys;
     // }
-
     this.currentCommodity = this.commodityList[0];
     this.isCreated = true;
   },
