@@ -3,7 +3,7 @@ import vm from '@/main';
 import Auth from '@/libs/auth';
 
 const api = axios.create({
-  baseURL: process.env.VUE_APP_PEII_S3_URL,
+  baseURL: process.env.VUE_APP_PEII_S3_BASE_API_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
