@@ -100,7 +100,7 @@ export default defineComponent({
               shoppingCartMap.set( key , value )
           });
         }
-        shoppingCartMap.set( this.currentCommodity.pass , this.number )
+        shoppingCartMap.set( {name: this.currentCommodity.name, price: this.currentCommodity.price, showImageUrl: this.currentCommodity.showImageUrl} as any , this.number )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
         this.modalShow = false;
         this.number = 1;
