@@ -89,6 +89,11 @@ export default defineComponent({
       this.retriveList();
     },
   },
+  watch: {
+    '$store.state.sellPlanId'(newVal,oldVal){
+			this.retriveList();
+		}
+  },
   methods: {
     readyAddShoppingCart(commodity: commodity) {
       //this.currentCommodity = commodity;
@@ -185,7 +190,6 @@ export default defineComponent({
     // }else{
     //   this.commodityList = commoditys;
     // }
-
     this.currentCommodity = this.commodityList[0];
     this.isCreated = true;
   },

@@ -197,6 +197,41 @@ export default defineComponent({
       } else {
         return null;
       }
+
+        // 沒有已選
+        
+        const resultChildData = this.get_child_at_depth(this.treeData.child, index, depth).child;
+        if (!resultChildData.isLeaf){
+          this.displayArray.push(resultChildData);
+          this.displayArray[depth][index].isSelected = true;
+        }
+
+      }
+    },
+    get_child_at_depth(data: any, objectIndex: any, depth: any) {
+      // Helper function - recursively traverse the JSON object
+      function dfs(obj: any, currentDepth: any) {
+        if (currentDepth === depth) {
+          return obj;
+        }
+        if (obj.child && Array.isArray(obj.child)) {
+          for (const childObj of obj.child) {
+            const result = dfs(childObj, currentDepth + 1) as any;
+            if (result !== null) {
+              return result;
+            }
+          }
+        }
+        return null;
+      }
+
+      if (objectIndex >= 0 && objectIndex < data.length) {
+        const desiredObject = data[objectIndex];
+        const desiredChild = dfs(desiredObject, 0); // Start traversing from depth 0
+        return desiredChild;
+      } else {
+        return null;
+      }
     },
   },
 });
