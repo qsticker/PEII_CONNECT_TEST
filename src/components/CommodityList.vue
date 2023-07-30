@@ -17,7 +17,14 @@
       </div>
     </div>
 
-    <b-modal v-model="modalShow" class="modal" hide-footer id="bv-modal-a">
+    <!-- isUserChoose= false 出現正常b-modal -->
+    <b-modal
+      v-if="!currentCommodity.isUserChoose"
+      v-model="modalShow"
+      class="modal"
+      hide-footer
+      id="bv-modal-a"
+    >
       <template #modal-header>
         <div class="mx-auto" style="width: 100%">
           <b-button
@@ -48,6 +55,50 @@
         </div>
       </div>
     </b-modal>
+
+    <!-- isUserChoose 為true，出現多選項b-modal -->
+    <b-modal
+      v-else-if="currentCommodity.isUserChoose"
+      v-model="modalShow"
+      class="modal"
+      hide-footer
+      id="bv-modal-a"
+    >
+      <template #modal-header>
+        <div class="mx-auto" style="width: 100%">
+          <b-button
+            squared
+            style="width: 10%; margin-left: 90%"
+            variant="outline-dark"
+            size="sm"
+            @click="$bvModal.hide('bv-modal-a')"
+            >X</b-button
+          >
+        </div>
+      </template>
+      <div
+        v-for="(item, index) in retriveGroups(currentCommodity.uuid)"
+        :key="index"
+        class="commidity-modal"
+      >
+        <div class="info-box">
+          <!-- <img :src="currentCommodity.showImageUrl" /> -->
+          <div>
+            <h2>{{ JSON.stringify(item) }}</h2>
+            <!-- <p>{{ item.price }}</p> -->
+            <!-- <p>{{retriveGroups(currentCommodity.categories)}}</p> -->
+          </div>
+        </div>
+        <div class="action-box">
+          <div>
+            <button class="round" @click="subNumber">-</button>
+            <span>{{ number }}</span>
+            <button class="round" @click="addNumber">+</button>
+          </div>
+          <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script lang="ts">
@@ -56,6 +107,7 @@ import { defineComponent } from "vue";
 import { commodity, pass, commoditys, courses } from "@/models/commodity";
 import isEqual from "lodash.isequal";
 import SellPlanApi from "@/apis/SellPlanApi";
+import CategoryApi from "@/apis/CategoryApi";
 
 export default defineComponent({
   name: "CommodityList",
@@ -90,6 +142,13 @@ export default defineComponent({
     },
   },
   methods: {
+    async retriveGroups(uuid: string) {
+      if (isEqual(this.type, "quiz")) {
+        return await CategoryApi.getAllQuizGroups(uuid);
+      } else {
+        return await CategoryApi.getAllQuizGroups(uuid);
+      }
+    },
     readyAddShoppingCart(commodity: commodity) {
       //this.currentCommodity = commodity;
       this.modalShow = true;

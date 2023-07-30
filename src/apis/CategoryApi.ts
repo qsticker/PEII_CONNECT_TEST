@@ -12,4 +12,14 @@ export default class CategoryApi {
         const result = await s3Api.get(`/quiz.json`);
         return result.data;
     }
+
+    static async getAllQuizGroups(categoryId: string): Promise<string> {
+        const result = await api.get(`/category/getAllQuizGroups/${categoryId}`);
+        return result.data.quizGroups;
+    }
+
+    static async getAllCourseGroups(categoryId: string): Promise<string> {
+        const result = await api.get(`/category/getAllCourseGroups/${categoryId}`);
+        return result.data.courseGroups;
+    }
 }
