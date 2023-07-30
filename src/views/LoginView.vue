@@ -69,7 +69,7 @@ export default defineComponent({
       console.log(this.username)
       //console.log(this.password)
       await CognitoHandler.login(this.username , this.password , this.$router , this.$cookies , this.$store );
-      await this.retriveAndSetUserDetail();
+      
     },
     async retriveAndSetUserDetail() {
       const result = await UserDataApi.getDetail();
