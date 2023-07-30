@@ -10,18 +10,26 @@
         </div>-->
 
       <div class="computer-view peiiicon" style="margin-top: 15px">
-        <img src="../assets/logo.png" class="img-fluid" alt="Responsive image" />
+        <img
+          src="../assets/logo.png"
+          class="img-fluid"
+          alt="Responsive image"
+        />
       </div>
       <div class="computer-view d-flex logo-box align-items-center">
         <router-link class="logo-text" to="/" title="北一国际教育">
           <div class="computer-view title font-weight-bold">
             <font style="vertical-align: inherit"
-              ><font style="vertical-align: inherit">智能型英语教学.自学云</font></font
+              ><font style="vertical-align: inherit"
+                >智能型英语教学.自学云</font
+              ></font
             >
           </div>
           <div class="computer-view des text-family-light">
             <font style="vertical-align: inherit"
-              ><font style="vertical-align: inherit">北一国际教育集团旗下品牌</font></font
+              ><font style="vertical-align: inherit"
+                >北一国际教育集团旗下品牌</font
+              ></font
             >
           </div>
         </router-link>
@@ -32,14 +40,14 @@
           squared
           variant="link"
           class="text-decoration-none computer-view dropdown-toggle"
-          data-bs-toggle="dropdown"
           aria-expanded="false"
           id="navMenuItemBtn"
+          @click="goToClassficationCommidityList('', '*', 'course')"
         >
           课程
         </b-button>
 
-        <ul class="dropdown-menu active" id="ulStyle">
+        <!-- <ul class="dropdown-menu active" id="ulStyle">
           <div id="dropdownMenuTopLine" />
           <div
             style="
@@ -73,15 +81,17 @@
               </div>
             </div>
           </div>
-        </ul>
+        </ul> -->
 
         <b-button
           squared
           variant="link"
           class="text-decoration-none computer-view dropdown-toggle"
-          data-bs-toggle="dropdown"
           aria-expanded="false"
           id="navMenuItemBtn"
+          @click="
+            goToClassficationCommidityList('', '*', 'quiz')
+          "
         >
           测验
         </b-button>
@@ -107,15 +117,29 @@
                 class="col"
               >
                 <h6
-                  @click="goToClassficationCommidityList(classfication.name, '*', 'quiz')"
+                  @click="
+                    goToClassficationCommidityList(
+                      classfication.name,
+                      '*',
+                      'quiz'
+                    )
+                  "
                 >
                   {{ classfication.name }}
                 </h6>
                 <li
-                  v-for="(subClassfication, index) in classfication.subClassfication"
+                  v-for="(
+                    subClassfication, index
+                  ) in classfication.subClassfication"
                   :key="index"
                   class="list-group-item"
-                  @click="goToClassficationCommidityList(classfication.name, '*', 'quiz')"
+                  @click="
+                    goToClassficationCommidityList(
+                      classfication.name,
+                      '*',
+                      'quiz'
+                    )
+                  "
                 >
                   <a href="#" id="listItemStyle">{{ subClassfication }}</a>
                 </li>
@@ -123,12 +147,14 @@
             </div>
           </div>
         </ul>
-
-        
       </div>
 
       <!-- Nav links -->
-      <div v-if="isLogin" class="login-nav nav-btn-wrapper" @click="changeSideNav">
+      <div
+        v-if="isLogin"
+        class="login-nav nav-btn-wrapper"
+        @click="changeSideNav"
+      >
         <div v-if="isLogin" class="rwd-title">
           <h6>页面选择</h6>
         </div>
@@ -261,7 +287,7 @@ export default defineComponent({
       console.log("out");
       this.$cookies.remove("accessToken");
       this.$store.state.profile = null;
-      },
+    },
     changeSideNav() {
       this.showSideNav = !this.showSideNav;
       console.log(this.showSideNav);
@@ -276,7 +302,11 @@ export default defineComponent({
     goToShoppingCart() {
       this.$router.push({ path: "/ShoppingCart" });
     },
-    goToClassficationCommidityList(class1: string, class2: string, type: string) {
+    goToClassficationCommidityList(
+      class1: string,
+      class2: string,
+      type: string
+    ) {
       let classPath = class1 + "/" + class2;
       this.$router.push({
         name: "classficationCommodityList",
