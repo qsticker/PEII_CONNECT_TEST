@@ -50,9 +50,7 @@
             <button class="round" @click="subNumber">-</button>
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
-          </div>
-          <button v-if="cookie.get('accessToken')" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
-            
+          </div>         
             <div v-if="cookie.get('accessToken')">
               <button id="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
               <div v-else> <img src="@/assets/icons/checkCircle.svg" />已完成加入</div>
