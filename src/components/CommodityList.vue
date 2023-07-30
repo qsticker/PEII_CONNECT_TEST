@@ -51,8 +51,13 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
-          <div v-else> <img src="@/assets/icons/checkCircle.svg" />已完成加入</div>
+          <button v-if="cookie.get('accessToken')" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+            
+            <div v-if="cookie.get('accessToken')">
+              <button id="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+              <div v-else> <img src="@/assets/icons/checkCircle.svg" />已完成加入</div>
+            </div>
+            <p v-else>您还未登录，请登录后再试！</p>
         </div>
       </div>
     </b-modal>
@@ -367,6 +372,19 @@ export default defineComponent({
       cursor: pointer;
     }
   }
+}
+
+.addToShoppingCartBtn{
+  button {
+        outline: 0;
+        border: 0;
+        padding: 10px 20px;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+        background: #ef8a8b;
+        cursor: pointer;
+      }
 }
 
 @media screen and (max-width: 500px) {
