@@ -52,7 +52,7 @@
             <button class="round" @click="addNumber">+</button>
             <div v-if="cookie.get('accessToken')" style="display: inline-block; margin-left: 150px;">
               <button class="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
-              <div v-else> <img src="@/assets/icons/checkCircle.svg" />已完成加入</div>
+              <div v-else> <b-icon icon="check2-circle" class="" variant="success" style="margin-right: 7px" />已加入购物车</div>
             </div>
             <p v-else>您还未登录，请登录后再试！</p>
             </div>

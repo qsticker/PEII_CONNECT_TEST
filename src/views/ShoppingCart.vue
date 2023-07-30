@@ -26,8 +26,15 @@
       </div>
     </div>
     <div v-else class="empty-container">
-      <b-icon icon="exclamation-circle" class="icon"></b-icon>
-      <span class="text">Woops! 您尚未选择任何商品哦</span>
+      <div v-if="showCheckoutSuccessTip">
+        <b-icon icon="check2-all" class="icon" style="height: 55px" variant="success"></b-icon>
+        <div class="text">Congratulation! 结账成功</div>
+        <b-button squared variant="outline-dark" style="margin-top: 30px" @click="backToHomeBtn">返回首页</b-button>
+      </div>
+      <div v-else>
+        <b-icon icon="exclamation-circle" class="icon"></b-icon>
+        <div class="text">Woops! 您尚未选择任何商品哦</div>
+      </div>
       </div>
   </div>
 </template>
@@ -46,20 +53,24 @@ export default defineComponent ({
     return {
       shoppingCartSortArray : new Array<Array<any>>(),
       total : 0,
+      showCheckoutSuccessTip: false,
     };
   },
   computed: {
     
   },
   watch: {
-      '$store.state.shoppingCart'  : {
-        handler : function( ) {
-          this.setshoppingCartSortArray(this.$store.state.shoppingCart ) //need confirm it's sort
-        },
-        deep: true,
-      },
+      // '$store.state.shoppingCart'  : {
+      //   handler : function( ) {
+      //     this.setshoppingCartSortArray(this.$store.state.shoppingCart ) //need confirm it's sort
+      //   },
+      //   deep: true,
+      // },
   },
   methods: {
+    backToHomeBtn(){
+      this.$router.push({name : "home"});
+    },
       addNumber( pass : pass){
         let passNumber = this.$store.state.shoppingCart.get(pass)
         passNumber = passNumber + 1;
@@ -113,17 +124,17 @@ export default defineComponent ({
         console.log("this.shoppingCartSortArray: " + this.shoppingCartSortArray);
         
       },
-      setshoppingCartSortArray(shoppingCartMap : Map<pass, number> ){
-          this.shoppingCartSortArray =  new Array<Array<any>>();
-          shoppingCartMap.forEach((value: number, key: pass) => {
-              let keyValue = new Array<any>();
-              keyValue.push(key);
-              keyValue.push(value);
-              this.shoppingCartSortArray.push(keyValue)
-          });
-          this.shoppingCartSortArray.sort( (one, two) => (one[0].name > two[0].name ? -1 : 1) )
-          console.log( this.shoppingCartSortArray )
-      },
+      // setshoppingCartSortArray(shoppingCartMap : Map<pass, number> ){
+      //     this.shoppingCartSortArray =  new Array<Array<any>>();
+      //     shoppingCartMap.forEach((value: number, key: pass) => {
+      //         let keyValue = new Array<any>();
+      //         keyValue.push(key);
+      //         keyValue.push(value);
+      //         this.shoppingCartSortArray.push(keyValue)
+      //     });
+      //     this.shoppingCartSortArray.sort( (one, two) => (one[0].name > two[0].name ? -1 : 1) )
+      //     console.log( this.shoppingCartSortArray )
+      // },
       getTotal(){
           // this.total = 0;
           // this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
@@ -135,6 +146,7 @@ export default defineComponent ({
         //todo: save commodity in user space by api
         await ShoppingCartApi.checkoutShoppingCart();
         await this.setShoppingCartSortArray();
+        this.showCheckoutSuccessTip = true;
         // this.$store.state.userContainPasses = this.$store.state.shoppingCart;
         // console.log(  this.$store.state.userContainPasses )
         // this.$router.push({name : "home"});
