@@ -44,7 +44,13 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
+            <button
+              v-if="cookie.get('accessToken')"
+              @click="addCurrentCommodityInShoppingCart"
+            >
+              加入购物车
+            </button>
+            <p v-else>您还未登录，请登录后再试！</p>
         </div>
       </div>
     </b-modal>
@@ -71,6 +77,7 @@ export default defineComponent({
       isCreated: false,
       isHoldingCurrentComodity: false,
       isQuiz: false,
+      cookie: this.$cookies,
     };
   },
   props: {
