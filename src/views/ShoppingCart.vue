@@ -1,6 +1,6 @@
 <template>
   <div> 
-    <div class="root">
+    <div v-if="shoppingCartSortArray.length !== 0" class="root">
       <div class="commidity-container" >
         <div class="commidityInShoppingCart"  v-for="(pass, index)  in shoppingCartSortArray" :key="index" >
           <div class="info-box">
@@ -25,6 +25,10 @@
         <button class="checkout" @click="checkout">付款</button>
       </div>
     </div>
+    <div v-else class="empty-container">
+      <b-icon icon="exclamation-circle" class="icon"></b-icon>
+      <span class="text">Woops! 您尚未选择任何商品哦</span>
+      </div>
   </div>
 </template>
 <script lang="ts">
@@ -123,9 +127,29 @@ export default defineComponent ({
 });
 </script>
 <style scoped lang="scss">
+.empty-container {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; /* 垂直居中文本和图标 */
+
+}
+
+.empty-container .icon {
+  margin-right: 0.5%;
+  font-size: 36px; /* 调整图标大小 */
+}
+
+.empty-container .text {
+  font-size: 20px; /* 调整文本字体大小 */
+  margin-top: 10px; /* 添加一些上边距，使得图标和文本之间有一定间隔 */
+}
 .root {
   display: flex;
   //flex-wrap: wrap;
+  
   .commidity-container{
    
     width: 50%;
@@ -209,6 +233,7 @@ export default defineComponent ({
     
     }
   }
+
   .check-out-container{
     margin-left: 3%;
     margin-top: 5%;
@@ -241,4 +266,5 @@ export default defineComponent ({
   }
  
 }
+
 </style>
