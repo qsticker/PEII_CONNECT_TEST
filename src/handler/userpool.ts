@@ -11,7 +11,8 @@ import jwt_decode from 'jwt-decode';
 import { ProfileModel } from '@/apis/models/Profile';
 import { Store } from "vuex";
 import { State } from "@/store/State"
-
+import axios from 'axios';
+import ShoppingCartApi from '@/apis/ShoppingCartApi';
 interface token {
     username: string;
     exp: number;
@@ -102,7 +103,28 @@ export default class CognitoHandler{
                 console.log( accessToken )
                 const jwt = jwt_decode<token>(accessToken)
                 const expireTime = jwt.exp - jwt.iat;
-                cookies.set('accessToken', accessToken , expireTime);
+                cookies.set('accessToken', accessToken );
+
+                axios.get( process.env.VUE_APP_PEII_BASE_API_URL + '/userspace/getDetail' 
+                , {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                        Authorization: accessToken
+                    }
+                   }
+                ).then(async function (userSpace) {
+                    const res = userSpace.data
+                    cookies.set('shoppingCarUuid', JSON.parse(JSON.stringify(res)).shoppingCar.uuid);
+                    cookies.set('shoppingCar', JSON.parse(JSON.stringify(res)).shoppingCar);
+                    cookies.set('userUuid', JSON.parse(JSON.stringify(res)).uuid);
+                    await ShoppingCartApi.updateItemAmountOfShoppingCart();
+                    // store.commit("updateShoppingCartSize", size); 
+                  }
+                )
+                
+                // console.log("user detail" + JSON.stringify(result));
+                
                 //cookies.set('refreshToken' , result.getRefreshToken , expireTime);
 
                 const profile : ProfileModel = { 

@@ -131,11 +131,13 @@ export default defineComponent ({
           // });
           return this.total
       },
-      checkout(){
+      async checkout(){
         //todo: save commodity in user space by api
-        this.$store.state.userContainPasses = this.$store.state.shoppingCart;
-        console.log(  this.$store.state.userContainPasses )
-        this.$router.push({name : "home"});
+        await ShoppingCartApi.checkoutShoppingCart();
+        await this.setShoppingCartSortArray();
+        // this.$store.state.userContainPasses = this.$store.state.shoppingCart;
+        // console.log(  this.$store.state.userContainPasses )
+        // this.$router.push({name : "home"});
       },
   },
   async created() {

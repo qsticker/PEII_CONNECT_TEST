@@ -9,6 +9,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
     Authorization: {
       toString() {
+        console.log( vm.$cookies.get('accessToken') + "auth")
         return vm.$cookies.get('accessToken');
       },
     },
