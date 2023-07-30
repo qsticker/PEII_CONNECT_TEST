@@ -2,21 +2,21 @@
   <div> 
     <div v-if="shoppingCartSortArray.length !== 0" class="root">
       <div class="commidity-container" >
-        <div class="commidityInShoppingCart"  v-for="(pass, index)  in shoppingCartSortArray" :key="index" >
+        <div class="commidityInShoppingCart"  v-for="(item, index)  in shoppingCartSortArray" :key="index" >
           <div class="info-box">
-            <img :src="pass[0].showImageUrl" />
+            <img :src="item[0].showImageUrl" />
             <div>
-              <h2>{{ pass[0].name }}</h2>
-              <p>{{ pass[0].price }}</p>
+              <h2>{{ item[0].name }}</h2>
+              <p>{{ item[0].price }}</p>
             </div>
           </div>
           <div class="action-box">
             <div>
-              <button class="round" @click="subNumber(pass[0])">-</button>
-              <span>{{ pass[1] }}</span>
-              <button class="round" @click="addNumber(pass[0])">+</button>
+              <button class="round" @click="subNumber(item[0])">-</button>
+              <span>{{ item[1] }}</span>
+              <button class="round" @click="addNumber(item[0])">+</button>
             </div>
-            <button @click="removeCommodityInShoppingCart(pass[0])" >取消</button>
+            <button @click="removeCommodityInShoppingCart(index)" >刪除</button>
           </div>
         </div>
       </div>
@@ -35,6 +35,8 @@
 import { defineComponent } from "vue";
 import { pass , commoditys} from "@/models/commodity"
 import isEqual from 'lodash.isequal';
+import ShoppingCartApi from "@/apis/ShoppingCartApi";
+
 export default defineComponent ({
   name: 'ShoopingCart',
     components: {
@@ -83,18 +85,33 @@ export default defineComponent ({
         shoppingCartMap.set( pass , passNumber )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
       },
-      removeCommodityInShoppingCart( pass : pass ){
-        //todo save shopping cart by api
-        let shoppingCartMap = new  Map<pass, number>();
-        if(this.$store.state.shoppingCart){
-          this.$store.state.shoppingCart.forEach((value: number, key: pass ) => {
-              if( !isEqual(key , pass ) ){
-                shoppingCartMap.set( key , value )
-              }  
-          });
-        }
-        this.$store.commit('updateShoppingCart', shoppingCartMap );  
-        console.log(shoppingCartMap)
+      async removeCommodityInShoppingCart( index: number ){
+        console.log("index: "+ index);
+        await this.sendRemoveCommodityRequestToRemote(this.shoppingCartSortArray[index][0].productId);
+        // let shoppingCartMap = this.shoppingCartSortArray;
+        this.shoppingCartSortArray.splice(index, 1);
+        
+      },
+      async sendRemoveCommodityRequestToRemote(productId: string){
+        console.log("send the remove request to remote");
+        await ShoppingCartApi.removeContentFromShoppingCart(productId); // 刪除
+        this.setShoppingCartSortArray(); // 重新render購物車
+        
+      },
+      async setShoppingCartSortArray(){
+        const shoppingCartResult = JSON.parse(JSON.stringify(await ShoppingCartApi.retriveShoppingCart()));
+        console.log("shoppingCartResult: " + shoppingCartResult);
+        this.total = shoppingCartResult.totalPrice;
+
+        this.shoppingCartSortArray =  new Array<Array<any>>();
+        shoppingCartResult.contents.forEach((element: any) =>{
+          let singleItem = new Array<any>();
+          singleItem.push({name: element.sellPlan.name, price: element.sellPlan.price, showImageUrl: element.sellPlan.showImageUrl, sellPlanId: element.sellPlan.uuid, productId: element.product.uuid});
+          singleItem.push(1); // 購物車 item的數量
+          this.shoppingCartSortArray.push(singleItem);
+        });
+        console.log("this.shoppingCartSortArray: " + this.shoppingCartSortArray);
+        
       },
       setshoppingCartSortArray(shoppingCartMap : Map<pass, number> ){
           this.shoppingCartSortArray =  new Array<Array<any>>();
@@ -108,12 +125,12 @@ export default defineComponent ({
           console.log( this.shoppingCartSortArray )
       },
       getTotal(){
-          this.total = 0;
-          this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
-             this.total = this.total + ( value * key.price );
-          });
+          // this.total = 0;
+          // this.$store.state.shoppingCart.forEach((value: number, key: pass) => {
+          //    this.total = this.total + ( value * key.price );
+          // });
           return this.total
-      },     
+      },
       checkout(){
         //todo: save commodity in user space by api
         this.$store.state.userContainPasses = this.$store.state.shoppingCart;
@@ -121,8 +138,9 @@ export default defineComponent ({
         this.$router.push({name : "home"});
       },
   },
-  created() {
-    this.setshoppingCartSortArray(this.$store.state.shoppingCart);
+  async created() {
+    await this.setShoppingCartSortArray(); //new
+    // this.setshoppingCartSortArray(this.$store.state.shoppingCart);
   }
 });
 </script>
