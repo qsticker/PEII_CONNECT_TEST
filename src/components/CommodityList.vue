@@ -44,7 +44,12 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
+          <div v-if="cookie.get('accessToken')">
           <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
+        </div>
+        <div v-else>
+          <p>您还未登录，请登录后再试！</p>
+        </div>
         </div>
       </div>
     </b-modal>
@@ -71,6 +76,7 @@ export default defineComponent({
       isCreated: false,
       isHoldingCurrentComodity: false,
       isQuiz: false,
+      cookie: this.$cookies,
     };
   },
   props: {
@@ -168,6 +174,8 @@ export default defineComponent({
     },
   },
   async created() {
+
+    
     const sellPlanQueryResult = await SellPlanApi.getSellPlans(
       this.$store.state.sellPlanId
     );

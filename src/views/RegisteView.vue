@@ -4,23 +4,35 @@
         <form class="register-form">
           <!-- Email input -->
           <div class="username-input form-outline b-4">
+            <div class="input-wrapper">
+            <b-icon icon="person" class="icon"></b-icon>
             <input  id="form3Example3" class="form-control form-control-lg" 
               placeholder="输入用户名" v-model="username"/>
           </div>
+          </div>
 
           <div class="name-input form-outline mb-4">
+            <div class="input-wrapper">
+            <b-icon icon="person-bounding-box" class="icon"></b-icon>
             <input  id="form3Example3" class="form-control form-control-lg"
               placeholder="输入名称" v-model="name"/>
           </div>
+          </div>
 
           <div class="email-input form-outline mb-3">
+            <div class="input-wrapper">
+            <b-icon icon="envelope" class="icon"></b-icon>
             <input type="email" id="form3Example4" class="form-control form-control-lg"
-              placeholder="输入电子邮箱" v-model="email"/>    
+              placeholder="输入电子邮箱" v-model="email"/>  
+          </div>  
           </div>
             <!-- Password input -->
           <div class="pawwsord-input form-outline mb-3">
+            <div class="input-wrapper">
+            <b-icon icon="key" class="icon"></b-icon>
             <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="输入密码" v-model="password"/>    
+              placeholder="输入密码" v-model="password"/> 
+          </div>   
           </div>
             
           <b-button variant="dark" squared class="register-buttom btn btn-lg" @click="register">注册</b-button>
@@ -84,6 +96,16 @@
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped lang="scss">
+  .icon {
+  /* 根据需要调整图标样式，比如大小、颜色等 */
+  font-size: 24px;
+  margin-right: 10px; /* 调整图标与输入框之间的距离 */
+}
+  .input-wrapper {
+  display: flex;
+  align-items: center; /* 垂直居中对齐元素 */
+  /* 添加其他样式，比如宽度、边距等 */
+}
   .register {
     display: block;
   
