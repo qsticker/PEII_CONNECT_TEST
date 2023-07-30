@@ -64,12 +64,14 @@ export default defineComponent({
       console.log(this.username)
       //console.log(this.password)
       await CognitoHandler.login(this.username , this.password , this.$router , this.$cookies , this.$store );
-      this.retriveAndSetUserDetail();
+      await this.retriveAndSetUserDetail();
     },
     async retriveAndSetUserDetail(){
       const result = await UserDataApi.getDetail();
       // console.log("user detail" + JSON.stringify(result));
-      this.$cookies.set('user', JSON.parse(JSON.stringify(result)));
+      this.$cookies.set('shoppingCarUuid', JSON.parse(JSON.stringify(result)).shoppingCar.uuid);
+      this.$cookies.set('shoppingCar', JSON.parse(JSON.stringify(result)).shoppingCar);
+      this.$cookies.set('userUuid', JSON.parse(JSON.stringify(result)).uuid);
     }
   },
 });

@@ -51,7 +51,8 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
+          <button v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+          <div v-else> <img src="@/assets/icons/checkCircle.svg" />已完成加入</div>
         </div>
       </div>
     </b-modal>
@@ -95,7 +96,7 @@
             <span>{{ number }}</span>
             <button class="round" @click="addNumber">+</button>
           </div>
-          <button @click="addCurrentCommodityInShoppingCart">加入购物车</button>
+            <button @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
         </div>
       </div>
     </b-modal>
@@ -108,6 +109,7 @@ import { commodity, pass, commoditys, courses } from "@/models/commodity";
 import isEqual from "lodash.isequal";
 import SellPlanApi from "@/apis/SellPlanApi";
 import CategoryApi from "@/apis/CategoryApi";
+import ShoppingCartApi from "@/apis/ShoppingCartApi";
 
 export default defineComponent({
   name: "CommodityList",
@@ -123,6 +125,7 @@ export default defineComponent({
       isCreated: false,
       isHoldingCurrentComodity: false,
       isQuiz: false,
+      addToShoppingCartStatus: false,
     };
   },
   props: {
@@ -142,6 +145,13 @@ export default defineComponent({
     },
   },
   methods: {
+    async addSellPlanToShoppingCartWithSellPlanIdOnly(sellPlanId: string) {
+      console.log("cookies: "+ JSON.stringify(this.$cookies.get("user")));
+      
+      ShoppingCartApi.addProductToShoppingCart(sellPlanId, this.$cookies.get("shoppingCarUuid"));
+      this.addToShoppingCartStatus= true;
+      return true;
+    },
     async retriveGroups(uuid: string) {
       if (isEqual(this.type, "quiz")) {
         return await CategoryApi.getAllQuizGroups(uuid);
@@ -151,6 +161,7 @@ export default defineComponent({
     },
     readyAddShoppingCart(commodity: commodity) {
       //this.currentCommodity = commodity;
+      this.addToShoppingCartStatus = false;
       this.modalShow = true;
       this.number = 1;
       this.currentCommodity = commodity;
