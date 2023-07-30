@@ -25,21 +25,21 @@ export default class ShopiingCartApi {
     // 在購物車移除一個 Product
     static async removeContentFromShoppingCart(productId: string): Promise<string> {
         const shoppingCartId = vm.$cookies.get("shoppingCarUuid");
-        const result = await api.post(`/shoppingcar/removeContent/${shoppingCartId}/${productId}`);
+        const result = await api.post(`/shoppingcar/removeContent/${shoppingCartId}/${productId}` , {} );
         return result.data;
     }
 
     // 清空購物車
     static async cleanShoppingCart(): Promise<string> {
         const shoppingCartId = vm.$cookies.get("shoppingCarUuid");
-        const result = await api.post(`/shoppingcar/removeContent/${shoppingCartId}`);
+        const result = await api.post(`/shoppingcar/removeContent/${shoppingCartId}` , {} );
         return result.data;
     }
 
     // 購買購物車內的所有內容
     static async checkoutShoppingCart(): Promise<string> {
         const shoppingCartId = vm.$cookies.get("shoppingCarUuid");
-        const result = await api.post(`/shoppingcar/purchase/${shoppingCartId}`);
+        const result = await api.post(`/shoppingcar/purchase/${shoppingCartId}` , {} );
         return result.data;
     }
 
