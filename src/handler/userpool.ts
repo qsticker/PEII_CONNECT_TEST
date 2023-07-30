@@ -12,6 +12,7 @@ import { ProfileModel } from '@/apis/models/Profile';
 import { Store } from "vuex";
 import { State } from "@/store/State"
 import axios from 'axios';
+import ShoppingCartApi from '@/apis/ShoppingCartApi';
 interface token {
     username: string;
     exp: number;
@@ -112,12 +113,13 @@ export default class CognitoHandler{
                         Authorization: accessToken
                     }
                    }
-                ).then(function (userSpace) {
+                ).then(async function (userSpace) {
                     const res = userSpace.data
                     cookies.set('shoppingCarUuid', JSON.parse(JSON.stringify(res)).shoppingCar.uuid);
                     cookies.set('shoppingCar', JSON.parse(JSON.stringify(res)).shoppingCar);
                     cookies.set('userUuid', JSON.parse(JSON.stringify(res)).uuid);
-
+                    await ShoppingCartApi.updateItemAmountOfShoppingCart();
+                    // store.commit("updateShoppingCartSize", size); 
                   }
                 )
                 

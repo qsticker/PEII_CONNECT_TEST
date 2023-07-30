@@ -274,9 +274,9 @@ export default defineComponent({
     },
   },
   watch: {
-    "$store.state.shoppingCart": {
+    "$store.state.shoppingCartSize": {
       handler: function () {
-        this.shoppingCartNumber = this.$store.state.shoppingCart.size;
+        this.shoppingCartNumber = this.$store.state.shoppingCartSize;
       },
       deep: true,
     },

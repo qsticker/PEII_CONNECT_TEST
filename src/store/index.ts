@@ -15,11 +15,15 @@ export default new Vuex.Store<State>({
     shoppingCart : null,
     userContainPasses : null,
     sellPlanId: 'ceb5cfdf-2dd8-4abc-91f7-0579faa55e5e',
+    shoppingCartSize: 0,
   }),
   getters: {
   
   },
   mutations: {
+    updateShoppingCartSize: function(state : State, newShoppingCartSize: number){
+      state.shoppingCartSize = newShoppingCartSize;
+    },
     updateSellPlanId: function(state : State, newSellPlanId: string){
       state.sellPlanId = newSellPlanId;
     },
