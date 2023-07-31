@@ -1,8 +1,8 @@
 <template>
-  <div> 
+  <div style="margin-top: 20px; margin-bottom: 20px;"> 
     <div v-if="shoppingCartSortArray.length !== 0" class="root">
       <div class="commidity-container" >
-        <div class="commidityInShoppingCart"  v-for="(item, index)  in shoppingCartSortArray" :key="index" >
+        <div class="commidityInShoppingCart"  v-for="(item, index)  in shoppingCartSortArray" :key="index" style="margin-top: 15px">
           <div class="info-box">
             <img :src="item[0].showImageUrl" />
             <div>
