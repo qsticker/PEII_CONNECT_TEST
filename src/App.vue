@@ -8,7 +8,7 @@
     <!---<HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />-->
     <router-view class="router-view" />
 
-    <loading :active.sync="$store.state.isLoading" />
+   
     <!---<AnswerGroupView/>-->
     <!---<ShoppingCart />-->
     <peiiFooter />

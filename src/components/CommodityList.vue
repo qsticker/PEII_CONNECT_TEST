@@ -1,6 +1,8 @@
 <template>
   <div style="margin-bottom: 80px">
     <div class="commodity-list">
+      <loading :active.sync="$store.state.isLoading" />
+
       <div
         class="commodity"
         v-for="(commodity, index) in commodityList"
@@ -229,6 +231,7 @@ export default defineComponent({
     },
     async retriveList() {
       this.$store.commit('updateLoading', true);
+      this.commodityList = [];
       try{
         await SellPlanApi.getSellPlans(
           this.$store.state.sellPlanId
