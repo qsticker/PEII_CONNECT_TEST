@@ -1,8 +1,7 @@
 <template>
   <div style="margin-bottom: 80px">
     <div class="commodity-list">
-      <loading :active.sync="$store.state.isLoading" />
-
+      
       <div
         class="commodity"
         v-for="(commodity, index) in commodityList"

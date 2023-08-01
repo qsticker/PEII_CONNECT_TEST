@@ -1,5 +1,8 @@
 <template>
     <div class="root">
+        <loading 
+        :active.sync="$store.state.isLoading" 
+        :is-full-page="false" />
         <HierarchyClasses class="HierarchyClasses" :clickedClass="clickedClass" :type="type"/>
         <CommodityList :type="type" />
     </div>
