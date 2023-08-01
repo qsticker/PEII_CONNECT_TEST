@@ -16,6 +16,7 @@ export default new Vuex.Store<State>({
     userContainPasses : null,
     sellPlanId: 'ceb5cfdf-2dd8-4abc-91f7-0579faa55e5e',
     shoppingCartSize: 0,
+    isLoading: false
   }),
   getters: {
   
@@ -41,6 +42,9 @@ export default new Vuex.Store<State>({
     },
     updateUserContainPasses: function(state : State,  userContainPasses : Map<pass , number> ){
       state.userContainPasses = userContainPasses;
+    },
+    updateLoading(state, status) {
+      state.isLoading = status;
     },
   },
   actions: {

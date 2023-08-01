@@ -10,11 +10,20 @@ import 'bootstrap/dist/js/bootstrap.bundle'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { RootClassfication } from '@/apis/models/RootClassfication'
 import VueCookies from 'vue-cookies'; 
+import Loading from 'vue-loading-overlay';
+
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+
 Vue.use(VueCookies);
+Vue.$cookies.config('7d');
+
+Vue.component('Loading', Loading);
+
+store.commit('updateLoading', false);
+
 Vue.config.productionTip = false
 Vue.use(Notifications);
 

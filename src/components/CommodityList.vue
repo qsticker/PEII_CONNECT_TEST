@@ -228,17 +228,19 @@ export default defineComponent({
         "https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html";
     },
     async retriveList() {
-      const sellPlanQueryResult = await SellPlanApi.getSellPlans(
-        this.$store.state.sellPlanId
-      );
-      this.commodityList = JSON.parse(
-        JSON.stringify(sellPlanQueryResult)
-      ).sellPlans;
-      console.log(
-        this.$store.state.sellPlanId +
-          " sellPlanQueryResult: " +
-          JSON.stringify(sellPlanQueryResult)
-      );
+      this.$store.commit('updateLoading', true);
+      try{
+        await SellPlanApi.getSellPlans(
+          this.$store.state.sellPlanId
+        ).then(async (sellPlanQueryResult) => {
+              this.commodityList = JSON.parse(  JSON.stringify(sellPlanQueryResult)).sellPlans;
+              console.log( this.$store.state.sellPlanId + " sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult) );
+          }
+        );
+      }
+      finally{
+        this.$store.commit('updateLoading', false);
+      }
     },
   },
   async created() {
