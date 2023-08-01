@@ -4,6 +4,8 @@ import { RootClassfication } from '@/apis/models/RootClassfication'
 import { ProfileModel } from '@/apis/models/Profile';
 import { pass} from '@/models/commodity'
 import { State } from "@/store/State"
+import VuexPersistence from 'vuex-persist';
+
 Vue.use(Vuex)
 
 
@@ -50,5 +52,7 @@ export default new Vuex.Store<State>({
   actions: {
   },
   modules: {
-  }
+  },
+  
+  plugins: [new VuexPersistence().plugin],
 })
