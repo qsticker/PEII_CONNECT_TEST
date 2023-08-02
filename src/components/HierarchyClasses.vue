@@ -98,12 +98,13 @@ export default defineComponent({
 
       this.treeData = JSON.parse(JSON.stringify(remoteCategory));
       let level0 = [] as any;
-      this.treeData.child.forEach((element: { name: string; uuid: any }) => {
+      this.treeData.child.forEach((element: { name: string; uuid: any; child: any;}) => {
         // 設定第0層的每一個元素
-        let elemetnObject = { uuid: "", name: "", isSelected: false, depth: 0 };
-        elemetnObject.uuid = element.uuid;
-        elemetnObject.name = element.name;
-        level0.push(elemetnObject);
+        let elementObject = { uuid: "", name: "" , child: [], isSelected: false, depth: 0 };
+        elementObject.uuid = element.uuid;
+        elementObject.name = element.name;
+        elementObject.child = element.child
+        level0.push(elementObject);
       });
       this.displayArray = [level0];
     } catch (error) {
@@ -124,6 +125,7 @@ export default defineComponent({
       this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
       console.log(depth, index, uuid);
       let tempDisplayArray = this.displayArray;
+      
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
 
@@ -132,7 +134,9 @@ export default defineComponent({
           tempDisplayArray.length != 0 &&
           depth + 1 != this.displayArray.length
         ) {
-          tempDisplayArray.pop();
+          while(depth + 1 != tempDisplayArray.length){
+              tempDisplayArray.pop();
+          }
         }
         this.displayArray = tempDisplayArray;
       } else {
@@ -149,7 +153,6 @@ export default defineComponent({
 
         if (depth < tempDisplayArray.length) {
           this.displayArray = this.displayArray.slice(0, depth + 1);
-          console.log("tempDisplayArray: " + JSON.stringify(tempDisplayArray));
         }
 
         if (depth == 0 && this.displayArray.length > 1) {
@@ -160,17 +163,43 @@ export default defineComponent({
           );
         }
 
-        // 沒有已選
+        let showArray = []
 
-        const resultChildData = this.get_child_at_depth(
-          this.treeData.child,
-          index,
-          depth
-        ).child;
-        if (!resultChildData.isLeaf) {
-          this.displayArray.push(resultChildData);
+        for(let i = 0 ; i < tempDisplayArray.length ; i ++){
+            let temp = []
+            for(let j = 0 ; j < tempDisplayArray[i].length ; j ++){
+              temp.push( tempDisplayArray[i][j].name )
+            }
+            showArray.push(temp)
+        }          
+        console.log("tempDisplayArray: " + showArray);
+
+        
+        // 沒有已選
+        
+
+        //const resultChildData = this.get_child_at_depth(
+        //  this.treeData.child,
+        //  index,
+        //  depth
+        //).child;
+
+        //console.log( resultChildData )
+
+        if (!this.displayArray[depth][index].isLeaf) {
+          this.displayArray.push( this.displayArray[depth][index].child );
           this.displayArray[depth][index].isSelected = true;
         }
+
+         let newShowArray = []
+        for(let i = 0 ; i < this.displayArray.length ; i ++){
+          let temp = []
+          for(let j = 0 ; j < this.displayArray[i].length ; j ++){
+            temp.push( this.displayArray[i][j].name )
+          }
+          newShowArray.push(temp)
+        }
+        console.log("displayArray: " + newShowArray);
       }
     },
     get_child_at_depth(data: any, objectIndex: any, depth: any) {
