@@ -35,7 +35,8 @@ export default class ShopiingCartApi {
     // 清空購物車
     static async cleanShoppingCart(): Promise<string> {
         const shoppingCartId = vm.$cookies.get("shoppingCarUuid");
-        const result = await api.post(`/shoppingcar/removeContent/${shoppingCartId}`, {});
+        const result = await api.post(`/shoppingcar/clearContent/${shoppingCartId}`, {});
+        await this.updateItemAmountOfShoppingCart();
         return result.data;
     }
 
