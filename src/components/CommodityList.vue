@@ -20,93 +20,95 @@
       </div>
     </div>
 
+    <div v-if="currentCommodity">
     <!-- isUserChoose= false 出現正常b-modal -->
-    <b-modal
-      v-if="!currentCommodity.isUserChoose"
-      v-model="modalShow"
-      class="modal"
-      hide-footer
-      id="bv-modal-a"
-    >
-      <template #modal-header>
-        <div class="mx-auto" style="width: 100%">
-          <b-button
-            squared
-            style="width: 10%; margin-left: 90%"
-            variant="outline-dark"
-            size="sm"
-            @click="$bvModal.hide('bv-modal-a')"
-            >X</b-button
-          >
-        </div>
-      </template>
-      <div class="commidity-modal">
-        <div class="info-box">
-          <img :src="currentCommodity.showImageUrl" />
-          <div>
-            <h2>{{ currentCommodity.name }}</h2>
-            <p>{{ currentCommodity.price }}</p>
+      <b-modal
+        v-if="!currentCommodity.isUserChoose"
+        v-model="modalShow"
+        class="modal"
+        hide-footer
+        id="bv-modal-a"
+      >
+        <template #modal-header>
+          <div class="mx-auto" style="width: 100%">
+            <b-button
+              squared
+              style="width: 10%; margin-left: 90%"
+              variant="outline-dark"
+              size="sm"
+              @click="$bvModal.hide('bv-modal-a')"
+              >X</b-button
+            >
+          </div>
+        </template>
+        <div class="commidity-modal">
+          <div class="info-box">
+            <img :src="currentCommodity.showImageUrl" />
+            <div>
+              <h2>{{ currentCommodity.name }}</h2>
+              <p>{{ currentCommodity.price }}</p>
+            </div>
+          </div>
+          <div class="action-box">
+            <div>
+              <button class="round" @click="subNumber">-</button>
+              <span>{{ number }}</span>
+              <button class="round" @click="addNumber">+</button>
+              <div v-if="cookie.get('accessToken')" style="display: inline-block; margin-left: 150px;">
+                <button class="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+                <div v-else> <b-icon icon="check2-circle" class="" variant="success" style="margin-right: 7px" />已加入购物车</div>
+              </div>
+              <p v-else>您还未登录，请登录后再试！</p>
+              </div>
           </div>
         </div>
-        <div class="action-box">
-          <div>
-            <button class="round" @click="subNumber">-</button>
-            <span>{{ number }}</span>
-            <button class="round" @click="addNumber">+</button>
-            <div v-if="cookie.get('accessToken')" style="display: inline-block; margin-left: 150px;">
-              <button class="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
-              <div v-else> <b-icon icon="check2-circle" class="" variant="success" style="margin-right: 7px" />已加入购物车</div>
-            </div>
-            <p v-else>您还未登录，请登录后再试！</p>
-            </div>
-        </div>
-      </div>
-    </b-modal>
+      </b-modal>
 
     <!-- isUserChoose 為true，出現多選項b-modal -->
-    <b-modal
-      v-else-if="currentCommodity.isUserChoose"
-      v-model="modalShow"
-      class="modal"
-      hide-footer
-      id="bv-modal-a"
-    >
-      <template #modal-header>
-        <div class="mx-auto" style="width: 100%">
-          <b-button
-            squared
-            style="width: 10%; margin-left: 90%"
-            variant="outline-dark"
-            size="sm"
-            @click="$bvModal.hide('bv-modal-a')"
-            >X</b-button
-          >
-        </div>
-      </template>
-      <div
-        v-for="(item, index) in retriveGroups(currentCommodity.uuid)"
-        :key="index"
-        class="commidity-modal"
+      <b-modal
+        v-else-if="currentCommodity.isUserChoose"
+        v-model="modalShow"
+        class="modal"
+        hide-footer
+        id="bv-modal-a"
       >
-        <div class="info-box">
-          <!-- <img :src="currentCommodity.showImageUrl" /> -->
-          <div>
-            <h2>{{ JSON.stringify(item) }}</h2>
-            <!-- <p>{{ item.price }}</p> -->
-            <!-- <p>{{retriveGroups(currentCommodity.categories)}}</p> -->
+        <template #modal-header>
+          <div class="mx-auto" style="width: 100%">
+            <b-button
+              squared
+              style="width: 10%; margin-left: 90%"
+              variant="outline-dark"
+              size="sm"
+              @click="$bvModal.hide('bv-modal-a')"
+              >X</b-button
+            >
+          </div>
+        </template>
+        <div
+          v-for="(item, index) in retriveGroups(currentCommodity.uuid)"
+          :key="index"
+          class="commidity-modal"
+        >
+          <div class="info-box">
+            <!-- <img :src="currentCommodity.showImageUrl" /> -->
+            <div>
+              <h2>{{ JSON.stringify(item) }}</h2>
+              <!-- <p>{{ item.price }}</p> -->
+              <!-- <p>{{retriveGroups(currentCommodity.categories)}}</p> -->
+            </div>
+          </div>
+          <div class="action-box">
+            <div>
+              <button class="round" @click="subNumber">-</button>
+              <span>{{ number }}</span>
+              <button class="round" @click="addNumber">+</button>
+            </div>
+              <button v-if="cookie.get('accessToken')" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+              <p v-else>您还未登录，请登录后再试！</p>
           </div>
         </div>
-        <div class="action-box">
-          <div>
-            <button class="round" @click="subNumber">-</button>
-            <span>{{ number }}</span>
-            <button class="round" @click="addNumber">+</button>
-          </div>
-            <button v-if="cookie.get('accessToken')" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
-            <p v-else>您还未登录，请登录后再试！</p>
-        </div>
-      </div>
-    </b-modal>
+      </b-modal>
+    </div>
   </div>
 </template>
 <script lang="ts">
