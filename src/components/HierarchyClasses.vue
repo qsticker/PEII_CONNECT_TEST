@@ -162,36 +162,25 @@ export default defineComponent({
             }
           );
         }
-
-        let showArray = []
-
-        for(let i = 0 ; i < tempDisplayArray.length ; i ++){
-            let temp = []
-            for(let j = 0 ; j < tempDisplayArray[i].length ; j ++){
-              temp.push( tempDisplayArray[i][j].name )
-            }
-            showArray.push(temp)
-        }          
-        console.log("tempDisplayArray: " + showArray);
-
-        
-        // 沒有已選
-        
-
         //const resultChildData = this.get_child_at_depth(
         //  this.treeData.child,
         //  index,
         //  depth
         //).child;
-
         //console.log( resultChildData )
 
         if (!this.displayArray[depth][index].isLeaf) {
           this.displayArray.push( this.displayArray[depth][index].child );
           this.displayArray[depth][index].isSelected = true;
+          for( let i = 0 ; i < this.displayArray[depth+1].length ; i ++ ){
+            this.displayArray[depth + 1][i].isSelected = false
+          }
+        }else{
+          this.displayArray[depth][index].isSelected = true;
         }
 
-         let newShowArray = []
+        //just for console
+        let newShowArray = []
         for(let i = 0 ; i < this.displayArray.length ; i ++){
           let temp = []
           for(let j = 0 ; j < this.displayArray[i].length ; j ++){
