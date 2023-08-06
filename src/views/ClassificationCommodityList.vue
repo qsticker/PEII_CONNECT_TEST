@@ -47,10 +47,12 @@
           if (isEqual(this.type, "quiz")) {
             this.isQuiz = true;
             this.isCourse = false;
+            this.$store.state.sellPlanId = null;
           }
           if (isEqual(this.type, "course")) {
             this.isQuiz = false;
             this.isCourse = true;
+            this.$store.state.sellPlanId = null;
           }
         },
         deep: true,
