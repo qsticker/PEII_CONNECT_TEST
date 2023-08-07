@@ -9,9 +9,9 @@ import VuexPersistence from 'vuex-persist';
 Vue.use(Vuex);
 
 // 创建 VuexPersistence 实例，设置 storage 为 Session Storage
-const vuexLocal = new VuexPersistence({
-  storage: window.sessionStorage
-});
+// const vuexLocal = new VuexPersistence({
+//   storage: window.sessionStorage
+// });
 
 export default new Vuex.Store<State>({
   state: (): State => ({ //this is default state
@@ -58,6 +58,5 @@ export default new Vuex.Store<State>({
   modules: {
   },
 
-  // 使用创建的 VuexPersistence 实例
-  plugins: [vuexLocal.plugin],
+  plugins: [new VuexPersistence().plugin],
 });
