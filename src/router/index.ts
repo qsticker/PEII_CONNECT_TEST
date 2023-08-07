@@ -51,7 +51,7 @@ const routes: Array<RouteConfig> = [
 
   },
   {
-    path: '/Answer',
+    path: '/Answer/:quizsId',
     //alias: ['/login'],
     name: 'answer',
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),

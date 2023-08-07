@@ -12,6 +12,8 @@
                     类型：{{ item.type==='COURSE'?'课程':'测验' }}
                 </b-card-text>
                 <b-button v-if="item.type==='COURSE'" squared :href="item.courseUrl" target="_blank" variant="outline-dark">打开课程</b-button>
+
+                <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer(item.quizGroupId)" target="_blank" variant="outline-dark">打开测验</b-button>
             </b-card>
         </b-card-group>
     </div>
@@ -45,6 +47,9 @@ export default defineComponent({
         backToHomeBtn() {
             this.$router.push({ name: "home" });
         },
+        startAnswer(quizsId : string) {
+            this.$router.push( { name: "answer" , params: { quizsId }  } )
+        }
 
     },
     async created() {

@@ -154,7 +154,11 @@
     },
     async created() {
       //AnswerGroupApi.create( "554dfd1d-20ba-4cc2-a975-406aac08c623" );
-      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=cbdjq') //as AnswerGroupRespondModel
+
+      const instance  = await axios
+      .get( process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/makeanswergroup/' + this.$route.params.quizsId 
+      + "/"  + this.$cookies.get('userUuid') )//as AnswerGroupRespondModel
+
       console.log( instance.data.amount )
       const instanceData = instance.data;
       this.amount = instance.data.amount;
