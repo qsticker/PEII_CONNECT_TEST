@@ -1,5 +1,10 @@
 <template>
+    <div>
+        <div style="width: 100%; height: 130px; background-color: #1c1d1f;">
+            <h2 style="text-align: left;color: #fff; padding-top: 50px; padding-left: 12%;">我的已购买列表</h2>
+        </div>
     <div style="margin: 50px;">
+        
         <b-card-group  v-for="item in purchasedList" :key="item.bundleId" style="display: inline-block">
             <b-card  :title=item.name :img-src="item.imageUrl" img-alt="Image" img-top 
                 style="max-width: 20rem; " class="my-2 mx-2">
@@ -10,6 +15,7 @@
             </b-card>
         </b-card-group>
     </div>
+</div>
 </template>
 
 <script lang="ts">
