@@ -55,7 +55,6 @@ const routes: Array<RouteConfig> = [
     //alias: ['/login'],
     name: 'answer',
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),
-
   },
   {
     path: '/AnswerResult',
@@ -69,6 +68,11 @@ const routes: Array<RouteConfig> = [
     name: 'classficationCommodityList',
     component: () => import(/* webpackChunkName: "about" */ '@/views/ClassificationCommodityList.vue'),
     //props: true,
+  },
+  {
+    path: '/PurchasedList',
+    name: 'purchasedList',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/PurchasedList.vue'),
   },
 ]
 

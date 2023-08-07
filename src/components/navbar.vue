@@ -196,6 +196,9 @@
             <b-dropdown-item>
               目前登录为 <br /><strong>{{ username }}</strong>
             </b-dropdown-item>
+            <b-dropdown-item @click="jumpToPurchasedList">
+              已购买列表
+            </b-dropdown-item>
             <b-dropdown-divider />
             <b-dropdown-item @click.prevent="logout"> 退出 </b-dropdown-item>
           </b-dropdown>
@@ -282,6 +285,9 @@ export default defineComponent({
     },
   },
   methods: {
+    jumpToPurchasedList(){
+      this.$router.push('/PurchasedList')
+    },
     logout() {
       //Auth.logout();
       console.log("out");
