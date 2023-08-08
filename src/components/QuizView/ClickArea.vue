@@ -3,26 +3,27 @@
 
     <div v-if="localClickAreaModel.content.blankField.enabled" >
       <div class="ClickStage">
-        <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
+        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
+        <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.content.label , $event.target.value)">
       </div>
     </div>
 
     <div v-else  @click="updateAnswers">
       
       <div v-if="interBeClick" class="ClickStage">
-          <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
+          <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
           <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
+          <div class="highlight" />
       </div>
 
       <div v-else class="ClickStage" >
-        <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
+        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
       </div>
-
     </div>
   </div>
 </template>
@@ -54,11 +55,16 @@
           type: Boolean,
           defualt: false,
         },
+        blankFillAnswer : {
+          type : Object,
+          defualt : false,
+        }
     },
     data() {
       return {
         localClickAreaModel : {} as ClickAreaModel ,
         interBeClick : this.beClicked,
+        blankUserAnswer : "",
         //answerModel : {} as Answer
       };
     },
@@ -89,9 +95,18 @@
       }
     },
     created() {
-      console.log( this.clickAreaModel.label )
+      //console.log( this.clickAreaModel.label )
       this.localClickAreaModel = this.clickAreaModel; 
       this.interBeClick = this.beClicked;
+      
+      if( this.localClickAreaModel.content.blankField.enabled ){
+        if( this.blankFillAnswer != undefined ){
+          const blankAnswerOfThisLabel = this.blankFillAnswer[this.clickAreaModel.label]
+          if( blankAnswerOfThisLabel  != undefined){
+            this.blankUserAnswer = blankAnswerOfThisLabel 
+          }
+        }
+      }
     }
   });
   </script>

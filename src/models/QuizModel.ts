@@ -9,6 +9,7 @@ export interface ContentModel {
     Audio : Audio;
     textField: TextField;
     imageField: ImageField;
+    blankField : blankField;
 }
 
 export interface TextField {
@@ -17,6 +18,11 @@ export interface TextField {
   paddingY: number;
   size: number;
   text: string;
+}
+
+export interface blankField {
+  enabled: boolean;
+  blankAnswer : string;
 }
 
 export interface Audio {
@@ -66,7 +72,7 @@ export interface AnswerInterface {
   templateName: string;
   type: string;
   userAnswer: string[];
-  blankFillAnswer: string;
+  blankFillAnswer: any;
   timeSpent: number;
   clickAreas: Array<ClickAreaModel>;
   multipleSelect?: boolean;

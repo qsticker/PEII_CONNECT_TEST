@@ -1,4 +1,4 @@
-import { AnswerInterface , ClickAreaModel , TextField , ImageField , Audio , ContentModel , ActionModel} from '@/models/QuizModel';
+import { AnswerInterface , ClickAreaModel , TextField , ImageField , Audio , ContentModel , ActionModel, blankField} from '@/models/QuizModel';
 /*
 export interface AnswerModel {
     userAnswer: string[];
@@ -37,14 +37,14 @@ export class Answer implements AnswerInterface {
     multipleSelect = false;
     followPreviousQuiz = false;
   
-    blankFillAnswer = ""
+    blankFillAnswer = {} as any;
     isBlankFill = false;
     score = 5;
     uuid = ""
     realAnswer = [] as string[];
 
     constructor(userAnswer: [], sourceQuiz: any | JSON , uuid: string, timeSpent: number,
-      multipleSelect: boolean, isBlankFill: boolean, blankFillAnswer: string , score : number) {
+      multipleSelect: boolean, isBlankFill: boolean, blankFillAnswer: any | JSON, score : number) {
       
       //console.log( sourceQuiz.clickAreas[0] )
       const clickAreaList = new Array<ClickAreaModel>()
@@ -69,15 +69,26 @@ export class Answer implements AnswerInterface {
         }
 
         const audioField : Audio = {
-          enabled: false,
-          url : ""
+          enabled: clickArea.content.audioField.enabled,
+          url : clickArea.content.audioField.url ,
         }
 
+        const blankField : blankField = {
+          enabled: clickArea.content.blankField.enabled,
+          blankAnswer : '' ,
+        }
 
+        if( clickArea.content.blankField.answer != undefined  ){
+          if( clickArea.content.blankField.answer != ""){
+            blankField.blankAnswer = clickArea.content.blankField.answer
+          }
+        }
+        
         const contentModel : ContentModel = {
           Audio : audioField,
           textField : textField ,
           imageField: imageField,
+          blankField : blankField,
         }
 
         const actionModel : ActionModel = {
