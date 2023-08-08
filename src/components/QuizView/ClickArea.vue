@@ -6,7 +6,7 @@
         <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-        <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.content.label , $event.target.value)">
+        <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.label , $event.target.value)">
       </div>
     </div>
 
@@ -76,9 +76,12 @@
       },
       currentIndex : function() {
         this.interBeClick = this.beClicked
-        console.log(this.clickAreaModel.label)
-        console.log(this.interBeClick)
-        console.log("hi")
+        if( this.blankFillAnswer != undefined ){
+          this.blankUserAnswer = this.blankFillAnswer[this.clickAreaModel.label]
+        }
+        //console.log(this.clickAreaModel.label)
+        //console.log(this.interBeClick)
+        //console.log("hi")
       },
     },
     computed: {
