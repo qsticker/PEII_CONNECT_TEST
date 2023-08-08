@@ -10,19 +10,19 @@
         ">
             <h2 style="text-align: left; color: #fff;">我的已购买列表</h2>
         </div>
-        <div style="margin: 50px; display: flex; flex-wrap: wrap;">
+        <div style="margin: 50px; display: flex; flex-wrap: wrap; justify-content: center;">
             <b-card v-for="item in purchasedList" :key="item.bundleId"
                 style="width: 20rem; margin: 10px; display: flex; flex-direction: column;" class="my-2">
                 <b-card-img :src="item.imageUrl" alt="Image" top />
-                <div  style=" height: 40px; margin-top: 10%;">
+                <div style="height: 40px; margin-top: 10%;">
                     <b-card-title>{{ item.name }}</b-card-title>
                 </div>
-                <div style=" margin-top: 20%;">
+                <div style="margin-top: 20%;">
                     <b-card-text>
                         类型：{{ item.type === 'COURSE' ? '课程' : '测验' }}
                     </b-card-text>
                 </div>
-                <div style=" margin-top: 5%;" >
+                <div style="margin-top: 5%;">
                     <b-button v-if="item.type === 'COURSE'" squared :href="item.courseUrl" target="_blank"
                         variant="outline-dark">
                         打开课程
@@ -32,6 +32,7 @@
         </div>
     </div>
 </template>
+
   
 
 <script lang="ts">
