@@ -21,6 +21,7 @@
         </div>
       </div>
       <div class="check-out-container">
+      <b-button squared variant="outline-dark" @click="removeAllCommodityOfShoppingCart" style="margin-top: 15px; margin-bottom: 15px; width: 50%">清空购物车</b-button>
         <div colspan="3" class="total-price-title" >商品总计 <span class="total-price">￥ {{ getTotal() }}</span></div>
         <button class="checkout" @click="checkout">付款</button>
       </div>
@@ -95,6 +96,10 @@ export default defineComponent ({
         }
         shoppingCartMap.set( pass , passNumber )
         this.$store.commit('updateShoppingCart', shoppingCartMap );  
+      },
+      async removeAllCommodityOfShoppingCart(){
+        await ShoppingCartApi.cleanShoppingCart();
+        this.setShoppingCartSortArray();
       },
       async removeCommodityInShoppingCart( index: number ){
         console.log("index: "+ index);

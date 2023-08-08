@@ -7,7 +7,7 @@
     <!---<CommodityList />-->
     <!---<HierarchyClasses type="quiz" clickedClass="北師大/第一冊" />-->
     <router-view class="router-view" />
-
+    <!-- <SelectCommodityVue /> -->
    
     <!---<AnswerGroupView/>-->
     <!---<ShoppingCart />-->
@@ -24,12 +24,14 @@
 //import ClassficationCommodityList from './views/ClassificationCommodityList'
 import peiiNavbar from './components/navbar.vue'
 import peiiFooter from './components/PageFooter.vue'
+// import SelectCommodityVue from './components/SelectCommodity.vue'
 //import AnswerGroupResult from './views/AnswerGroupResult.vue'
 export default {
   name: 'App',
   components: {
     peiiNavbar,
     peiiFooter,
+    // SelectCommodityVue,
     //CommodityList,
     //HomeView
     //QuizView

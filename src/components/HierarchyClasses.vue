@@ -85,6 +85,7 @@ export default defineComponent({
     };
   },
   async created() {
+    // console.log("this.clickedClass: ");
     // console.log(this.clickedClass);
     // console.log(this.type);
     let remoteCategory;
@@ -92,9 +93,11 @@ export default defineComponent({
       if (isEqual( this.type , "course" )) {
         remoteCategory = await CategoryApi.getCoursePath();
         console.log(JSON.parse(JSON.stringify(remoteCategory)).child);
+        // this.$store.commit('updateFourQuiz', false);
       } else{
         remoteCategory = await CategoryApi.getQuizPath();
       }
+      
 
       this.treeData = JSON.parse(JSON.stringify(remoteCategory));
       let level0 = [] as any;
@@ -103,8 +106,9 @@ export default defineComponent({
         let elementObject = { uuid: "", name: "" , child: [], isSelected: false, depth: 0 };
         elementObject.uuid = element.uuid;
         elementObject.name = element.name;
-        elementObject.child = element.child
+        elementObject.child = element.child;
         level0.push(elementObject);
+        console.log("element.name: " + element.name);
       });
       this.displayArray = [level0];
     } catch (error) {
@@ -125,7 +129,8 @@ export default defineComponent({
       this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
       console.log(depth, index, uuid);
       let tempDisplayArray = this.displayArray;
-      
+      console.log("depth: " + depth);
+      console.log("tempDisplayArray.length: " + tempDisplayArray.length);
       if (this.displayArray[depth][index].isSelected) {
         // 已選 -> 將原本已選改為未選中
 
@@ -150,7 +155,7 @@ export default defineComponent({
             }
           }
         );
-
+        
         if (depth < tempDisplayArray.length) {
           this.displayArray = this.displayArray.slice(0, depth + 1);
         }

@@ -18,7 +18,8 @@ export default new Vuex.Store<State>({
     userContainPasses : null,
     sellPlanId: 'ceb5cfdf-2dd8-4abc-91f7-0579faa55e5e',
     shoppingCartSize: 0,
-    isLoading: false
+    isLoading: false,
+    isFourQuiz: false
   }),
   getters: {
   
@@ -47,6 +48,9 @@ export default new Vuex.Store<State>({
     },
     updateLoading(state, status) {
       state.isLoading = status;
+    },
+    updateFourQuiz(state, status) {
+      state.isFourQuiz = status;
     },
   },
   actions: {

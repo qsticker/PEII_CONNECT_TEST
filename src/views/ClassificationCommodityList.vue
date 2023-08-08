@@ -5,6 +5,12 @@
         <HierarchyClasses class="HierarchyClasses" :clickedClass="clickedClass" type="course" key="1"/>
         <CommodityList type="course" key="1"/>
       </div>  
+      <div v-else-if="isQuiz && isFourQuiz" >  
+        <div style="margin-top: 40px; font-size: 25px" >
+          <h2>購買一份真題四選系列測驗，包含四回真題測驗，您欲購買1份，請選擇4回測驗</h2>
+        </div>
+        <ChooseExam type="quiz" key="2"/>
+      </div>  
       <div v-else >  
         <HierarchyClasses class="HierarchyClasses" :clickedClass="clickedClass" type="quiz" key="2"/>
         <CommodityList type="quiz" key="2"/>
@@ -16,6 +22,7 @@
   import { defineComponent } from "vue";
   import HierarchyClasses  from "@/components/HierarchyClasses.vue";
   import CommodityList  from "@/components/CommodityList.vue";
+  import ChooseExam  from "@/components/ChooseExam.vue";
   import isEqual from "lodash.isequal";
   export default defineComponent({
     name: 'ClassficationCommodityList',
@@ -23,6 +30,7 @@
       //peiiNavbar,
       HierarchyClasses ,
       CommodityList ,
+      ChooseExam
     },
     data() {
       return {
@@ -31,7 +39,8 @@
         type: "",
         created: false,
         isQuiz : false,
-        isCourse : false
+        isCourse : false,
+        isFourQuiz : false
       };
     },
     computed: {
@@ -55,11 +64,18 @@
         },
         deep: true,
       },
+      "$store.state.isFourQuiz" :{
+        handler : function(){
+          this.isFourQuiz=this.$store.state.isFourQuiz;
+          console.log("change FourQuiz: " + this.isFourQuiz);
+        }
+      },
   },
     methods: {
     
     },
     async created() {
+      // this.isFourQuiz=this.$store.state.isFourQuiz;
       console.log( this.$route.params.classPath );
 
       this.clickedClass = this.$route.params.classPath;

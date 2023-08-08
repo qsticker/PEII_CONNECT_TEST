@@ -55,7 +55,8 @@
               <span>{{ number }}</span>
               <button class="round" @click="addNumber">+</button>
               <div v-if="cookie.get('accessToken')" style="display: inline-block; margin-left: 150px;">
-                <button class="addToShoppingCartBtn" v-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
+                <button class="addToShoppingCartBtn" v-if="!addToShoppingCartStatus && currentCommodity.name=='真題四选' " @click="GotoSelectCommodity(currentCommodity.uuid)">加入购物车</button>
+                <button class="addToShoppingCartBtn" v-else-if="!addToShoppingCartStatus" @click="addSellPlanToShoppingCartWithSellPlanIdOnly(currentCommodity.uuid)">加入购物车</button>
                 <div v-else> <b-icon icon="check2-circle" class="" variant="success" style="margin-right: 7px" />已加入购物车</div>
               </div>
               <p v-else>您还未登录，请登录后再试！</p>
@@ -76,7 +77,7 @@
           <div class="mx-auto" style="width: 100%">
             <b-button
               squared
-              style="width: 10%; margin-left: 90%"
+              style="width: 10%; margin-left: 10%"
               variant="outline-dark"
               size="sm"
               @click="$bvModal.hide('bv-modal-a')"
@@ -93,8 +94,8 @@
             <!-- <img :src="currentCommodity.showImageUrl" /> -->
             <div>
               <h2>{{ JSON.stringify(item) }}</h2>
-              <!-- <p>{{ item.price }}</p> -->
-              <!-- <p>{{retriveGroups(currentCommodity.categories)}}</p> -->
+              <!-- <p>{{ item.price }}</p>
+              <p>{{retriveGroups(currentCommodity.categories)}}</p> -->
             </div>
           </div>
           <div class="action-box">
@@ -113,7 +114,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-//import PeiiCommodity from '@/components/ShoppingCart/Commodity.vue'
+// import selectCommodity from '@/views/SelectCommodity.vue'
 import { commodity, pass, commoditys, courses } from "@/models/commodity";
 import isEqual from "lodash.isequal";
 import SellPlanApi from "@/apis/SellPlanApi";
@@ -123,7 +124,7 @@ import ShoppingCartApi from "@/apis/ShoppingCartApi";
 export default defineComponent({
   name: "CommodityList",
   components: {
-    //PeiiCommodity,
+    // selectCommodity,
   },
   data() {
     return {
@@ -146,29 +147,40 @@ export default defineComponent({
     type: {
       type: String,
       defualt: true,
-    },
+    }
   },
   computed: {},
   watch: {
     "$store.state.sellPlanId"(newVal, oldVal) {
+      console.log("newVal: " + newVal);
       this.retriveList();
     },
   },
   methods: {
     async addSellPlanToShoppingCartWithSellPlanIdOnly(sellPlanId: string) {
+      this.$store.commit('updateFourQuiz', false);
       console.log("cookies: "+ JSON.stringify(this.$cookies.get("user")));
       await ShoppingCartApi.addProductToShoppingCart(sellPlanId, this.$cookies.get("shoppingCarUuid"));
       this.addToShoppingCartStatus= true;
       return true;
     },
     async retriveGroups(uuid: string) {
+      console.log("retriveGroups uuid: " + uuid);
       if (isEqual(this.type, "quiz")) {
         return await CategoryApi.getAllQuizGroups(uuid);
       } else {
-        return await CategoryApi.getAllQuizGroups(uuid);
+        return await CategoryApi.getAllCourseGroups(uuid);
       }
     },
+    GotoSelectCommodity(uuid: string){
+      this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
+      this.$store.commit('updateFourQuiz', true);
+      console.log("update uuid success:" + this.$store.state.sellPlanId);
+      // this.addCartNumber = this.number;
+      // this.$router.push( {path: "/SelectCommodity" });
+    },
     readyAddShoppingCart(commodity: commodity) {
+      // this.$router.push({ path: "/SelectCommodity" });
       //this.currentCommodity = commodity;
       this.addToShoppingCartStatus = false;
       this.modalShow = true;
@@ -240,7 +252,7 @@ export default defineComponent({
           this.$store.state.sellPlanId
         ).then(async (sellPlanQueryResult) => {
               this.commodityList = JSON.parse(  JSON.stringify(sellPlanQueryResult)).sellPlans;
-              console.log( this.$store.state.sellPlanId + " sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult) );
+              console.log( this.$store.state.sellPlanId + " sellPlanQueryResult1: " + JSON.stringify(sellPlanQueryResult) );
           }
         );
       }
@@ -250,13 +262,14 @@ export default defineComponent({
     },
   },
   async created() {
+    this.$store.commit('updateFourQuiz', false);
     const sellPlanQueryResult = await SellPlanApi.getSellPlans(
       this.$store.state.sellPlanId
     );
 
     this.commodityList = await JSON.parse(JSON.stringify(sellPlanQueryResult))
       .sellPlans;
-    console.log("sellPlanQueryResult: " + JSON.stringify(sellPlanQueryResult));
+    console.log("sellPlanQueryResult2: " + JSON.stringify(sellPlanQueryResult));
 
     //load commodity.ts by quiz or course's classified when created()
     // console.log(  commoditys )
@@ -269,6 +282,7 @@ export default defineComponent({
     // }
 
     this.currentCommodity = this.commodityList[0];
+    console.log("currentCommodity: ", this.currentCommodity);
     this.isCreated = true;
   },
 });

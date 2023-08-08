@@ -307,6 +307,7 @@ export default defineComponent({
       class2: string,
       type: string
     ) {
+      this.$store.commit('updateFourQuiz', false);
       let classPath = class1 + "/" + class2;
       this.$router.push({
         name: "classficationCommodityList",
