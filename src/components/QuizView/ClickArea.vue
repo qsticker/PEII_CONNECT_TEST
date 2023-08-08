@@ -100,7 +100,7 @@
       justify-content: center;
       flex-direction: column;
       position: relative;
-      width: 400px;
+      width: 90vw;
       border-radius: 10px;
       border-width: 10px;
       border-style: solid;
@@ -121,7 +121,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 380px;
+        width: 90vw;
         height: 100%;
         z-index: 999;
 

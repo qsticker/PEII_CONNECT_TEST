@@ -196,7 +196,8 @@
     }
   }
   .answer {
-    margin-top: 10%;
+    margin-top: 1%;
+    margin-bottom: 1%;
   }
   .submitButton{
     margin-left: auto;
