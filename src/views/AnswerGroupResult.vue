@@ -66,13 +66,13 @@
       },
     },
     async created() {
-      const answerResultInstance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/25d14247-f997-4e64-a0b5-e297b9eb138e')
+      const answerResultInstance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/' + this.$route.params.answerUuid )
       const {
-        status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList
+        status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList , shortId
       } = answerResultInstance.data;
       this.answerResult = new AnswerGroupResultRespondModel( status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList );
 
-      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=cbdjq') //as AnswerGroupRespondModel
+      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=' + shortId) //as AnswerGroupRespondModel
       const instanceData = instance.data;
       console.log( instance  )
      

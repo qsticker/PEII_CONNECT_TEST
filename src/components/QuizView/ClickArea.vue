@@ -121,7 +121,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 90vw;
+        width: 89vw;
         height: 100%;
         z-index: 999;
 

@@ -57,7 +57,7 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),
   },
   {
-    path: '/AnswerResult',
+    path: '/AnswerResult/:answerUuid',
     //alias: ['/login'],
     name: 'answerResult',
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupResult.vue'),

@@ -76,6 +76,8 @@
         beClickCurrent : [] as Array<boolean>,
         modalShow: false,
         isAllSelected: false,
+        shortId : '',
+        uuid : '',
       };
     },
     computed: {
@@ -139,9 +141,11 @@
           submitAnswerFormatList.push( this.newAnswerModelList[i].getSubmitFormat() );
         }
         const answerSubmitFormatSet = Answer.getSubmitJson( submitAnswerFormatList );
-        let res = await AnswerGroupApi.save("cbdjq" , answerSubmitFormatSet );
+        let res = await AnswerGroupApi.save( this.shortId , answerSubmitFormatSet );
         console.log(res)
-        this.$router.push( { path: '/AnswerResult' } )
+
+        const answerUuid = this.uuid
+        this.$router.push( { name: "answerResult" , params: { answerUuid } } )
       },
     },
     watch: {
@@ -158,6 +162,9 @@
       const instance  = await axios
       .get( process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/makeanswergroup/' + this.$route.params.quizsId 
       + "/"  + this.$cookies.get('userUuid') )//as AnswerGroupRespondModel
+
+      this.shortId = instance.data.shortId
+      this.uuid = instance.data.uuid
 
       console.log( instance.data.amount )
       const instanceData = instance.data;
