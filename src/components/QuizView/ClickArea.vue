@@ -1,19 +1,28 @@
 <template>
   <div class = "container">
-    <div  @click="updateAnswers">
-      <div v-if="interBeClick" class="ClickStage">
 
-          <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+    <div v-if="localClickAreaModel.content.blankField.enabled" >
+      <div class="ClickStage">
+        <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
+        <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
+      </div>
+    </div>
+
+    <div v-else  @click="updateAnswers">
+      
+      <div v-if="interBeClick" class="ClickStage">
+          <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
           <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-          <div class="highlight" />
       </div>
 
       <div v-else class="ClickStage" >
-        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+        <AudioArea v-if="localClickAreaModel.content.audioField.enabled" :audio="localClickAreaModel.content.audioField.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-      </div>       
+      </div>
+
     </div>
   </div>
 </template>
@@ -112,9 +121,7 @@
       .image {
           width : 300px;
       }
-    }
-        
-        
+    }   
     
      .highlight {
           
