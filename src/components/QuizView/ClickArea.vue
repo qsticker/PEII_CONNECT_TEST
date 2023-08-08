@@ -65,13 +65,10 @@
         localClickAreaModel : {} as ClickAreaModel ,
         interBeClick : this.beClicked,
         blankUserAnswer : "",
-        //answerModel : {} as Answer
       };
     },
     watch: {
       clickAreaModel : function() {
-          //console.log( "watch" )
-          
           this.localClickAreaModel = this.clickAreaModel
       },
       currentIndex : function() {
@@ -79,9 +76,6 @@
         if( this.blankFillAnswer != undefined ){
           this.blankUserAnswer = this.blankFillAnswer[this.clickAreaModel.label]
         }
-        //console.log(this.clickAreaModel.label)
-        //console.log(this.interBeClick)
-        //console.log("hi")
       },
     },
     computed: {

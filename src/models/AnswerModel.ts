@@ -15,6 +15,7 @@ export interface AnswerSubmitFormatModel {
   uuid : string;
   timeSpent: number;
   userAnswer: Array<string>;
+  blankFillAnswer : any;
 }
 
 export interface AnswerSubmitFormatSet {
@@ -137,6 +138,7 @@ export class Answer implements AnswerInterface {
         uuid : this.uuid,
         timeSpent : this.timeSpent,
         userAnswer : this.userAnswer, 
+        blankFillAnswer : this.blankFillAnswer
       };
       return asnwerSubmitFormat;
     }
