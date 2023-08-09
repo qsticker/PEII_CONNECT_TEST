@@ -12,14 +12,14 @@
 
     <div v-else  @click="updateAnswers">
       
-      <div v-if="interBeClick" class="ClickStage">
+      <div v-if="interBeClick && checkBlockExist()" class="ClickStage">
           <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
           <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
           <div class="highlight" />
       </div>
 
-      <div v-else class="ClickStage" >
+      <div v-else-if="checkBlockExist()" class="ClickStage" >
         <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
@@ -89,7 +89,17 @@
             this.interBeClick = !this.interBeClick;
             this.$emit('updateByParent', this.clickAreaModel.label );
           }
-      }
+      },
+      checkBlockExist(){
+        if( this.localClickAreaModel.content.Audio.enabled ){
+          return true;
+        }else if( this.localClickAreaModel.content.textField.enabled ){
+          return true;
+        }else if( this.localClickAreaModel.content.imageField.enabled ){
+          return true;
+        }
+        return false;
+      },
     },
     created() {
       //console.log( this.clickAreaModel.label )
