@@ -74,6 +74,11 @@ const routes: Array<RouteConfig> = [
     name: 'purchasedList',
     component: () => import(/* webpackChunkName: "about" */ '@/views/PurchasedList.vue'),
   },
+  {
+    path: '/FinishAnswerList',
+    name: 'finishAnswerList',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/FinishAnswerGroupList.vue'),
+  },
 ]
 
 const router = new VueRouter({
