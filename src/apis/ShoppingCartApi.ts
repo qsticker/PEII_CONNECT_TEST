@@ -4,7 +4,7 @@ import vm from '@/main';
 export default class ShopiingCartApi {
 
     // 在購物車加入 Product（需要sellPlanId 和 Contents）
-    static async addProductToShoppingCartWithContents(sellPlanId: string, contents: [], shoppingCartId: string): Promise<string> {
+    static async addProductToShoppingCartWithContents(sellPlanId: string, contents: Array<String>, shoppingCartId: string): Promise<string> {
         const result = await api.post(`/shoppingcar/addContent/${shoppingCartId}`, {uuid: sellPlanId, contents: contents});
         await this.updateItemAmountOfShoppingCart();
         return result.data;

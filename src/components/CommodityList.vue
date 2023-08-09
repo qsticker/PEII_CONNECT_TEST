@@ -173,9 +173,13 @@ export default defineComponent({
       }
     },
     GotoSelectCommodity(uuid: string){
-      this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
-      this.$store.commit('updateFourQuiz', true);
-      console.log("update uuid success:" + this.$store.state.sellPlanId);
+      if(this.number>0){
+        this.$store.commit("updateSellPlanId", uuid); // 用於顯示列表
+        this.$store.commit('updateFourQuiz', true);
+        this.$emit('ReturnCartNumber', this.number);
+        console.log("update uuid success:" + this.$store.state.sellPlanId);
+      }
+      else  alert("需至少加入一項商品");
       // this.addCartNumber = this.number;
       // this.$router.push( {path: "/SelectCommodity" });
     },

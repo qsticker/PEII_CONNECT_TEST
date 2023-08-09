@@ -21,17 +21,16 @@
     </div>
     <div>
       <b-button  
-        style="width:˙50px;height:60px;"
+        style="width: 100px; height:55px; margin-top:80px"
         variant="light"
-        v-if="hasChooseNumber!=4"
-        disabled
+        v-if="hasChosenNumber!=totalNumber"
         @click="chooseFourAlert"
         >
         確定
       </b-button>
       <b-button  
-        style="width:˙50px;height:60px;" 
-        variant="light" 
+        style="width: 100px; height:55px;margin-top:80px" 
+        variant="outline-secondary" 
         v-else 
         @click="readyAddShoppingCart"
         >
@@ -46,10 +45,10 @@
       >
         <h3>你選擇的測驗為：</h3>
         <template #modal-header >
-          <div class="mx-auto" style="width: 100%; margin-top:-110px;">
+          <div class="mx-auto" style="width: 100%; margin-top:-120px;">
             <b-button
               squared
-              style="width: 10%; margin-left: 90%"
+              style="width: 70px; height:45px; margin-left: 85%; margin-top:120px"
               variant="outline-dark"
               size="sm"
               @click="$bvModal.hide('bv-modal-a')"
@@ -67,7 +66,7 @@
             >
               <div class="info-box" >
                 <div style="display:flex">
-                  <img :src="item.imageUrl" style="width:100px;height:50px;margin-left:10px; margin-top:10px;"/>
+                  <img :src="item.imageUrl" />
                   <h2 style="margin-left:10px;">{{ item.name }}</h2>
                 </div>
               </div>
@@ -75,7 +74,8 @@
           </div>
           <div class="action-box">
             <div v-if="cookie.get('accessToken')" style="display: inline-block; margin-left: 150px;">
-              <b-button class="addToShoppingCartBtn"  @click="$bvModal.hide('bv-modal-a'); addToShoppingCart(); ">確定</b-button>
+              <b-button class="addToShoppingCartBtn"  @click="$bvModal.hide('bv-modal-a') ;addToShoppingCart(); addToShoppingCartAlert()">確定</b-button>
+              
             </div>
             <p v-else>您还未登录，请登录后再试！</p>
             </div>
@@ -105,34 +105,61 @@ export default defineComponent({
       // commodityList: new Array<ommodity>(),
       commodityList: [] as any[],
       modalShow: false,
-      hasChooseNumber: 0,
-      hasSelect: 0,//has saved in fourQuiz
+      hasChosenNumber: 0,
+      // totalNumber:0 as any ,
       isCreated: false,
       isHoldingCurrentComodity: false,
+      sellPlanId: "", 
       // isQuiz: false,
       fourQuiz : [] as any[],
       readyBtn : false,
-      addToShoppingCartStatus: false,
       cookie: this.$cookies,
       treeData: null as any,
     };
   },
+  props: {
+    totalNumber: {
+      type: Number,
+      defualt: 0,
+    }
+    // totalNumber : Number
+  },
   
   computed: {},
   // watch: {
-  //   "$store.state.sellPlanId"(newVal, oldVal) {
+  //   "$store.state.sellPlanId"(newVal, oldVal) {vv
   //     this.retriveList();
   //   },
   // },
   methods: {
+    async addToShoppingCart(){
+      let contents  = new Array<String>();
+      if(this.totalNumber!=undefined)
+        for(let i = 0; i < this.totalNumber; i++){
+          contents.push(this.fourQuiz[i].uuid as string);
+        } 
+      console.log("cookies: "+ JSON.stringify(this.$cookies.get("user")));
+      try{
+        const result = await ShoppingCartApi.addProductToShoppingCartWithContents(this.sellPlanId, contents, this.$cookies.get("shoppingCarUuid"));
+        console.log( this.sellPlanId + " (ChooseExam)addProductToShoppingCartWithContents result: " + JSON.stringify(result) );
+        return true;
+      }catch(error){
+        console.error('Error:', error);
+        return false;
+      }
+    },
+    addToShoppingCartAlert(){
+      alert("已加入購物車");
+    },
     chooseFourAlert(){
-      alert("還未選取四回測驗");
+      if(this.totalNumber!=undefined && this.hasChosenNumber < this.totalNumber)
+        alert("還未選取"+this.totalNumber+"回測驗");
     },
     isClicked(index: number){
       if(this.commodityList[index].isSelected){
         // 已選 -> 將原本已選改為未選中
         this.commodityList[index].isSelected = false;
-        this.hasChooseNumber = this.hasChooseNumber - 1;
+        this.hasChosenNumber = this.hasChosenNumber - 1;
         // let tmp =  this.commodityList[index].saveIndex - 1;
         for(var j = this.commodityList[index].saveIndex + 1; j < this.fourQuiz.length; j++){
           this.fourQuiz[j].saveIndex --;
@@ -140,15 +167,20 @@ export default defineComponent({
         this.fourQuiz.splice(this.commodityList[index].saveIndex,1);
         this.commodityList[index].saveIndex = 0;
         // console.log("this.fourQuiz: " + this.fourQuiz[0].name);
-        console.log("------" + this.hasChooseNumber);
+        console.log("------" + this.hasChosenNumber);
       }
       else{
-        if(this.hasChooseNumber < 4){
+        if(this.totalNumber != undefined && this.hasChosenNumber < this.totalNumber){
+        //  if(this.hasChosenNumber < 4){
           this.commodityList[index].isSelected = true;
-          this.hasChooseNumber = this.hasChooseNumber + 1;
-          this.commodityList[index].saveIndex = this.hasChooseNumber - 1;
+          this.hasChosenNumber = this.hasChosenNumber + 1;
+          this.commodityList[index].saveIndex = this.hasChosenNumber - 1;
           this.fourQuiz.push(this.commodityList[index]);
-          console.log("++++++" + this.hasChooseNumber);
+          console.log("++++++" + this.hasChosenNumber);
+        }
+        else{
+          console.log("this.totalNumber:" + this.totalNumber);
+          alert("只能選取"+this.totalNumber+"回測驗");
         }
       }
       //just for console
@@ -157,22 +189,9 @@ export default defineComponent({
       }
     },
     readyAddShoppingCart() {
-      // this.$router.push({ path: "/SelectCommodity" });
-      //this.currentCommodity = commodity;
-      this.addToShoppingCartStatus = false;
       this.modalShow = true;
-      // this.hasChooseNumber = 1;
       this.readyBtn = true;
       console.log("shopping");
-    },
-    async addSellPlanToShoppingCartWithSellPlanIdOnly(sellPlanId: string) {
-      console.log("cookies: "+ JSON.stringify(this.$cookies.get("user")));
-      await ShoppingCartApi.addProductToShoppingCart(sellPlanId, this.$cookies.get("shoppingCarUuid"));
-      this.addToShoppingCartStatus= true;
-      return true;
-    },
-    addToShoppingCart(){
-      alert("已加入購物車");
     },
     checkCommodityContainByUser(commodity: commodity) {
       if (this.$store.state.userContainPasses) {
@@ -190,7 +209,10 @@ export default defineComponent({
     },
   },
   async created() {
+    // this.totalNumber = this.getReturnCartNumber;
+    // console.log("totalNumber: " + this.totalNumber);
     this.$store.commit('updateLoading', true);
+    this.sellPlanId = this.$store.state.sellPlanId;
     try{
       const sellPlanQueryResult = await CategoryApi.getAllQuizGroups(
         this.$store.state.sellPlanId
@@ -220,12 +242,7 @@ export default defineComponent({
   
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.btn{
-  margin-top: 100px;
-  width:100px;
-  height:50px;
-  border:2px #9999FF
-}
+
 .beClicked {
   background: rgb(173, 170, 170);
   color: white;
@@ -253,9 +270,6 @@ export default defineComponent({
       .OfCommodity {
         margin-right: 3%;
       }
-      .price {
-        margin-top: 3%;
-      }
     }
   }
 }
@@ -268,6 +282,12 @@ export default defineComponent({
   .info-box {
     // display: flex;
     padding: 15px 5px;
+    img{
+      width:100px;
+      height:50px;
+      margin-left:10px; 
+      margin-top:10px;
+    }
 
     h2 {
       margin: 10px 0;
@@ -341,9 +361,6 @@ export default defineComponent({
       .content {
         .OfCommodity {
           margin-right: 3%;
-        }
-        .price {
-          margin-top: 3%;
         }
       }
     }

@@ -7,13 +7,13 @@
       </div>  
       <div v-else-if="isQuiz && isFourQuiz" >  
         <div style="margin-top: 40px; font-size: 25px" >
-          <h2>購買一份真題四選系列測驗，包含四回真題測驗，您欲購買1份，請選擇4回測驗</h2>
-        </div>
-        <ChooseExam type="quiz" key="2"/>
+          <h2>購買一份真題四選系列測驗，包含4回真題測驗，您欲購買{{getReturnCartNumber}}份，請選擇{{getReturnCartNumber*4}}回測驗</h2>
+        </div> 
+        <ChooseExam :totalNumber='getReturnCartNumber*4' type="quiz" key="2"  />
       </div>  
       <div v-else >  
         <HierarchyClasses class="HierarchyClasses" :clickedClass="clickedClass" type="quiz" key="2"/>
-        <CommodityList type="quiz" key="2"/>
+        <CommodityList type="quiz" key="2" @ReturnCartNumber="getCommodityNumber" />
       </div>  
     </div>
 </template>
@@ -40,7 +40,8 @@
         created: false,
         isQuiz : false,
         isCourse : false,
-        isFourQuiz : false
+        isFourQuiz : false,
+        getReturnCartNumber:0
       };
     },
     computed: {
@@ -72,7 +73,9 @@
       },
   },
     methods: {
-    
+      getCommodityNumber(data:number){ 
+        this.getReturnCartNumber = data;
+      }
     },
     async created() {
       // this.isFourQuiz=this.$store.state.isFourQuiz;
