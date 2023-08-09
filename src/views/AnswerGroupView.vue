@@ -141,7 +141,7 @@
           submitAnswerFormatList.push( this.newAnswerModelList[i].getSubmitFormat() );
         }
         const answerSubmitFormatSet = Answer.getSubmitJson( submitAnswerFormatList );
-        let res = await AnswerGroupApi.save( this.shortId , answerSubmitFormatSet );
+        let res = await AnswerGroupApi.submit( this.shortId , answerSubmitFormatSet );
         console.log(res)
 
         const answerUuid = this.uuid
