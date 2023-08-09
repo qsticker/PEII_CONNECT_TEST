@@ -291,6 +291,7 @@ export default defineComponent({
     logout() {
       //Auth.logout();
       console.log("out");
+      this.$router.push({ path: "/" })   
       this.$cookies.remove("accessToken");
       this.$store.state.profile = null;
     },
