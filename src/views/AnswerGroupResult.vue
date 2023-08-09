@@ -53,16 +53,16 @@
     },
     methods: {
        changeNum(changeIndex : number) {
-        if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
-          alert( "以超過總題數數量" )
-        }else if(changeIndex < 0){
-          alert( "以超過總題數數量" )
-        }
-        else{
-          console.log("change" + changeIndex)
-          this.currentIndex = changeIndex
-          this.currentAnswerModel = this.answerModelList[changeIndex]
-        }
+        //if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
+        //  alert( "以超過總題數數量" )
+        //}else if(changeIndex < 0){
+        //  alert( "以超過總題數數量" )
+        //}
+        //else{
+        console.log("change" + changeIndex)
+        this.currentIndex = changeIndex
+        this.currentAnswerModel = this.answerModelList[changeIndex]
+        //}
       },
     },
     async created() {

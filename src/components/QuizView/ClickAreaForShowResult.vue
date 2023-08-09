@@ -1,7 +1,7 @@
 <template>
     <div class = "container">
       <div >
-        <div  class="ClickStage">
+        <div v-if="checkBlockExist()" class="ClickStage">
             <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
             <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
             <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
@@ -57,6 +57,16 @@
        
       },
       methods: {
+        checkBlockExist(){
+          if( this.localClickAreaModel.content.Audio.enabled ){
+            return true;
+          }else if( this.localClickAreaModel.content.textField.enabled ){
+            return true;
+          }else if( this.localClickAreaModel.content.imageField.enabled ){
+            return true;
+          }
+          return false;
+        },
       },
       created() {
         console.log( this.clickAreaModel.label )
@@ -78,7 +88,7 @@
         justify-content: center;
         flex-direction: column;
         position: relative;
-        width: 400px;
+        width: 90vw;
         border-radius: 10px;
         border-width: 10px;
         border-style: solid;
