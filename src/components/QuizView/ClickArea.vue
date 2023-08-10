@@ -1,19 +1,29 @@
 <template>
   <div class = "container">
-    <div  @click="updateAnswers">
-      <div v-if="interBeClick" class="ClickStage">
 
-          <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+    <div v-if="localClickAreaModel.content.blankField.enabled" >
+      <div class="ClickStage">
+        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
+        <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
+        <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.label , $event.target.value)">
+      </div>
+    </div>
+
+    <div v-else  @click="updateAnswers">
+      
+      <div v-if="interBeClick && checkBlockExist()" class="ClickStage">
+          <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
           <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
           <div class="highlight" />
       </div>
 
-      <div v-else class="ClickStage" >
-        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+      <div v-else-if="checkBlockExist()" class="ClickStage" >
+        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio.url" />
         <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-      </div>       
+      </div>
     </div>
   </div>
 </template>
@@ -45,25 +55,27 @@
           type: Boolean,
           defualt: false,
         },
+        blankFillAnswer : {
+          type : Object,
+          defualt : false,
+        }
     },
     data() {
       return {
         localClickAreaModel : {} as ClickAreaModel ,
         interBeClick : this.beClicked,
-        //answerModel : {} as Answer
+        blankUserAnswer : "",
       };
     },
     watch: {
       clickAreaModel : function() {
-          //console.log( "watch" )
-          
           this.localClickAreaModel = this.clickAreaModel
       },
       currentIndex : function() {
         this.interBeClick = this.beClicked
-        console.log(this.clickAreaModel.label)
-        console.log(this.interBeClick)
-        console.log("hi")
+        if( this.blankFillAnswer != undefined ){
+          this.blankUserAnswer = this.blankFillAnswer[this.clickAreaModel.label]
+        }
       },
     },
     computed: {
@@ -77,12 +89,31 @@
             this.interBeClick = !this.interBeClick;
             this.$emit('updateByParent', this.clickAreaModel.label );
           }
-      }
+      },
+      checkBlockExist(){
+        if( this.localClickAreaModel.content.Audio.enabled ){
+          return true;
+        }else if( this.localClickAreaModel.content.textField.enabled ){
+          return true;
+        }else if( this.localClickAreaModel.content.imageField.enabled ){
+          return true;
+        }
+        return false;
+      },
     },
     created() {
-      console.log( this.clickAreaModel.label )
+      //console.log( this.clickAreaModel.label )
       this.localClickAreaModel = this.clickAreaModel; 
       this.interBeClick = this.beClicked;
+      
+      if( this.localClickAreaModel.content.blankField.enabled ){
+        if( this.blankFillAnswer != undefined ){
+          const blankAnswerOfThisLabel = this.blankFillAnswer[this.clickAreaModel.label]
+          if( blankAnswerOfThisLabel  != undefined){
+            this.blankUserAnswer = blankAnswerOfThisLabel 
+          }
+        }
+      }
     }
   });
   </script>
@@ -100,7 +131,7 @@
       justify-content: center;
       flex-direction: column;
       position: relative;
-      width: 400px;
+      width: 90vw;
       border-radius: 10px;
       border-width: 10px;
       border-style: solid;
@@ -112,16 +143,14 @@
       .image {
           width : 300px;
       }
-    }
-        
-        
+    }   
     
      .highlight {
           
         position: absolute;
         top: 0;
         left: 0;
-        width: 380px;
+        width: 89vw;
         height: 100%;
         z-index: 999;
 

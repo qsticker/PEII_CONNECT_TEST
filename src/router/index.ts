@@ -51,13 +51,13 @@ const routes: Array<RouteConfig> = [
 
   },
   {
-    path: '/Answer',
+    path: '/Answer/:quizsId',
     //alias: ['/login'],
     name: 'answer',
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupView.vue'),
   },
   {
-    path: '/AnswerResult',
+    path: '/AnswerResult/:answerUuid',
     //alias: ['/login'],
     name: 'answerResult',
     component: () => import(/* webpackChunkName: "about" */ '@/views/AnswerGroupResult.vue'),
@@ -73,6 +73,11 @@ const routes: Array<RouteConfig> = [
     path: '/PurchasedList',
     name: 'purchasedList',
     component: () => import(/* webpackChunkName: "about" */ '@/views/PurchasedList.vue'),
+  },
+  {
+    path: '/FinishAnswerList',
+    name: 'finishAnswerList',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/FinishAnswerGroupList.vue'),
   },
 ]
 

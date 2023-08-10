@@ -27,6 +27,7 @@
                         variant="outline-dark">
                         打开课程
                     </b-button>
+                    <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer(item.quizGroupId)" target="_blank" variant="outline-dark">打开测验</b-button>
                 </div>
             </b-card>
         </div>
@@ -62,6 +63,9 @@ export default defineComponent({
         backToHomeBtn() {
             this.$router.push({ name: "home" });
         },
+        startAnswer(quizsId : string) {
+            this.$router.push( { name: "answer" , params: { quizsId }  } )
+        }
 
     },
     async created() {
