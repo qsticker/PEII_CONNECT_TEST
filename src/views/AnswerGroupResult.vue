@@ -53,37 +53,34 @@
     },
     methods: {
        changeNum(changeIndex : number) {
-        if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
-          alert( "以超過總題數數量" )
-        }else if(changeIndex < 0){
-          alert( "以超過總題數數量" )
-        }
-        else{
-          console.log("change" + changeIndex)
-          this.currentIndex = changeIndex
-          this.currentAnswerModel = this.answerModelList[changeIndex]
-        }
+        //if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
+        //  alert( "以超過總題數數量" )
+        //}else if(changeIndex < 0){
+        //  alert( "以超過總題數數量" )
+        //}
+        //else{
+        console.log("change" + changeIndex)
+        this.currentIndex = changeIndex
+        this.currentAnswerModel = this.answerModelList[changeIndex]
+        //}
       },
     },
     async created() {
-      const answerResultInstance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/25d14247-f997-4e64-a0b5-e297b9eb138e')
+      const answerResultInstance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/' + this.$route.params.answerUuid )
       const {
-        status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList
+        status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList , shortId
       } = answerResultInstance.data;
       this.answerResult = new AnswerGroupResultRespondModel( status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList );
 
-      const instance  = await axios.get(process.env.VUE_APP_BASE_API_URL + '/answer-group/anwser-web?entranceCode=cbdjq') //as AnswerGroupRespondModel
-      const instanceData = instance.data;
-      console.log( instance  )
-     
-      const newAnswerList = instanceData.answerList as Array<any>;
-      const newAnswerModelList = new Array<Answer>();
+      const instance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/anwser-web?entranceCode=' + shortId) //as AnswerGroupRespondModel
+      const answerViewInstance = instance.data;
+      console.log( instance )
       
-      this.originalQuizInstanceName = instanceData.sourceQuizGroupName
-
+      this.originalQuizInstanceName = answerViewInstance.sourceQuizGroupName
+      /*
       for (let i = 0; i < instanceData.amount; i += 1) {
        const {
-          userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
+          userAnswer , sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
         } = newAnswerList[i];
         let answer = new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , sourceQuiz.score)
         newAnswerModelList.push( answer );
@@ -93,6 +90,27 @@
               }  
           }
         );
+      }
+      */
+      console.log("answer")
+      console.log( this.answerResult.answerList )
+      const newAnswerList = this.answerResult.answerList as Array<any>;
+      const newAnswerModelList = new Array<Answer>();
+      for(let i = 0 ; i < this.answerResult.answerList.length ; i++){
+        const {
+          userAnswer , uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
+        } = newAnswerList[i];
+        //retrieve clickArea from answerViewInstance
+        for(let j = 0 ; j < answerViewInstance.answerList.length ; j++){
+          if( answerViewInstance.answerList[j].sourceQuiz.uuid == newAnswerList[i].sourceQuiz.uuid){
+            const { 
+            sourceQuiz
+            } = answerViewInstance.answerList[j]
+            let answer = new Answer( userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , sourceQuiz.score)
+            answer.setRealAnswer( newAnswerList[i].sourceQuiz.answerSet )
+            newAnswerModelList.push( answer );
+          }
+        }
       }
       console.log( newAnswerModelList )
       this.answerModelList = newAnswerModelList;
