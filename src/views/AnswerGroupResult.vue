@@ -72,7 +72,7 @@
       } = answerResultInstance.data;
       this.answerResult = new AnswerGroupResultRespondModel( status , uuid , timeSpent , totalScore , scoreGot , correctRate , sourceQuizGroupId , sourceQuizGroupSize ,quizEventId , answerList );
 
-      const instance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/anwser-web?entranceCode=' + shortId) //as AnswerGroupRespondModel
+      const instance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/get-answer-result-with-area?entranceCode=' + shortId) //as AnswerGroupRespondModel
       const answerViewInstance = instance.data;
       console.log( instance )
       
