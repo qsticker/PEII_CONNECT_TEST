@@ -22,4 +22,8 @@ export default class CategoryApi {
         const result = await api.get(`/category/getAllCourseGroups/${sellPlanId}`);
         return result.data.courseGroups;
     }
+    static async getAllQuizGroupsInNode(categoryNode: string): Promise<string> {
+        const result = await api.get(`/category/getAllQuizGroupsInNode/${categoryNode}`);
+        return result.data.quizGroups;
+    }
 }
