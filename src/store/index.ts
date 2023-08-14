@@ -21,6 +21,7 @@ export default new Vuex.Store<State>({
     shoppingCart: null,
     userContainPasses: null,
     sellPlanId: 'ceb5cfdf-2dd8-4abc-91f7-0579faa55e5e',
+    bundleId : '',
     shoppingCartSize: 0,
     isLoading: false
   }),
@@ -33,6 +34,9 @@ export default new Vuex.Store<State>({
     },
     updateSellPlanId: function (state: State, newSellPlanId: string) {
       state.sellPlanId = newSellPlanId;
+    },
+    updateBundleId: function (state: State, newbundleId: string) {
+      state.bundleId = newbundleId;
     },
     updateCourseClass: function (state: State, courseClassfication: RootClassfication[]) {
       state.courseClassfication = courseClassfication;

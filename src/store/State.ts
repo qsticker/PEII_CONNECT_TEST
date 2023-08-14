@@ -10,6 +10,7 @@ export interface State {
     shoppingCart : Map<pass, number> | null;
     userContainPasses : Map<pass, number> | null; //retrieve this information by api ( maybe those can contain in user's profile)
     sellPlanId: string;
+    bundleId: string,
     shoppingCartSize: number;
     isLoading: Boolean;
 }
