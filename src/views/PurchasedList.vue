@@ -27,7 +27,7 @@
                         variant="outline-dark">
                         打开课程
                     </b-button>
-                    <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer(item.quizGroupId)" target="_blank" variant="outline-dark">打开测验</b-button>
+                    <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer(item.quizGroupId, item.bundle.isRandom, item.bundle.categoryNode, item.bundle.uuid)" target="_blank" variant="outline-dark">打开测验</b-button>
                 </div>
             </b-card>
         </div>
@@ -63,8 +63,14 @@ export default defineComponent({
         backToHomeBtn() {
             this.$router.push({ name: "home" });
         },
-        startAnswer(quizsId : string) {
-            this.$router.push( { name: "answer" , params: { quizsId }  } )
+        startAnswer(quizsId : string, random:boolean ,NodeID:string, bundleId:string) {
+            if(random){
+                this.$store.commit("updateSellPlanId", NodeID);
+                console.log("Purchased bundleId: " + bundleId);
+                this.$store.commit("updateBundleId", bundleId);
+                this.$router.push( {path: "/RandomQuiz" });
+            }
+            else    this.$router.push( { name: "answer" , params: { quizsId }  } )
         }
 
     },
