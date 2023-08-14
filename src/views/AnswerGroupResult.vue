@@ -6,8 +6,8 @@
       <li  class="list-group-item "> 題組總分 : {{ answerResult.totalScore }}  </li>    
       <li  class="list-group-item "> 你的得分 : {{ answerResult.scoreGot  }}  </li>    
       <li  class="list-group-item "> 正確率 : {{ answerResult.correctRate  }}  </li>
-      <li  class="list-group-item "> 本題答案 : {{ currentAnswerModel.realAnswer  }}  </li>  
-      <li  class="list-group-item "> 你的答案 : {{ currentAnswerModel.userAnswer  }}  </li>  
+      <li  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
+      <li  class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
     </ul>
 
     <b-row class="indexSelector">
@@ -64,6 +64,56 @@
         this.currentAnswerModel = this.answerModelList[changeIndex]
         //}
       },
+      getRealAnswer( ){
+        let realAnswer = ""
+        if( this.currentAnswerModel.isBlankFill ){
+          if( this.currentAnswerModel.realBlankFillAnswer != undefined ){
+            const keys = ["A" , "B" , "C" , "D" , "E"]
+
+            for( let i = 0 ; i < keys.length ; i++){
+              let tempAnswer = this.currentAnswerModel.realBlankFillAnswer[ keys[i] ]
+              if( tempAnswer != ""){
+                if(tempAnswer != undefined){
+                  if( keys[i] != "A"){
+                    realAnswer = realAnswer + " / " 
+                  }
+                  realAnswer = realAnswer + tempAnswer
+                } 
+              } 
+            }
+          }  
+        }else{
+          for(let i = 0 ; i < this.currentAnswerModel.realAnswer.length ; i++){
+            realAnswer = realAnswer + " " + this.currentAnswerModel.realAnswer[i]
+          } 
+        }
+        return realAnswer
+      },
+      getAnswer( ){
+        let userAnswer = ""
+        if( this.currentAnswerModel.isBlankFill ){
+          if( this.currentAnswerModel.blankFillAnswer != undefined ){
+            const keys = ["A" , "B" , "C" , "D" , "E"]
+
+            for( let i = 0 ; i < keys.length ; i++){
+              let tempAnswer = this.currentAnswerModel.blankFillAnswer[ keys[i] ]
+              if( tempAnswer != ""){
+                if(tempAnswer != undefined){
+                  if( keys[i] != "A"){
+                    userAnswer = userAnswer + " / " 
+                  }
+                  userAnswer = userAnswer + tempAnswer
+                } 
+              } 
+            }
+          }  
+        }else{
+          for(let i = 0 ; i < this.currentAnswerModel.userAnswer.length ; i++){
+            userAnswer = userAnswer + " " + this.currentAnswerModel.userAnswer[i]
+          } 
+        }
+        return userAnswer
+      }
     },
     async created() {
       const answerResultInstance  = await axios.get(process.env.VUE_APP_PEII_BASE_API_URL + '/answer-group/' + this.$route.params.answerUuid )
@@ -98,16 +148,19 @@
       const newAnswerModelList = new Array<Answer>();
       for(let i = 0 ; i < this.answerResult.answerList.length ; i++){
         const {
-          userAnswer , uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
+          userAnswer , uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , realBlankFillAnswer
         } = newAnswerList[i];
         //retrieve clickArea from answerViewInstance
         for(let j = 0 ; j < answerViewInstance.answerList.length ; j++){
           if( answerViewInstance.answerList[j].sourceQuiz.uuid == newAnswerList[i].sourceQuiz.uuid){
             const { 
-            sourceQuiz
+              sourceQuiz
             } = answerViewInstance.answerList[j]
             let answer = new Answer( userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , sourceQuiz.score)
             answer.setRealAnswer( newAnswerList[i].sourceQuiz.answerSet )
+            if( answer.isBlankFill ){
+              answer.setRealBlankFillAnswer( answerViewInstance.answerList[j].realBlankFillAnswer )
+            }
             newAnswerModelList.push( answer );
           }
         }

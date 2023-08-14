@@ -73,6 +73,7 @@ export interface AnswerInterface {
   type: string;
   userAnswer: string[];
   blankFillAnswer: any;
+  realBlankFillAnswer: any;
   timeSpent: number;
   clickAreas: Array<ClickAreaModel>;
   multipleSelect?: boolean;

@@ -39,6 +39,7 @@ export class Answer implements AnswerInterface {
     followPreviousQuiz = false;
   
     blankFillAnswer = {} as any;
+    realBlankFillAnswer = {} as any;
     isBlankFill = false;
     score = 5;
     uuid = ""
@@ -152,5 +153,9 @@ export class Answer implements AnswerInterface {
 
     public setRealAnswer( realAnswer : Array<string> ){
       this.realAnswer = realAnswer;
+    }
+
+    public setRealBlankFillAnswer( realBlankFillAnswer: any ){
+      this.realBlankFillAnswer = realBlankFillAnswer;
     }
 }
