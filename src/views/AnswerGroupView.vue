@@ -1,38 +1,38 @@
 <template>
   <div class= "root">
-      <b-navbar class="navbar navbar-expand-lg navbar-light  box-shadow:0px 4.9px 5px -3px grey;">
-         <b-button v-if="isAllSelected" class="submitButton" variant="warning" @click="submitAnswer" >
-            缴交
+    <b-navbar class="navbar navbar-expand-lg navbar-light  box-shadow:0px 4.9px 5px -3px grey;">
+        <b-button v-if="isAllSelected" class="submitButton" variant="warning" @click="submitAnswer" >
+          缴交
+        </b-button>
+        <b-button v-else class="submitButton" variant="outline-light" @click="submitAnswer">
+          缴交
+        </b-button>
+    </b-navbar>
+    <AnswerView class="answer" v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
+    <div class="Sticky-top" style="margin-top:20px; margin-bottom:0px;">
+      <div class="navbar-light" role="group">
+        <div class="btn-group bottom-btns" style="height:70%">
+          <b-button class="btn btn-light"  @click="previousBtn">
+          &nbsp;&nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            上一题
           </b-button>
-          <b-button v-else class="submitButton" variant="outline-light" @click="submitAnswer">
-            缴交
+          <b-button class="btn btn-light" @click="listBtn">
+          &nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z" />
+            </svg>
+            答题进度
           </b-button>
-      </b-navbar>
-      <AnswerView class="answer" v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/>
-      <div class="fixed-bottom">
-        <div class="navbar-light" role="group">
-          <div class="btn-group bottom-btns" style="height:70%">
-            <b-button class="btn btn-light"  @click="previousBtn">
-            &nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-              </svg>
-              上一题
-            </b-button>
-            <b-button class="btn btn-light" @click="listBtn">
-            &nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z" />
-              </svg>
-              答题进度
-            </b-button>
-            <b-button class="btn btn-light"  @click="nextBtn">
-            &nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
-              </svg>
-              下一题
-            </b-button>
+          <b-button class="btn btn-light"  @click="nextBtn">
+          &nbsp;&nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+            </svg>
+            下一题
+          </b-button>
         </div>
       </div>
       <!--<AnswerProgress v-if="isCreated"  :answers="newAnswerModelList" @numChanged="changeNumber" />-->
@@ -42,6 +42,8 @@
         </p>
       </b-modal>
     </div>
+    <!-- <AnswerView class="answer" v-if="isCreated" :answerModel="currentAnsweModel" :beClickeds="beClickCurrent" :currentIndex="currentIndex"/> -->
+
   </div>
 </template>
   

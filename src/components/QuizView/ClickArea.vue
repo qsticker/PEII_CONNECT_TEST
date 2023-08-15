@@ -131,9 +131,9 @@
       justify-content: center;
       flex-direction: column;
       position: relative;
-      width: 90vw;
+      width: 95vw;
       border-radius: 10px;
-      border-width: 10px;
+      border-width: 6px;
       border-style: solid;
       border-color: blue;
       &:hover {

@@ -1,5 +1,5 @@
 <template>
-  <p :style="{'text-align': 'LEFT' ,'font-size': '20px' , 'width':   '100%' }" > {{ field.text }}</p>
+  <p :style="{'text-align': 'LEFT' ,'font-size': '20px' , 'width':   '98%', 'margin-top':'10px' }" > {{ field.text }}</p>
 </template>
   
 <script lang="ts">
