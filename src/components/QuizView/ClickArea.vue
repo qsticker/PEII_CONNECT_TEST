@@ -150,7 +150,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 89vw;
+        width: 94.5vw;
         height: 100%;
         z-index: 999;
 
