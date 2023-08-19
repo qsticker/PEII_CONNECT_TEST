@@ -28,7 +28,7 @@ api.interceptors.response.use((response) => response, (error) => {
   }
 
   const path = '';
-
+  
   switch (error.response.status) {
     case 401:
       if (vm.$cookies.isKey('token')) {
@@ -63,6 +63,7 @@ api.interceptors.response.use((response) => response, (error) => {
     vm.$router.push(path);
   }
   return Promise.reject(error);
+  
 });
 
 export default api;

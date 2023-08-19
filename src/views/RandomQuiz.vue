@@ -222,10 +222,6 @@ export default defineComponent({
       console.log("ppp");
       return false;
     },
-    course() {
-      window.location.href =
-        "https://peiiquizs.s3.ap-northeast-1.amazonaws.com/and%E7%94%A8%E5%9C%A8%E5%8F%A5%E9%A6%96/index.html";
-    },
   },
   async created() {
     // this.totalNumber = this.getReturnCartNumber;

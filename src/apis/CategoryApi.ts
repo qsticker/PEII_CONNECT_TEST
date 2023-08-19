@@ -26,4 +26,8 @@ export default class CategoryApi {
         const result = await api.get(`/category/getAllQuizGroupsInNode/${categoryNode}`);
         return result.data.quizGroups;
     }
+    static async getNodeById(categoryNodeId: string): Promise<string> {
+        const result = await api.post(`/category/retrieveByCategoryNodeId` , {categoryId : categoryNodeId } );
+        return result.data;
+    }
 }
