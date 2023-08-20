@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!--<peiiNavbar />-->
-    <RandomQuiz categoryNodeId="205f9dfc-90ff-41dc-aca5-d7723a8528f6"/>
+    <RandomQuiz categoryNodeId="d2176997-1973-487c-a604-c407b60d94fa"/>
 
     <!--<router-view class="router-view" />-->
 

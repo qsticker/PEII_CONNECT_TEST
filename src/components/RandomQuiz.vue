@@ -1,25 +1,42 @@
 <template>
 <div>
-  
-  <b-dropdown id="dropdown-1" :text="getbeClickLevelName(groupIndex)" class="m-md-2"  v-for="(group, groupIndex) in displayArray" :key="groupIndex">
-
-    <b-dropdown-item 
+  <div class="b-downs-container">
+    <b-dropdown id="dropdown-1" :text="getbeClickLevelName(groupIndex)" class="m-md-2"  v-for="(group, groupIndex) in displayArray" :key="groupIndex">
+      <b-dropdown-item 
             v-for="(element, elementIndex) in group"
             :key="element.uuid"
             @click="elementClickedHandler(groupIndex, elementIndex, element.uuid)"
             >
-      {{element.name}}
-    </b-dropdown-item>  
-  </b-dropdown>
-  
+        {{element.name}}
+      </b-dropdown-item>  
+    </b-dropdown>
+  </div>
+
+  <div class="pathConatiner">
+    <div v-for="(pathItem , pathListIndex) in pathList" :key="pathListIndex">
+      <div :style="{ 'background-color' : '#c4c4c4' , 'border-radius': '5px' , 'margin-right' : '0.1vw' , 'margin-top' : '0.1vw' , 'margin-bottom' : '0.5vw' }">
+        {{ pathItem.path }}
+        <button type="button" class="btn-close" aria-label="Close" @click="removePathFromPathList(pathItem.path)"> </button>
+      </div>
+    </div>
+  </div>
+
+  <b-button
+          squared
+          
+          @click="addNewPathInList()"
+        >
+        增加路径
+  </b-button>
 </div>
 </template>
   
 <script lang="ts">
-  import Vue , { defineComponent , PropType} from "vue";
-  import CategoryApi from "@/apis/CategoryApi";
-  import { levelClasses, quizunitRoot } from "@/models/levelClass";
+  import Vue , { defineComponent } from "vue";
+  
+  import { levelClasses } from "@/models/levelClass";
   import axios from 'axios';
+  import isEqual from "lodash.isequal";
   export default defineComponent({
     name: 'RandomQuiz',
     components: {
@@ -42,6 +59,7 @@
         treeData: null as any,
         displayArray: [] as any[],
         beClickLevelList: [] as any[],
+        pathList: [] as any[],
       };
     },
     computed: {
@@ -106,7 +124,59 @@
       this.beClickLevelList.push(pushItem);
        console.log( this.beClickLevelList )
     },
+    addNewPathInList(){
+      if( this.beClickLevelList.length != 0){
+        let path = "";
+        for(let i = 0 ; i < this.beClickLevelList.length  ; i++){
+          path = path + this.beClickLevelList[i].name 
+          if( i < this.beClickLevelList.length - 1){
+            path = path + "/"
+          }else{
+            let pathItem = { uuid: "", path: "" };
+            pathItem.path = path;
+            pathItem.uuid = this.beClickLevelList[i].uuid;
+            if( !this.checkDuplicatePath( pathItem.path )){
+              this.pathList.push( pathItem );
+            }
+          }
+        }
+        this.refreshBeclicked();
+      }
     },
+    removePathFromPathList(path : string){
+      let paths = [] as any;
+      this.pathList.forEach(( pathItem: any) =>{
+          if( !isEqual(pathItem.path , path ) ){
+            paths.push(pathItem)
+          }
+        });
+      this.pathList = paths
+    },
+    checkDuplicatePath(path : string){
+      if(this.pathList.length == 0){
+        return false;
+      }
+      for(let i = 0 ; i < this.pathList.length ; i++){
+        if( isEqual(this.pathList[i].path , path) ){
+          return true
+        }
+      }
+      return false;
+    },
+    refreshBeclicked(){
+      let level0 = [] as any;
+      this.treeData.child.forEach((element: { name: string; uuid: any; child: any;}) => {
+      // 設定第0層的每一個元素
+       let elementObject = { uuid: "", name: "" , child: [], isSelected: false, depth: 0 };
+       elementObject.uuid = element.uuid;
+       elementObject.name = element.name;
+       elementObject.child = element.child
+       level0.push(elementObject);
+      });
+      this.displayArray = [level0];
+      this.beClickLevelList = [] as any;
+    },
+},
     async created() {
     try{
       let remoteCategory;
@@ -134,4 +204,19 @@
 });
   </script>
 <style lang="scss" scoped>
+  .pathConatiner{
+    width : 10vw;
+    display: flex;
+    flex-wrap: wrap;
+    //align-items: stretch;
+    //background : blue;
+    margin: auto;
+    justify-content: center;
+  }
+  .b-downs-container{
+    display: flex;
+    flex-direction:column;
+    width : 10vw;
+    margin: auto;
+  }
 </style>
