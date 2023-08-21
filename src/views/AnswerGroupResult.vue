@@ -7,8 +7,8 @@
       <li  class="list-group-item "> 題組總分 : {{ answerResult.totalScore }}  </li>    
       <li  class="list-group-item "> 你的得分 : {{ answerResult.scoreGot  }}  </li>    
       <li  class="list-group-item "> 正確率 : {{ answerResult.correctRate  }}  </li>
-      <li  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
-      <li  class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill"  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill" class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
     </ul>
     <!--<i v-else-if="answerResult(item)" class="fas fa-check correct" />-->
     <b-row class="indexSelector">
@@ -22,7 +22,8 @@
     </b-row>
     <div  v-for="( clickArea ,index ) in currentAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
       <div class="result-clickArea-Container">
-        <i  class="fas fa-check correct faicon" />
+        <i v-if="checkThisAnswerIsCorrect(clickArea)" class="fas fa-check correct faicon" style="color: #14ee11;" />
+        <i v-else-if="checkThisAnswerIsInCorrect(clickArea)" class="fa fa-times faicon" style="color: #ee1111;" />
         <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="subCurrentIndex" />
       </div>
     </div>
@@ -32,6 +33,7 @@
   <script lang="ts">
   import { defineComponent  } from "vue";
   import { Answer } from '@/models/AnswerModel';
+  import { ClickAreaModel } from '@/models/QuizModel';
   import ClickAreaForShowResult from "@/components/QuizView/ClickAreaForShowResult.vue";
   import axios from 'axios';
   import { AnswerGroupResultRespondModel } from '@/apis/models/AnswerGroupResultModel';
@@ -57,16 +59,36 @@
     },
     methods: {
        changeNum(changeIndex : number) {
-        //if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
-        //  alert( "以超過總題數數量" )
-        //}else if(changeIndex < 0){
-        //  alert( "以超過總題數數量" )
-        //}
-        //else{
+       
         console.log("change" + changeIndex)
         this.currentIndex = changeIndex
         this.currentAnswerModel = this.answerModelList[changeIndex]
-        //}
+        
+      },
+      checkThisAnswerIsCorrect(clickArea : ClickAreaModel){
+        if( this.currentAnswerModel.isBlankFill ){
+          return false;
+        }else{
+          let realAnswer = this.currentAnswerModel.realAnswer
+          if( realAnswer.includes(clickArea.label) ){
+            return true;
+          }
+        }
+      return false;
+      },
+      checkThisAnswerIsInCorrect(clickArea : ClickAreaModel){
+        if( this.currentAnswerModel.isBlankFill ){
+          return false;
+        }else{
+          let realAnswer = this.currentAnswerModel.realAnswer
+          let userAnswer = this.currentAnswerModel.userAnswer
+          if( !realAnswer.includes(clickArea.label) ){
+            if( userAnswer.includes( clickArea.label) ){
+              return true;
+            }
+          }
+        }
+      return false;
       },
       getRealAnswer( ){
         let realAnswer = ""
@@ -193,9 +215,10 @@
     }
     .result-clickArea-Container{
       display : flex;
+      align-items: center; 
       .faicon{
         position: absolute;
-        left: 1vw;
+        left: 3vw;
         //bottom: 0.1vw;
       }
     }
