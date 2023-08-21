@@ -7,19 +7,28 @@
       <li  class="list-group-item "> 題組總分 : {{ answerResult.totalScore }}  </li>    
       <li  class="list-group-item "> 你的得分 : {{ answerResult.scoreGot  }}  </li>    
       <li  class="list-group-item "> 正確率 : {{ answerResult.correctRate  }}  </li>
-      <li v-if="currentAnswerModel.isBlankFill"  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
-      <li v-if="currentAnswerModel.isBlankFill" class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill"  class="list-group-item "> 本題答案 : {{ getRealAnswer( ) }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill" class="list-group-item "> 你的答案 : {{ getAnswer( ) }}  </li>  
     </ul>
-    <!--<i v-else-if="answerResult(item)" class="fas fa-check correct" />-->
-    <b-row class="indexSelector">
-      <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
-        <b-col  class="p-3 text-center ">
-          <b-button variant="secondary" @click="changeNum(index)">
-            {{ index + 1 }}
-          </b-button>
-        </b-col>
-      </div>
-    </b-row>
+
+    <b-modal
+        v-model="modalShow"
+        class="modal"
+        hide-footer
+        id="bv-modal-a"
+      >
+      <b-row class="indexSelector">
+        <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
+          <b-col  class="p-3 text-center ">
+            <b-button variant="secondary" @click="changeNum(index)">
+              {{ index + 1 }}
+            </b-button>
+          </b-col>
+        </div>
+      </b-row>
+
+    </b-modal>
+
     <div  v-for="( clickArea ,index ) in currentAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
       <div class="result-clickArea-Container">
         <i v-if="checkThisAnswerIsCorrect(clickArea)" class="fas fa-check correct faicon" style="color: #14ee11;" />
@@ -53,6 +62,7 @@
         currentIndex : 0,
         answerResult: null as unknown as AnswerGroupResultRespondModel,
         originalQuizInstanceName: "",
+        modalShow: false,
       };
     },
     computed: {
@@ -153,21 +163,7 @@
       console.log( instance )
       
       this.originalQuizInstanceName = answerViewInstance.sourceQuizGroupName
-      /*
-      for (let i = 0; i < instanceData.amount; i += 1) {
-       const {
-          userAnswer , sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
-        } = newAnswerList[i];
-        let answer = new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , sourceQuiz.score)
-        newAnswerModelList.push( answer );
-        this.answerResult.answerList.forEach( ( realAnswer : any) => {
-              if( isEqual( realAnswer.uuid , uuid ) ){
-                answer.setRealAnswer( realAnswer.sourceQuiz.answerSet ) 
-              }  
-          }
-        );
-      }
-      */
+     
       console.log("answer")
       console.log( this.answerResult.answerList )
       const newAnswerList = this.answerResult.answerList as Array<any>;
