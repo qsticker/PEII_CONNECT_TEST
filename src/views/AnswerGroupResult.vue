@@ -1,5 +1,6 @@
 <template>
   <div class="root">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <ul class="list-group  information-table">
       <li  class="list-group-item "> 題組名稱 : {{ originalQuizInstanceName  }}  </li> 
       <li  class="list-group-item "> 題目總數 : {{ answerResult.sourceQuizGroupSize }}  </li>    
@@ -9,7 +10,7 @@
       <li  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
       <li  class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
     </ul>
-
+    <!--<i v-else-if="answerResult(item)" class="fas fa-check correct" />-->
     <b-row class="indexSelector">
       <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
         <b-col  class="p-3 text-center ">
@@ -20,7 +21,10 @@
       </div>
     </b-row>
     <div  v-for="( clickArea ,index ) in currentAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
-      <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="subCurrentIndex" />
+      <div class="result-clickArea-Container">
+        <i  class="fas fa-check correct faicon" />
+        <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="subCurrentIndex" />
+      </div>
     </div>
   </div>
 </template>
@@ -186,6 +190,14 @@
     }
     .information-table{
       width : 30%;
+    }
+    .result-clickArea-Container{
+      display : flex;
+      .faicon{
+        position: absolute;
+        left: 1vw;
+        //bottom: 0.1vw;
+      }
     }
   }
   </style>
