@@ -2,6 +2,7 @@
   <div class="root">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <ul class="list-group  information-table">
+      <li  class="list-group-item "> 題号 : 第 {{ currentIndex + 1 }} 題 </li> 
       <li  class="list-group-item "> 題組名稱 : {{ originalQuizInstanceName  }}  </li> 
       <li  class="list-group-item "> 題目總數 : {{ answerResult.sourceQuizGroupSize }}  </li>    
       <li  class="list-group-item "> 題組總分 : {{ answerResult.totalScore }}  </li>    
@@ -11,12 +12,27 @@
       <li v-if="currentAnswerModel.isBlankFill" class="list-group-item "> 你的答案 : {{ getAnswer( ) }}  </li>  
     </ul>
 
+    <b-button class="indexModalButton" @click="openModel"> 选择题号  </b-button>
+
     <b-modal
         v-model="modalShow"
         class="modal"
         hide-footer
         id="bv-modal-a"
       >
+      <template #modal-header>
+          <div class="mx-auto" style="width: 100%">
+            <b-button
+              squared
+              style="width: 10%; margin-left: 90%"
+              variant="outline-dark"
+              size="sm"
+              @click="$bvModal.hide('bv-modal-a')"
+              >X</b-button
+            >
+          </div>
+      </template>
+
       <b-row class="indexSelector">
         <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
           <b-col  class="p-3 text-center ">
@@ -68,7 +84,10 @@
     computed: {
     },
     methods: {
-       changeNum(changeIndex : number) {
+      openModel(){
+        this.modalShow = true;
+      },
+      changeNum(changeIndex : number) {
        
         console.log("change" + changeIndex)
         this.currentIndex = changeIndex
@@ -200,7 +219,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-     .indexSelector{
+    .indexModalButton{
+      margin-top : 0.5%;
+      margin-bottom : 0.5%;
+      width : 30%;
+    }
+    .indexSelector{
       margin-top : 1%;
       margin-bottom : 1%;
       width : 30%;
