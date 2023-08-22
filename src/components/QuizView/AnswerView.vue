@@ -3,6 +3,7 @@
     <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
       <ClickArea :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" 
       :blankFillAnswer="subAnswerModel.blankFillAnswer"
+      :isBlankFill="subAnswerModel.isBlankFill"
       @updateByParent="updateAnswers" 
       @updateBlankAnswer="updateBlankAnswer"/>
     </div>

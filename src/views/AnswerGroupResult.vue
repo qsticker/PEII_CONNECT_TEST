@@ -49,7 +49,7 @@
       <div class="result-clickArea-Container">
         <i v-if="checkThisAnswerIsCorrect(clickArea)" class="fas fa-check correct faicon" style="color: #14ee11;" />
         <i v-else-if="checkThisAnswerIsInCorrect(clickArea)" class="fa fa-times faicon" style="color: #ee1111;" />
-        <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="subCurrentIndex" />
+        <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="index" :isBlankFill="currentAnswerModel.isBlankFill"/>
       </div>
     </div>
   </div>

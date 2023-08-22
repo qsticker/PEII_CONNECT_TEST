@@ -3,7 +3,10 @@
       <div >
         <div v-if="checkBlockExist()" class="ClickStage">
             <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-            <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+            <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" 
+            :field="localClickAreaModel.content.textField"
+            :label="localClickAreaModel.label" 
+            :isBlankFill="isBlankFill" />
             <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
         </div>    
       </div>
@@ -36,6 +39,11 @@
           beClicked : {
             type: Boolean,
             defualt: false,
+          },
+          isBlankFill : {
+            type: Boolean,
+            required: false,
+            default: null,
           },
       },
       data() {

@@ -4,7 +4,10 @@
     <div v-if="localClickAreaModel.content.blankField.enabled" >
       <div class="ClickStage">
         <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-        <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+        <TextArea v-if="localClickAreaModel.content.textField.enabled" 
+        class="text" :field="localClickAreaModel.content.textField" 
+        :label="localClickAreaModel.label" 
+        :isBlankFill="isBlankFill" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
         <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.label , $event.target.value)">
       </div>
@@ -14,14 +17,20 @@
       
       <div v-if="interBeClick && checkBlockExist()" class="ClickStage">
           <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-          <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+          <TextArea v-if="localClickAreaModel.content.textField.enabled" 
+          class="text" :field="localClickAreaModel.content.textField" 
+          :label="localClickAreaModel.label" 
+          :isBlankFill="isBlankFill"/>
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
           <div class="highlight" />
       </div>
 
       <div v-else-if="checkBlockExist()" class="ClickStage" >
         <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-        <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" :field="localClickAreaModel.content.textField" />
+        <TextArea v-if="localClickAreaModel.content.textField.enabled" 
+        class="text" :field="localClickAreaModel.content.textField" 
+        :label="localClickAreaModel.label" 
+        :isBlankFill="isBlankFill"/>
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
       </div>
     </div>
@@ -58,7 +67,12 @@
         blankFillAnswer : {
           type : Object,
           defualt : false,
-        }
+        },
+        isBlankFill : {
+            type: Boolean,
+            required: false,
+            default: null,
+        },
     },
     data() {
       return {
