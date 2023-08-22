@@ -7,6 +7,7 @@
         <TextArea v-if="localClickAreaModel.content.textField.enabled" 
         class="text" :field="localClickAreaModel.content.textField" 
         :label="localClickAreaModel.label" 
+        :labelIndex="labelIndex"
         :isBlankFill="isBlankFill" />
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
         <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.label , $event.target.value)">
@@ -20,6 +21,7 @@
           <TextArea v-if="localClickAreaModel.content.textField.enabled" 
           class="text" :field="localClickAreaModel.content.textField" 
           :label="localClickAreaModel.label" 
+          :labelIndex="labelIndex"
           :isBlankFill="isBlankFill"/>
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
           <div class="highlight" />
@@ -30,6 +32,7 @@
         <TextArea v-if="localClickAreaModel.content.textField.enabled" 
         class="text" :field="localClickAreaModel.content.textField" 
         :label="localClickAreaModel.label" 
+        :labelIndex="labelIndex"
         :isBlankFill="isBlankFill"/>
         <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
       </div>
@@ -70,6 +73,11 @@
         },
         isBlankFill : {
             type: Boolean,
+            required: false,
+            default: null,
+        },
+        labelIndex : {
+            type: Number,
             required: false,
             default: null,
         },

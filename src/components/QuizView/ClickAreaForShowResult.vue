@@ -6,6 +6,7 @@
             <TextArea v-if="localClickAreaModel.content.textField.enabled" class="text" 
             :field="localClickAreaModel.content.textField"
             :label="localClickAreaModel.label" 
+            :labelIndex="labelIndex"
             :isBlankFill="isBlankFill" />
             <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
         </div>    
@@ -45,6 +46,11 @@
             required: false,
             default: null,
           },
+          labelIndex : {
+            type: Number,
+            required: false,
+            default: null,
+        },
       },
       data() {
         return {

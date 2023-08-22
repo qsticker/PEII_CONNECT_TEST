@@ -49,7 +49,7 @@
       <div class="result-clickArea-Container">
         <i v-if="checkThisAnswerIsCorrect(clickArea)" class="fas fa-check correct faicon" style="color: #14ee11;" />
         <i v-else-if="checkThisAnswerIsInCorrect(clickArea)" class="fa fa-times faicon" style="color: #ee1111;" />
-        <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="index" :isBlankFill="currentAnswerModel.isBlankFill"/>
+        <ClickAreaForShowResult :clickAreaModel="clickArea" :labelIndex="getAreaIndex( clickArea.label )" :currentIndex="index" :isBlankFill="currentAnswerModel.isBlankFill"/>
       </div>
     </div>
   </div>
@@ -118,6 +118,31 @@
           }
         }
       return false;
+      },
+      getAreaIndex(label : string){
+        if( !isEqual(label , "Title") ){
+          let index = 0 ;
+          for( let i = 0 ; i < this.currentAnswerModel.clickAreas.length ; i++){
+            if( !isEqual( this.currentAnswerModel.clickAreas[i].label , "Title") ){
+              if( this.checkBlockExist( this.currentAnswerModel.clickAreas[i] ) ){
+                index = index + 1;
+              }
+            }
+            if( isEqual( this.currentAnswerModel.clickAreas[i].label , label) ){
+              return index - 1 ;
+            }
+          }
+        }
+      },
+      checkBlockExist(clickArea : ClickAreaModel){
+        if( clickArea.content.Audio.enabled ){
+            return true;
+          }else if( clickArea.content.textField.enabled ){
+            return true;
+          }else if( clickArea.content.imageField.enabled ){
+            return true;
+          }
+          return false;
       },
       getRealAnswer( ){
         let realAnswer = ""

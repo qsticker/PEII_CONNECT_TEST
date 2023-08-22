@@ -28,6 +28,11 @@
             required: false,
             default: null,
         },
+        labelIndex : {
+            type: Number,
+            required: false,
+            default: null,
+        },
     },
     data() {
       return {
@@ -38,9 +43,10 @@
     },
     methods: {
       getLabel(){
-        if(!this.isBlankFill){
+        let labels = [ "A" , "B" , "C" , "D" , "E"]
+        if(!this.isBlankFill){ 
           if( !isEqual( this.label , "Title" ) ){
-            return "( " + this.label + " )"; 
+            return "( " + labels[this.labelIndex] + " )"; 
           }
         }
       }

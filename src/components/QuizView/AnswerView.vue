@@ -4,6 +4,7 @@
       <ClickArea :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" 
       :blankFillAnswer="subAnswerModel.blankFillAnswer"
       :isBlankFill="subAnswerModel.isBlankFill"
+      :labelIndex="getAreaIndex( clickArea.label )"
       @updateByParent="updateAnswers" 
       @updateBlankAnswer="updateBlankAnswer"/>
     </div>
@@ -16,7 +17,7 @@
   import { Answer } from '@/models/AnswerModel';
   import ClickArea from '@/components/QuizView/ClickArea.vue';
   import isEqual from "lodash.isequal";
-
+  import { ClickAreaModel } from '@/models/QuizModel';
   export default defineComponent({
     name: 'AnswerView',
     components: {
@@ -76,7 +77,31 @@
               this.subAnswerModel.userAnswer.push(answer)
            }
       },
-
+      getAreaIndex(label : string){
+        if( !isEqual(label , "Title") ){
+          let index = 0 ;
+          for( let i = 0 ; i < this.subAnswerModel.clickAreas.length ; i++){
+            if( !isEqual( this.subAnswerModel.clickAreas[i].label , "Title") ){
+              if( this.checkBlockExist( this.subAnswerModel.clickAreas[i] ) ){
+                index = index + 1;
+              }
+            }
+            if( isEqual( this.subAnswerModel.clickAreas[i].label , label) ){
+              return index - 1 ;
+            }
+          }
+        }
+      },
+      checkBlockExist(clickArea : ClickAreaModel){
+        if( clickArea.content.Audio.enabled ){
+            return true;
+          }else if( clickArea.content.textField.enabled ){
+            return true;
+          }else if( clickArea.content.imageField.enabled ){
+            return true;
+          }
+          return false;
+      },
       updateBlankAnswer(label : string , answer: string)  {
           console.log("blank")
           console.log( answer )
