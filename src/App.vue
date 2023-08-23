@@ -2,7 +2,7 @@
   <div id="app">
     <peiiNavbar />
     <router-view class="router-view" />
-    -<peiiFooter />
+    <peiiFooter />
   </div>
 </template>
 

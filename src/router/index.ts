@@ -79,12 +79,6 @@ const routes: Array<RouteConfig> = [
     name: 'finishAnswerList',
     component: () => import(/* webpackChunkName: "about" */ '@/views/FinishAnswerGroupList.vue'),
   },
-  {
-    path: '/RandomQuiz',
-    name: 'randomQuiz',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/RandomQuiz.vue'),
-  },
-
 ]
 
 const router = new VueRouter({
