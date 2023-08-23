@@ -1,26 +1,56 @@
 <template>
   <div class="root">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <ul class="list-group  information-table">
+      <li  class="list-group-item "> 題号 : 第 {{ currentIndex + 1 }} 題 </li> 
       <li  class="list-group-item "> 題組名稱 : {{ originalQuizInstanceName  }}  </li> 
       <li  class="list-group-item "> 題目總數 : {{ answerResult.sourceQuizGroupSize }}  </li>    
       <li  class="list-group-item "> 題組總分 : {{ answerResult.totalScore }}  </li>    
       <li  class="list-group-item "> 你的得分 : {{ answerResult.scoreGot  }}  </li>    
       <li  class="list-group-item "> 正確率 : {{ answerResult.correctRate  }}  </li>
-      <li  class="list-group-item "> 本題答案 : {{ getRealAnswer( )  }}  </li>  
-      <li  class="list-group-item "> 你的答案 : {{ getAnswer( )  }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill"  class="list-group-item "> 本題答案 : {{ getRealAnswer( ) }}  </li>  
+      <li v-if="currentAnswerModel.isBlankFill" class="list-group-item "> 你的答案 : {{ getAnswer( ) }}  </li>  
     </ul>
 
-    <b-row class="indexSelector">
-      <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
-        <b-col  class="p-3 text-center ">
-          <b-button variant="secondary" @click="changeNum(index)">
-            {{ index + 1 }}
-          </b-button>
-        </b-col>
-      </div>
-    </b-row>
+    <b-button class="indexModalButton" @click="openModel"> 选择题号  </b-button>
+
+    <b-modal
+        v-model="modalShow"
+        class="modal"
+        hide-footer
+        id="bv-modal-a"
+      >
+      <template #modal-header>
+          <div class="mx-auto" style="width: 100%">
+            <b-button
+              squared
+              style="width: 10%; margin-left: 90%"
+              variant="outline-dark"
+              size="sm"
+              @click="$bvModal.hide('bv-modal-a')"
+              >X</b-button
+            >
+          </div>
+      </template>
+
+      <b-row class="indexSelector">
+        <div v-for="(item, index) in answerModelList" :key="item" style="float: left;line-height: 34px;width:25%; text-align: right">
+          <b-col  class="p-3 text-center ">
+            <b-button variant="secondary" @click="changeNum(index)">
+              {{ index + 1 }}
+            </b-button>
+          </b-col>
+        </div>
+      </b-row>
+
+    </b-modal>
+
     <div  v-for="( clickArea ,index ) in currentAnswerModel.clickAreas" :key="index" class="ClickAreaList"> 
-      <ClickAreaForShowResult :clickAreaModel="clickArea"  :currentIndex="subCurrentIndex" />
+      <div class="result-clickArea-Container">
+        <i v-if="checkThisAnswerIsCorrect(clickArea)" class="fas fa-check correct faicon" style="color: #14ee11;" />
+        <i v-else-if="checkThisAnswerIsInCorrect(clickArea)" class="fa fa-times faicon" style="color: #ee1111;" />
+        <ClickAreaForShowResult :clickAreaModel="clickArea" :labelIndex="getAreaIndex( clickArea.label )" :currentIndex="index" :isBlankFill="currentAnswerModel.isBlankFill"/>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +58,7 @@
   <script lang="ts">
   import { defineComponent  } from "vue";
   import { Answer } from '@/models/AnswerModel';
+  import { ClickAreaModel } from '@/models/QuizModel';
   import ClickAreaForShowResult from "@/components/QuizView/ClickAreaForShowResult.vue";
   import axios from 'axios';
   import { AnswerGroupResultRespondModel } from '@/apis/models/AnswerGroupResultModel';
@@ -47,22 +78,71 @@
         currentIndex : 0,
         answerResult: null as unknown as AnswerGroupResultRespondModel,
         originalQuizInstanceName: "",
+        modalShow: false,
       };
     },
     computed: {
     },
     methods: {
-       changeNum(changeIndex : number) {
-        //if( changeIndex  >= this.answerResult.sourceQuizGroupSize){
-        //  alert( "以超過總題數數量" )
-        //}else if(changeIndex < 0){
-        //  alert( "以超過總題數數量" )
-        //}
-        //else{
+      openModel(){
+        this.modalShow = true;
+      },
+      changeNum(changeIndex : number) {
+       
         console.log("change" + changeIndex)
         this.currentIndex = changeIndex
         this.currentAnswerModel = this.answerModelList[changeIndex]
-        //}
+        
+      },
+      checkThisAnswerIsCorrect(clickArea : ClickAreaModel){
+        if( this.currentAnswerModel.isBlankFill ){
+          return false;
+        }else{
+          let realAnswer = this.currentAnswerModel.realAnswer
+          if( realAnswer.includes(clickArea.label) ){
+            return true;
+          }
+        }
+      return false;
+      },
+      checkThisAnswerIsInCorrect(clickArea : ClickAreaModel){
+        if( this.currentAnswerModel.isBlankFill ){
+          return false;
+        }else{
+          let realAnswer = this.currentAnswerModel.realAnswer
+          let userAnswer = this.currentAnswerModel.userAnswer
+          if( !realAnswer.includes(clickArea.label) ){
+            if( userAnswer.includes( clickArea.label) ){
+              return true;
+            }
+          }
+        }
+      return false;
+      },
+      getAreaIndex(label : string){
+        if( !isEqual(label , "Title") ){
+          let index = 0 ;
+          for( let i = 0 ; i < this.currentAnswerModel.clickAreas.length ; i++){
+            if( !isEqual( this.currentAnswerModel.clickAreas[i].label , "Title") ){
+              if( this.checkBlockExist( this.currentAnswerModel.clickAreas[i] ) ){
+                index = index + 1;
+              }
+            }
+            if( isEqual( this.currentAnswerModel.clickAreas[i].label , label) ){
+              return index - 1 ;
+            }
+          }
+        }
+      },
+      checkBlockExist(clickArea : ClickAreaModel){
+        if( clickArea.content.Audio.enabled ){
+            return true;
+          }else if( clickArea.content.textField.enabled ){
+            return true;
+          }else if( clickArea.content.imageField.enabled ){
+            return true;
+          }
+          return false;
       },
       getRealAnswer( ){
         let realAnswer = ""
@@ -127,21 +207,7 @@
       console.log( instance )
       
       this.originalQuizInstanceName = answerViewInstance.sourceQuizGroupName
-      /*
-      for (let i = 0; i < instanceData.amount; i += 1) {
-       const {
-          userAnswer , sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer
-        } = newAnswerList[i];
-        let answer = new Answer(userAnswer, sourceQuiz, uuid, timeSpent, multipleSelect, isBlankFill, blankFillAnswer , sourceQuiz.score)
-        newAnswerModelList.push( answer );
-        this.answerResult.answerList.forEach( ( realAnswer : any) => {
-              if( isEqual( realAnswer.uuid , uuid ) ){
-                answer.setRealAnswer( realAnswer.sourceQuiz.answerSet ) 
-              }  
-          }
-        );
-      }
-      */
+     
       console.log("answer")
       console.log( this.answerResult.answerList )
       const newAnswerList = this.answerResult.answerList as Array<any>;
@@ -178,7 +244,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-     .indexSelector{
+    .indexModalButton{
+      margin-top : 0.5%;
+      margin-bottom : 0.5%;
+      width : 30%;
+    }
+    .indexSelector{
       margin-top : 1%;
       margin-bottom : 1%;
       width : 30%;
@@ -186,6 +257,15 @@
     }
     .information-table{
       width : 30%;
+    }
+    .result-clickArea-Container{
+      display : flex;
+      align-items: center; 
+      .faicon{
+        position: absolute;
+        left: 3vw;
+        //bottom: 0.1vw;
+      }
     }
   }
   </style>
