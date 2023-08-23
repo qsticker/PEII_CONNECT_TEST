@@ -27,10 +27,19 @@
                         variant="outline-dark">
                         打开课程
                     </b-button>
-                    <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer(item.quizGroupId, item.bundle.isRandom, item.bundle.categoryNode, item.bundle.uuid)" target="_blank" variant="outline-dark">打开测验</b-button>
+                    <b-button v-else-if="item.type==='QUIZ'" squared @click="startAnswer( item ,item.quizGroupId, item.bundle.isRandom, item.bundle.categoryNode, item.bundle.uuid)" target="_blank" variant="outline-dark">打开测验</b-button>
                 </div>
             </b-card>
         </div>
+        <b-modal
+            v-if="getRandomSelect( )"
+            v-model="modalShow"
+            class="modal"
+            hide-footer
+            id="bv-modal-a"
+            >
+            <RandomQuiz :name="bundleItem.bundle.name" :bundleId="bundleItem.bundle.uuid" :categoryNodeId="bundleItem.bundle.categoryNode" />
+        </b-modal>
     </div>
 </template>
 
@@ -38,19 +47,21 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import isEqual from 'lodash.isequal';
 import PurchasedItemsApis from "@/apis/PurchasedItemApis";
+import RandomQuiz from "@/components/RandomQuiz.vue";
 
 export default defineComponent({
     name: 'PurchasedList',
     components: {
-        //PeiiCommodity,
+        RandomQuiz,
     },
     data() {
         return {
             purchasedList: null as any,
             total: 0,
             showCheckoutSuccessTip: false,
+            bundleItem : null as any,
+            modalShow : false,
         };
     },
     computed: {
@@ -60,15 +71,21 @@ export default defineComponent({
 
     },
     methods: {
+        getRandomSelect(){
+            if( this.bundleItem != null ){
+                if( this.bundleItem.bundle.isRandom ){
+                    return this.modalShow;
+                }
+            }
+            return false;
+        },
         backToHomeBtn() {
             this.$router.push({ name: "home" });
         },
-        startAnswer(quizsId : string, random:boolean ,NodeID:string, bundleId:string) {
+        startAnswer(item: any ,quizsId : string, random:boolean ,NodeID:string, bundleId:string) {
             if(random){
-                this.$store.commit("updateSellPlanId", NodeID);
-                console.log("Purchased bundleId: " + bundleId);
-                this.$store.commit("updateBundleId", bundleId);
-                this.$router.push( {path: "/RandomQuiz" });
+                this.bundleItem = item;
+                this.modalShow = true;
             }
             else    this.$router.push( { name: "answer" , params: { quizsId }  } )
         }
