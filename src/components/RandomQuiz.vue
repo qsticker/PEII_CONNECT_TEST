@@ -1,5 +1,7 @@
 <template>
 <div>
+  <h5 style="margin-bottom:20px;">請輸入出題題數(5-10):</h5>
+  <input type="text" v-model="totalQuizNumber"/>
   <div class="b-downs-container">
     <b-dropdown id="dropdown-1" :text="getbeClickLevelName(groupIndex)" class="m-md-2"  v-for="(group, groupIndex) in displayArray" :key="groupIndex">
       <b-dropdown-item 
@@ -20,20 +22,28 @@
       </div>
     </div>
   </div>
-
-  <b-button
-          squared
-          
-          @click="addNewPathInList()"
+  <div class="button-container">
+    <b-button
+        squared
+        class="button"
+        @click="addNewPathInList()"
         >
         增加路径
-  </b-button>
+    </b-button>
+    <b-button
+        squared
+        class="button"
+        @click="createQuizGroup()"
+        >
+        确认出题
+    </b-button>
+  </div>
 </div>
 </template>
   
 <script lang="ts">
   import Vue , { defineComponent } from "vue";
-  
+  import RandomSelectApi from "@/apis/RandomSelectApi";
   import { levelClasses } from "@/models/levelClass";
   import axios from 'axios';
   import isEqual from "lodash.isequal";
@@ -48,6 +58,16 @@
             required: false,
             default: null,
         },
+        name : {
+          type: String ,
+          required: false,
+          default: null,
+        },
+        bundleId : {
+          type: String ,
+          required: false,
+          default: null,
+        },
     },
     data() {
       return {
@@ -60,12 +80,34 @@
         displayArray: [] as any[],
         beClickLevelList: [] as any[],
         pathList: [] as any[],
+        totalQuizNumber : 5,
       };
     },
     computed: {
       
     },
     methods: {
+      async createQuizGroup(){
+      let categoryNodeIds = new Array<string>();
+      for(let i = 0 ; i < this.pathList.length ; i++){
+        categoryNodeIds.push( this.pathList[i].uuid );
+      }
+      if( this.pathList.length == 0 ) alert("請選擇類別");
+      if(this.totalQuizNumber<5)  alert("需至少選擇5題");
+      else if(this.totalQuizNumber>10)  alert("不能選擇超過10題");
+      else{
+        try{
+            const result = JSON.parse(JSON.stringify(await RandomSelectApi.getRandomQuiz(this.name , this.totalQuizNumber , categoryNodeIds , this.bundleId)));
+            console.log(" (RandomQuiz)addProductToShoppingCartWithContents result: " + JSON.stringify(result) );
+            let quizsId = result.uuid;
+            this.$router.push( { name: "answer" , params: {quizsId}  } )
+            return true;
+          }catch(error){
+            console.error('Error:', error);
+            return false;
+          }
+      }
+    },
     getbeClickLevelName(index: number){
       if( index >= this.beClickLevelList.length ){
         return "请选择"
@@ -179,6 +221,7 @@
 },
     async created() {
     try{
+      console.log( this.categoryNodeId )
       let remoteCategory;
        
       remoteCategory = await axios.post(process.env.VUE_APP_PEII_BASE_API_URL + '/category/retrieveByCategoryNodeId' , {categoryId : this.categoryNodeId } )
@@ -213,6 +256,18 @@
     margin: auto;
     justify-content: center;
   }
+  .button-container{
+    width : 10vw;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    flex-direction:column;
+    justify-content: center;
+    .button{
+      margin-top: 1vw;
+    }
+  }
+
   .b-downs-container{
     display: flex;
     flex-direction:column;

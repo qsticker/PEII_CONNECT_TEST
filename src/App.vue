@@ -1,25 +1,20 @@
 <template>
   <div id="app">
-    <!--<peiiNavbar />-->
-    <RandomQuiz categoryNodeId="d2176997-1973-487c-a604-c407b60d94fa"/>
-
-    <!--<router-view class="router-view" />-->
-
-    <!--<peiiFooter />-->
+    <peiiNavbar />
+    <router-view class="router-view" />
+    <peiiFooter />
   </div>
 </template>
 
 <script>
-
-//import peiiNavbar from './components/navbar.vue'
-//import peiiFooter from './components/PageFooter.vue'
-import RandomQuiz from './components/RandomQuiz.vue'
+import peiiNavbar from './components/navbar.vue'
+import peiiFooter from './components/PageFooter.vue'
+//import AnswerGroupResult from './views/AnswerGroupResult.vue'
 export default {
   name: 'App',
   components: {
-    //peiiNavbar,
-    //peiiFooter,
-    RandomQuiz
+    peiiNavbar,
+    peiiFooter,
   },
   
    methods: {
