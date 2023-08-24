@@ -23,7 +23,7 @@
                     </b-card-text>
                 </div>
                 <div style="margin-top: 5%;">
-                    <b-button v-if="item.type === 'COURSE'" squared :href="item.courseUrl" target="_blank"
+                    <b-button v-if="item.type === 'COURSE'" squared @click="redirectUrl( item.courseUrl )" target="_blank"
                         variant="outline-dark">
                         打开课程
                     </b-button>
@@ -71,6 +71,10 @@ export default defineComponent({
 
     },
     methods: {
+        redirectUrl(url : string){
+            document.cookie ="somecookie=1;path=peiitw.com.cn";
+            window.location.href = "http://www.peiitw.com.cn/PEII/Code_CN/DB/Course/%E5%8D%95%E8%AF%8D%E5%BA%93%E7%9F%AD%E8%AF%AD%E5%BA%93/%E5%8D%95%E8%AF%8D%E5%BA%93/diamond/index.html"
+        },
         getRandomSelect(){
             if( this.bundleItem != null ){
                 if( this.bundleItem.bundle.isRandom ){
