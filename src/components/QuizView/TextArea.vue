@@ -44,8 +44,12 @@
     methods: {
       getLabel(){
         let labels = [ "A" , "B" , "C" , "D" , "E"]
+        // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ' + this.label);
+        // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ' + this.isBlankFill);
         if(!this.isBlankFill){ 
+          // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ' + this.label);
           if( !isEqual( this.label , "Title" ) ){
+            // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ' + this.label);
             return "( " + labels[this.labelIndex] + " )"; 
           }
         }

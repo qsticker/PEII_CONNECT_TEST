@@ -1,5 +1,5 @@
 <template>
-  <img :src=field.url :style="{  'width': '50vw' , 'border-radius': field.radius + 'px' }" />
+    <img :src=field.url :style="{  'width': '20vw' , 'border-radius': field.radius + 'px' }" />
 </template>
   
 <script lang="ts">

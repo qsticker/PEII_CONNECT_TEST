@@ -1,6 +1,5 @@
 <template>
-  <div class = "container">
-
+  <div :class="[localClickAreaModel.content.imageField.enabled ? 'container-with-image' : 'container']">
     <div v-if="localClickAreaModel.content.blankField.enabled" >
       <div class="ClickStage">
         <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
@@ -9,34 +8,35 @@
         :label="localClickAreaModel.label" 
         :labelIndex="labelIndex"
         :isBlankFill="isBlankFill" />
-        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
+        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="img" :field="localClickAreaModel.content.imageField"/> 
         <input :value="blankUserAnswer" @input="$emit('updateBlankAnswer', localClickAreaModel.label , $event.target.value)">
       </div>
     </div>
 
     <div v-else  @click="updateAnswers">
-      
-      <div v-if="interBeClick && checkBlockExist()" class="ClickStage">
+        <div v-if="interBeClick && checkBlockExist()" :class="[localClickAreaModel.content.imageField.enabled ? 'ClickStage-with-image' : 'ClickStage']">
+            <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
+            <TextArea 
+            class="text" :field="localClickAreaModel.content.textField" 
+            :label="localClickAreaModel.label" 
+            :labelIndex="labelIndex"
+            :isBlankFill="isBlankFill"/>
+            <ImageArea v-if="localClickAreaModel.content.imageField.enabled" 
+            class="image" :field="localClickAreaModel.content.imageField"/> 
+            <div class="highlight" />
+        </div>
+
+        <div v-else-if="checkBlockExist()" :class="[localClickAreaModel.content.imageField.enabled ? 'ClickStage-with-image' : 'ClickStage']" >
           <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-          <TextArea v-if="localClickAreaModel.content.textField.enabled" 
+          <TextArea 
           class="text" :field="localClickAreaModel.content.textField" 
           :label="localClickAreaModel.label" 
           :labelIndex="labelIndex"
           :isBlankFill="isBlankFill"/>
           <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-          <div class="highlight" />
-      </div>
-
-      <div v-else-if="checkBlockExist()" class="ClickStage" >
-        <AudioArea v-if="localClickAreaModel.content.Audio.enabled" :audio="localClickAreaModel.content.Audio" />
-        <TextArea v-if="localClickAreaModel.content.textField.enabled" 
-        class="text" :field="localClickAreaModel.content.textField" 
-        :label="localClickAreaModel.label" 
-        :labelIndex="labelIndex"
-        :isBlankFill="isBlankFill"/>
-        <ImageArea v-if="localClickAreaModel.content.imageField.enabled" class="image" :field="localClickAreaModel.content.imageField"/> 
-      </div>
-    </div>
+        </div>
+        
+    </div> 
   </div>
 </template>
   
@@ -46,6 +46,7 @@
   import TextArea from '@/components/QuizView/TextArea.vue';
   import ImageArea from '@/components/QuizView/ImageArea.vue';
   import AudioArea from '@/components/QuizView/AudioArea.vue';
+  // import BootstrapVue from "bootstrap-vue";
   export default defineComponent({
     name: 'ClickArea',
     components: {
@@ -108,8 +109,10 @@
           //require text field
           
           if( this.clickAreaModel.action.type == 'answer' ){
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ' + this.clickAreaModel.content.textField.enabled);
             this.interBeClick = !this.interBeClick;
             this.$emit('updateByParent', this.clickAreaModel.label );
+            
           }
       },
       checkBlockExist(){
@@ -155,24 +158,24 @@
       position: relative;
       width: 95vw;
       border-radius: 10px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: blue;
+      border-width: 1px; //改作答區虛線粗細
+      border-style: dotted;
+      border-color: rgb(0, 0, 0);
       &:hover {
         // cursor: pointer;
         box-shadow: 0 0 11px rgba(33,33,33,.2);
       }
       .image {
-          width : 300px;
+          width : 20px;
       }
     }   
     
-     .highlight {
+    .highlight {
           
         position: absolute;
         top: 0;
         left: 0;
-        width: 94.5vw;
+        width: 95vw;
         height: 100%;
         z-index: 999;
 
@@ -183,5 +186,52 @@
         border-color: green;
     }
   }
-    
+
+
+.container-with-image{
+    // display: flex;
+    // flex-wrap: nowrap;
+    display: inline-block;
+    // // flex-direction: column;
+    // align-items: center;
+  .ClickStage-with-image{
+    display: inline-block;
+    // display: flex;
+    // flex-wrap: nowrap;
+    width: 100%; /* 2x2 grid, so each item takes 50% width */
+    height: 100%;
+    box-sizing: content-box;
+    padding: 5px;
+    margin:10px;
+    align-items: center;
+    justify-content: center;
+    // flex-direction: column;
+    position: relative;
+    border-radius: 10px;
+    border-width: 1px; //改作答區虛線粗細
+    border-style: dotted;
+    border-color: rgb(0, 0, 0);
+    &:hover {
+      // cursor: pointer;
+      box-shadow: 0 0 11px rgba(33,33,33,.2);
+    }
+    .image {
+        width : 100%;
+    }
+    .highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // z-index: 999;
+
+      background-color: rgb(0 255 8 / 10%);
+      //border-radius: 24px;
+      //border-width: 1.3px;
+      border-style: solid;
+      border-color: green;
+    }
+  }    
+}
   </style>
