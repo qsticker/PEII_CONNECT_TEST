@@ -107,6 +107,8 @@ export default defineComponent({
           return true;
         }else if( clickArea.content.imageField.enabled ){
           return true;
+        }else if( clickArea.content.blankField.enabled ){
+          return true;
         }
         return false;
     },
