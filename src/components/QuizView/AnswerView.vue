@@ -1,18 +1,13 @@
 <template>
-  <div class= "root">
-    <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas" :key="index" :class="[clickArea.content.imageField.enabled ? 'ClickAreaList-with-image' : 'ClickAreaList']"> <!--class="ClickAreaList"-->
-      <ClickArea  :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" 
+  <div class= "root" >
+    <div  v-for="( clickArea ,index ) in subAnswerModel.clickAreas"  
+      :key="index" :class="[clickArea.content.imageField.enabled ? 'ClickAreaList-with-image' : 'ClickAreaList']">
+      <ClickArea  v-if="checkBlockExist(clickArea)" :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" 
       :blankFillAnswer="subAnswerModel.blankFillAnswer"
       :isBlankFill="subAnswerModel.isBlankFill"
       :labelIndex="getAreaIndex( clickArea.label )"
       @updateByParent="updateAnswers" 
       @updateBlankAnswer="updateBlankAnswer"/>
-      <!-- <ClickImgArea v-else :clickAreaModel="clickArea" :beClicked="localBeClickeds[index]" :currentIndex="subCurrentIndex" 
-      :blankFillAnswer="subAnswerModel.blankFillAnswer"
-      :isBlankFill="subAnswerModel.isBlankFill"
-      :labelIndex="getAreaIndex( clickArea.label )"
-      @updateByParent="updateAnswers" 
-      @updateBlankAnswer="updateBlankAnswer"/> -->
     </div>
   </div>
 </template>
@@ -65,10 +60,17 @@ export default defineComponent({
   },
   
   computed: {
-      
+    // filteredClickAreas() {
+    //   // 使用 filter 函数来过滤 subAnswerModel.clickAreas 数组
+    //   return this.subAnswerModel.clickAreas.filter(item => {
+    //     // 根据条件判断是否要包含该项
+    //     return item.content.textField.enabled && item.content.imageField.enabled;
+    //   });
+    // }
   },
   
   methods: {
+    
     updateAnswers(answer: string) {
           //console.log(
           
@@ -136,40 +138,34 @@ export default defineComponent({
   
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-// .ClickAreaList{
-//   display: grid;
-//   width: 80%;
-//   height: 600px;
-//   /* 如同border，但不會占空間 */
-//   outline: 5px solid #252a34;
-//   /* 代表我設置一個 4x4 的格線，且各行列都佔1/4 */
-//   grid-template-columns: 25% 25% 25% 25%;
-//   grid-template-rows: 25% 25% 25% 25%;
-//   /* 格線間的間距，如同bs的now-gutter */
-// 	grid-gap: 10px;
-// }
 .root{
+  // display: inline-block;
+  // width: 100%; /* 2x2 grid, so each item takes 50% width */
+  // box-sizing: border-box;
+  // padding: 10px;
+  // text-align: left;
+  // box-sizing: border-box;
+
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  // background : blue;
   justify-content: center;
+  padding: 2%;
   .ClickAreaList-with-image {
-    flex: 0 0 20%;
-    margin-left: 2.5%;
-    margin-top: 2.5%;
-    font-size: 25px;
-    // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
     // display: inline-block;
-    // // display: flex;
-    // // flex-wrap: nowrap;
+    // flex: 0 0 calc(40% - 10px);
     // align-items: stretch;
-    // width: 26%; /* 2x2 grid, so each item takes 50% width */
+    // width: 40%; /* 2x2 grid, so each item takes 50% width */
     // box-sizing: content-box;
     // padding: 0px;
-    // // border:1px solid black;
     // margin:10px;
+
+    flex: 0 0 calc(40% - 10px); /* 一格格方格，可根据需要调整宽度 */
+    margin-right: 10px; 
+    margin-bottom: 10px; 
+    margin-top: 20px;
+    // padding: 10px; /* 格子内的填充，可以根据需要调整 */
+    // text-align: left; 
 
   }
 }

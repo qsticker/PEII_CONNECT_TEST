@@ -189,9 +189,9 @@
 
 
 .container-with-image{
-    // display: flex;
-    // flex-wrap: nowrap;
-    display: inline-block;
+    display: flex;
+    margin-top: 5%;
+    // display: inline-block;
     // // flex-direction: column;
     // align-items: center;
   .ClickStage-with-image{
@@ -202,11 +202,10 @@
     height: 100%;
     box-sizing: content-box;
     padding: 5px;
-    margin:10px;
-    align-items: center;
-    justify-content: center;
-    // flex-direction: column;
+    margin:20px;
+   
     position: relative;
+    // margin-top: 10%;
     border-radius: 10px;
     border-width: 1px; //改作答區虛線粗細
     border-style: dotted;
