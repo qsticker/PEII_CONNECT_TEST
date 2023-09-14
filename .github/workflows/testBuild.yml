@@ -9,7 +9,7 @@ jobs:
       uses: actions/checkout@master
 
     - name: buildAndDeploy
-      uses: JamesIves/github-pages-deploy-action@master
+      uses: JamesIves/github-pages-deploy-action@v4
       env:
         BRANCH: gh-pages
         FOLDER: dist
