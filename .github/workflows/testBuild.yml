@@ -1,0 +1,16 @@
+name: testBuild
+on:
+  push
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+
+    - name: buildAndDeploy
+      uses: JamesIves/github-pages-deploy-action@master
+      env:
+        BRANCH: gh-pages
+        FOLDER: dist
+        BUILD_SCRIPT: npm install && npm run build
