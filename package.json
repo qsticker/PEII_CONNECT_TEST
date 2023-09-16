@@ -2,6 +2,7 @@
   "name": "peiifrontedts",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://qsticker.github.io/PEII_CONNECT_TEST/",
   "scripts": {
     "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build --mode development",
