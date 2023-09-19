@@ -13,8 +13,24 @@ jobs:
         npm install
         npm run build
 
-    - name: Deploy
+    - name: Deploy on github page
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         BRANCH: gh-pages
         FOLDER: dist
+
+    - name: AWS-CLI
+      uses: shinyinc/action-aws-cli@v1.2
+      
+    - name: Deploy on S3
+      run: aws s3 sync build s3:/${{ secrets.AWS_S3_BUCKET_NAME }}/
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        
+    - name: AWS CloudFront deactivate
+      run: aws cloudfront create-invalidation --distribution-id ${{ secretsAWS_DISTRIBUTION_ID }} --paths "/index.html" 
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
